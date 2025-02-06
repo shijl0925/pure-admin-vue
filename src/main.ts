@@ -1,9 +1,18 @@
 import { createApp } from 'vue'
-import 'virtual:uno.css'
-// import '@unocss/reset/tailwind.css'
-// import '@unocss/reset/tailwind-compat.css'
+import { createPinia } from 'pinia'
+import Antd from 'ant-design-vue'
 
+import 'virtual:uno.css'
+import 'ant-design-vue/dist/reset.css'
+
+import { router } from './router'
 import './style.css'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+const pinia = createPinia()
+
+createApp(App)
+  .use(router)
+  .use(pinia)
+  .use(Antd)
+  .mount('#app')
