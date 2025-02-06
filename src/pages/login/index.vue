@@ -2,12 +2,10 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 
 import { Wave } from '@/components/login'
-
-import styles from './login.module.scss'
 </script>
 
 <template>
-  <div :class="styles.header" class="relative">
+  <div class="relative login-bg">
     <div class="flex flex-col items-center justify-center w-screen py-10 min-h-[80vh]">
       <div class="space-y-4">
         <div class="text-4xl text-center text-white">

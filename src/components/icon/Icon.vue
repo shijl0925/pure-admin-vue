@@ -2,8 +2,6 @@
 import { Icon as Iconify } from '@iconify/vue'
 import { nextTick, ref, watch } from 'vue'
 
-import styles from './Icon.module.scss'
-
 const { name = '' } = defineProps<{
   name: string
 }>()
@@ -18,8 +16,8 @@ watch(() => name, async () => {
 </script>
 
 <template>
-  <span v-if="loading" :class="styles.icon" />
-  <span v-else :class="styles.icon">
+  <span v-if="loading" class="icon-wrapper" />
+  <span v-else class="icon-wrapper">
     <Iconify :icon="name" />
   </span>
 </template>

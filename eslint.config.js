@@ -3,8 +3,9 @@ import perfectionist from 'eslint-plugin-perfectionist'
 
 export default antfu(
   {
-    vue: true,
     typescript: true,
+    vue: true,
+    jsx: true,
     stylistic: true,
   },
   {
