@@ -14,14 +14,14 @@ import { Wave } from '@/components/login'
         <div class="p-4 transition-all border shadow rounded-xl hover:shadow-2xl w-80 bg-white/80">
           <a-form>
             <a-form-item name="username">
-              <a-input size="large" allow-clear placeholder="用户名">
+              <a-input size="large" allow-clear placeholder="请输入用户名">
                 <template #prefix>
                   <UserOutlined style="color: #D9D9D9;" />
                 </template>
               </a-input>
             </a-form-item>
             <a-form-item name="password">
-              <a-input-password size="large" allow-clear placeholder="密码">
+              <a-input-password size="large" allow-clear placeholder="请输入密码">
                 <template #prefix>
                   <LockOutlined style="color: #D9D9D9;" />
                 </template>
