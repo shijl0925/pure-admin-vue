@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="login-bg-waves"
+    class="bg-login-waves"
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     viewBox="0 24 150 28"
@@ -14,10 +14,10 @@
       />
     </defs>
     <g>
-      <use class="login-bg-wave-1" href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
-      <use class="login-bg-wave-2" href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-      <use class="login-bg-wave-3" href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-      <use class="login-bg-wave-4" href="#gentle-wave" x="48" y="7" fill="#fff" />
+      <use class="bg-login-wave-1" href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+      <use class="bg-login-wave-2" href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+      <use class="bg-login-wave-3" href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+      <use class="bg-login-wave-4" href="#gentle-wave" x="48" y="7" fill="#fff" />
     </g>
   </svg>
 </template>
