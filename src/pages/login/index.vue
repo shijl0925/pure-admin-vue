@@ -14,10 +14,10 @@ import styles from './login.module.scss'
         <div class="p-4 transition-all border shadow rounded-xl hover:shadow-2xl w-80 bg-white/80">
           <a-form>
             <a-form-item name="username">
-              <a-input />
+              <a-input size="large" />
             </a-form-item>
             <a-form-item name="password">
-              <a-input />
+              <a-input size="large" />
             </a-form-item>
             <a-form-item>
               <a-button type="primary" html-type="submit" size="large" block>
