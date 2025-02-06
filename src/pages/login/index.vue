@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
+
 import { Wave } from '@/components/login'
 
 import styles from './login.module.scss'
 </script>
 
 <template>
-  <div class="relative" :class="styles.header">
+  <div :class="styles.header" class="relative">
     <div class="flex flex-col items-center justify-center w-screen py-10 min-h-[80vh]">
       <div class="space-y-4">
         <div class="text-4xl text-center text-white">
@@ -14,10 +16,18 @@ import styles from './login.module.scss'
         <div class="p-4 transition-all border shadow rounded-xl hover:shadow-2xl w-80 bg-white/80">
           <a-form>
             <a-form-item name="username">
-              <a-input size="large" />
+              <a-input size="large" allow-clear placeholder="用户名">
+                <template #prefix>
+                  <UserOutlined style="color: #D9D9D9;" />
+                </template>
+              </a-input>
             </a-form-item>
             <a-form-item name="password">
-              <a-input size="large" />
+              <a-input-password size="large" allow-clear placeholder="密码">
+                <template #prefix>
+                  <LockOutlined style="color: #D9D9D9;" />
+                </template>
+              </a-input-password>
             </a-form-item>
             <a-form-item>
               <a-button type="primary" html-type="submit" size="large" block>
