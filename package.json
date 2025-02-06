@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@iconify/vue": "^4.3.0",
+    "@unocss/reset": "^65.4.3",
     "@vueuse/core": "^12.5.0",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",
@@ -22,15 +23,24 @@
   "devDependencies": {
     "@antfu/eslint-config": "^4.1.1",
     "@types/node": "^22.13.1",
+    "@unocss/postcss": "^65.4.3",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.19.0",
     "eslint-plugin-perfectionist": "^4.8.0",
+    "postcss": "^8.5.1",
     "sass": "^1.84.0",
     "typescript": "~5.7.3",
     "unocss": "^65.4.3",
     "unplugin-vue-router": "^0.11.2",
     "vite": "^6.0.11",
     "vue-tsc": "^2.2.0"
-  }
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead"
+  ]
 }
