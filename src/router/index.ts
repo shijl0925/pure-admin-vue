@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { routes, handleHotUpdate } from 'vue-router/auto-routes'
+import { handleHotUpdate, routes } from 'vue-router/auto-routes'
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
 
 export const router = createRouter({
@@ -19,7 +19,8 @@ if (import.meta.hot) {
     console.log('🔥 HMR with', routes)
     addRedirects()
   })
-} else {
+}
+else {
   // production
   addRedirects()
 }

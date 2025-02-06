@@ -1,13 +1,11 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 import Antd from 'ant-design-vue'
-
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 import 'virtual:uno.css'
 import 'ant-design-vue/dist/reset.css'
 
-import { router } from './router'
-import './style.css'
 import App from './App.vue'
+import { router } from './router'
 
 const pinia = createPinia()
 
