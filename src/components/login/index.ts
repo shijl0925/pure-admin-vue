@@ -1,4 +1,4 @@
-import Wave from './background/Wave.vue'
+import Wave from './background/wave.vue'
 
 export {
   Wave,
