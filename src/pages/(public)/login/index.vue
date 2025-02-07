@@ -1,3 +1,8 @@
+<route lang="yaml">
+  meta:
+    isPublic: true
+</route>
+
 <script setup lang="ts">
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 

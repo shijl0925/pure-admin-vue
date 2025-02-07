@@ -7,6 +7,17 @@ export const router = createRouter({
   routes,
 })
 
+router.beforeEach((to, _from, next) => {
+  console.log('🔥 to', to)
+  if (to.meta.isPublic) {
+    console.log('🔥 public route')
+    next()
+  }
+  else {
+    console.log('🔥 private route')
+    next()
+  }
+})
 function addRedirects() {
   // router.addRoute({
   //   path: '/new-about',
