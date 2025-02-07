@@ -9,7 +9,7 @@ export default antfu(
     stylistic: true,
   },
   {
-    files: ['**/*.{ts,js}'],
+    files: ['**/*.{vue,ts,tsx,js,jsx}'],
     languageOptions: {
       ecmaVersion: 'latest', // 使用最新的 ECMAScript 版本
     },
