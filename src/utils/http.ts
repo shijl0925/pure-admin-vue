@@ -36,8 +36,9 @@ http.interceptors.response.use(
     }
   },
   (error) => {
-    const errMsg = error.response?.data?.message || error.message
-    console.error(errMsg)
+    const errMsg = error.response?.data?.data?.message || error.message
+    console.error(error)
+    message.error(errMsg)
 
     return Promise.reject(error)
   },
