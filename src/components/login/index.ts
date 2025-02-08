@@ -1,1 +1,1 @@
-export { default as Wave } from './background/wave.vue'
+export { default as Wave } from './background/Wave.vue'
