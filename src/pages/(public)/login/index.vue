@@ -18,6 +18,7 @@ import { useAuthStore } from '@/stores'
 import { deCode, enCode } from '@/utils/string'
 
 const router = useRouter()
+
 const { setAllToken } = useAuthStore()
 
 const formLoading = ref(false)

@@ -1,5 +1,1 @@
-import Wave from './background/wave.vue'
-
-export {
-  Wave,
-}
+export { default as Wave } from './background/wave.vue'
