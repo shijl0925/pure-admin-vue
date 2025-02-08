@@ -15,6 +15,7 @@ router.beforeEach((to, _from, next) => {
   }
   else {
     console.log('🔥 private route')
+    console.log('🔥 request user info')
     next()
   }
 })
