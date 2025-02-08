@@ -4,6 +4,8 @@
 </route>
 
 <script setup lang="ts">
+import type { CheckboxChangeEvent } from 'ant-design-vue/es/checkbox/interface'
+
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -46,7 +48,7 @@ if (localStorage.getItem(rememberKey) === rememberValueTrue) {
 console.log(`🔥 ${rememberUsernameKey}`)
 console.log(`🔥 ${deCode(rememberUsernameKey)}`)
 
-function onRememberChange(e: any) {
+function onRememberChange(e: CheckboxChangeEvent) {
   if (!e.target.checked) {
     clearRemember()
   }
