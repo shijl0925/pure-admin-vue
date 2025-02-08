@@ -1,5 +1,1 @@
-import { useAuthStore } from './auth'
-
-export {
-  useAuthStore,
-}
+export { useAuthStore } from './auth'
