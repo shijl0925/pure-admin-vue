@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { compact } from 'es-toolkit'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

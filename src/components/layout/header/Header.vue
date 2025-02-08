@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useElementSize, useWindowScroll } from '@vueuse/core'
 import clsx from 'clsx'
 import { storeToRefs } from 'pinia'

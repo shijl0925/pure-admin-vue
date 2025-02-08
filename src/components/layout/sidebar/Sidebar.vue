@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 import 'overlayscrollbars/overlayscrollbars.css'
 import { storeToRefs } from 'pinia'
