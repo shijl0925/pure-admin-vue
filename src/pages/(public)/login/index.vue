@@ -98,12 +98,12 @@ function clearRemember() {
 
 <template>
   <div class="relative bg-login">
-    <div class="flex flex-col items-center justify-center w-screen py-10 min-h-[80vh]">
+    <div class="min-h-[80vh] w-screen flex flex-col items-center justify-center py-10">
       <div class="space-y-4">
-        <div class="text-4xl text-center text-white">
+        <div class="text-center text-4xl text-white">
           Pure Admin
         </div>
-        <div class="p-4 transition-all border shadow rounded-xl hover:shadow-2xl w-80 bg-white/80">
+        <div class="w-80 border rounded-xl bg-white/80 p-4 shadow transition-all hover:shadow-2xl">
           <a-form :model="form" :rules="rules" @finish="onFinish">
             <a-form-item name="username">
               <a-input
@@ -131,7 +131,7 @@ function clearRemember() {
                 </template>
               </a-input-password>
             </a-form-item>
-            <div class="flex flex-row justify-between mb-4">
+            <div class="mb-4 flex flex-row justify-between">
               <a-checkbox
                 v-model:checked="isRemember"
                 :disabled="formLoading"
