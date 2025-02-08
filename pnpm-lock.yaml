@@ -35,6 +35,9 @@ importers:
       es-toolkit:
         specifier: ^1.32.0
         version: 1.32.0
+      overlayscrollbars:
+        specifier: ^2.10.1
+        version: 2.10.1
       overlayscrollbars-vue:
         specifier: ^0.5.9
         version: 0.5.9(overlayscrollbars@2.10.1)(vue@3.5.13(typescript@5.7.3))
