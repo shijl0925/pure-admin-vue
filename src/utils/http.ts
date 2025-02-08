@@ -2,6 +2,7 @@ import type { InternalAxiosRequestConfig } from 'axios'
 
 import { message } from 'ant-design-vue'
 import Axios from 'axios'
+import { storeToRefs } from 'pinia'
 
 import { logout } from '@/core/system'
 import { useAuthStore } from '@/stores'
@@ -13,9 +14,10 @@ export const http = Axios.create({
 
 http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const authStore = useAuthStore()
+  const { token } = storeToRefs(authStore)
 
-  if (authStore.token)
-    config.headers.authorization = `Bearer ${authStore.token}`
+  if (token.value)
+    config.headers.authorization = `Bearer ${token.value}`
 
   return config
 }, error => Promise.reject(error))

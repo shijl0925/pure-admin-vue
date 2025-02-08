@@ -7,6 +7,7 @@
 import type { CheckboxChangeEvent } from 'ant-design-vue/es/checkbox/interface'
 
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
+import { storeToRefs } from 'pinia'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -19,7 +20,8 @@ import { deCode, enCode } from '@/utils/string'
 
 const router = useRouter()
 
-const { setAllToken } = useAuthStore()
+const authStore = useAuthStore()
+const { token, refreshToken } = storeToRefs(authStore)
 
 const formLoading = ref(false)
 
@@ -64,7 +66,8 @@ async function onFinish(data: LoginData) {
   try {
     const res = await loginApi(data)
     console.log(res)
-    setAllToken(res.token, res.refreshToken)
+    token.value = res.token
+    refreshToken.value = res.refreshToken
     if (isRemember.value) {
       saveRemember(data.username, data.password)
     }
