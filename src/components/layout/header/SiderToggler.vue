@@ -10,18 +10,20 @@ const { toggleSidebarCollapsed } = layoutStore
 </script>
 
 <template>
-  <a-button type="text" @click="toggleSidebarCollapsed">
-    <template #icon>
-      <Icon
-        v-if="sidebarCollapsed"
-        name="icon-park-outline:menu-unfold"
-        class="text-base text-gray-800"
-      />
-      <Icon
-        v-else
-        name="icon-park-outline:menu-fold"
-        class="text-base text-gray-800"
-      />
-    </template>
-  </a-button>
+  <div class="w-10">
+    <a-button type="text" block @click="toggleSidebarCollapsed">
+      <template #icon>
+        <Icon
+          v-show="!sidebarCollapsed"
+          name="icon-park-outline:menu-fold"
+          class="text-base text-gray-800"
+        />
+        <Icon
+          v-show="sidebarCollapsed"
+          name="icon-park-outline:menu-unfold"
+          class="text-base text-gray-800"
+        />
+      </template>
+    </a-button>
+  </div>
 </template>
