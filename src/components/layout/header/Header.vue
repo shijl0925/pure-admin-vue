@@ -4,6 +4,8 @@ import { computed } from 'vue'
 
 import { useLayoutStore } from '@/stores'
 
+import SiderToggler from './SiderToggler.vue'
+
 const layoutStore = useLayoutStore()
 const { headerHeight } = storeToRefs(layoutStore)
 
@@ -17,6 +19,7 @@ const style = computed(() => ({
 <template>
   <a-layout-header :style="style">
     <div class="h-full border-gray-100 border-b-solid bg-white px-3">
+      <SiderToggler />
       <slot />
     </div>
   </a-layout-header>
