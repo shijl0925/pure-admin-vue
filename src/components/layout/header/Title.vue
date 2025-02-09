@@ -6,7 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 
-const isHomePage = computed(() => route.name === '/')
+const isHomePage = computed(() => route.path === '/')
 const isListPage = computed(() => /.+\/list/.test(route.path))
 const canBack = computed(() => !/.+\/list$/.test(route.path))
 const menuIcon = computed(() => route.meta.menuIcon as string)
@@ -31,10 +31,10 @@ function back() {
 <template>
   <div v-if="!isHomePage" class="h-[32px] flex items-center justify-center">
     <span v-if="canBack" class="w-[32px] flex cursor-pointer select-none items-center self-stretch justify-center rounded text-xl hover:bg-gray-100 hover:text-gray-900">
-      <common-icon name="icon-park-outline:left" @click="() => back()" />
+      <Icon name="icon-park-outline:left" @click="() => back()" />
     </span>
     <span v-else class="w-[32px] flex cursor-pointer select-none items-center self-stretch justify-center rounded text-xl">
-      <common-icon :name="menuIcon" />
+      <Icon :name="menuIcon" />
     </span>
     <span v-if="title" class="ml-2 text-lg font-medium">{{ title }}</span>
     <span v-if="subTitle" class="ml-2 text-gray-500">{{ subTitle }}</span>
