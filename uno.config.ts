@@ -1,4 +1,8 @@
-import { defineConfig, presetUno } from 'unocss'
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
+import path from 'node:path'
+import { defineConfig, presetIcons, presetUno } from 'unocss'
+
+const localIconPath = path.resolve(__dirname, 'src/assets/svg-icon')
 
 export default defineConfig({
   rules: [
@@ -33,5 +37,16 @@ export default defineConfig({
   },
   presets: [
     presetUno(),
+    presetIcons({
+      prefix: 'icon-',
+      scale: 1,
+      extraProperties: {
+        display: 'inline-block',
+      },
+      collections: {
+        local: FileSystemIconLoader(localIconPath),
+      },
+      warn: true,
+    }),
   ],
 })
