@@ -2,12 +2,12 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
-import { useLayoutStore } from '@/stores'
+import { useAppStore } from '@/stores'
 
 import SiderToggler from './SiderToggler.vue'
 
-const layoutStore = useLayoutStore()
-const { headerHeight } = storeToRefs(layoutStore)
+const appStore = useAppStore()
+const { headerHeight } = storeToRefs(appStore)
 
 const style = computed(() => ({
   height: `${headerHeight.value}px`,

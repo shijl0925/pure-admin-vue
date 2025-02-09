@@ -3,11 +3,11 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
-import { useLayoutStore } from '@/stores'
+import { useAppStore } from '@/stores'
 import { scrollbarOptions } from '@/utils/overlayscrollbars'
 
-const layoutStore = useLayoutStore()
-const { headerHeight } = storeToRefs(layoutStore)
+const appStore = useAppStore()
+const { headerHeight } = storeToRefs(appStore)
 
 const contentStyle = computed(() => ({
   height: `calc(100vh - ${headerHeight.value}px)`,

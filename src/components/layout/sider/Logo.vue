@@ -3,12 +3,12 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { useLayoutStore } from '@/stores'
+import { useAppStore } from '@/stores'
 
 const router = useRouter()
 
-const layoutStore = useLayoutStore()
-const { headerHeight, sidebarCollapsed } = storeToRefs(layoutStore)
+const appStore = useAppStore()
+const { headerHeight, sidebarCollapsed } = storeToRefs(appStore)
 
 const logoStyle = computed(() => ({
   height: `${headerHeight.value}px`,

@@ -4,18 +4,18 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
-import { useLayoutStore } from '@/stores'
+import { useAppStore } from '@/stores'
 import { scrollbarOptions } from '@/utils/overlayscrollbars'
 
 import Logo from './Logo.vue'
 
-const layoutStore = useLayoutStore()
+const appStore = useAppStore()
 const {
   headerHeight,
   sidebarWidth,
   sidebarCollapsedWidth,
   sidebarCollapsed,
-} = storeToRefs(layoutStore)
+} = storeToRefs(appStore)
 
 const menuStyle = computed(() => ({
   height: `calc(100vh - ${headerHeight.value}px)`,

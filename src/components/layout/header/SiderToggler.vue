@@ -2,11 +2,11 @@
 import { storeToRefs } from 'pinia'
 
 import { Icon } from '@/components/icon'
-import { useLayoutStore } from '@/stores/layout'
+import { useAppStore } from '@/stores'
 
-const layoutStore = useLayoutStore()
-const { sidebarCollapsed } = storeToRefs(layoutStore)
-const { toggleSidebarCollapsed } = layoutStore
+const appStore = useAppStore()
+const { sidebarCollapsed } = storeToRefs(appStore)
+const { toggleSidebarCollapsed } = appStore
 </script>
 
 <template>

@@ -3,14 +3,14 @@ import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watchEffect } from 'vue'
 
-import { useLayoutStore } from '@/stores'
+import { useAppStore } from '@/stores'
 
 const { margin = 20 } = defineProps<{
   margin: number
 }>()
 
-const layoutStore = useLayoutStore()
-const { sidebarWidth } = storeToRefs(layoutStore)
+const appStore = useAppStore()
+const { sidebarWidth } = storeToRefs(appStore)
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const breakpointsName = ['2xl', 'xl', 'lg', 'md', 'sm'] as const

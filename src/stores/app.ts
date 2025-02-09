@@ -2,12 +2,11 @@ import { useLocalStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-import { HEADER_HEIGHT, SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from '@/constants/layout'
+import { HEADER_HEIGHT, SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from '@/constants/app'
 import { projectSign } from '@/utils/string'
 
-export const useLayoutStore = defineStore('layout', () => {
+export const useAppStore = defineStore('app', () => {
   const headerHeight = ref(HEADER_HEIGHT)
-  const titleHeight = ref(0)
   const sidebarWidth = ref(SIDEBAR_WIDTH)
   const sidebarCollapsedWidth = ref(SIDEBAR_COLLAPSED_WIDTH)
 
@@ -19,7 +18,6 @@ export const useLayoutStore = defineStore('layout', () => {
 
   return {
     headerHeight,
-    titleHeight,
     sidebarWidth,
     sidebarCollapsedWidth,
     sidebarCollapsed,
