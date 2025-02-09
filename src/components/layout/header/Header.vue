@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
+import ThemeSwitch from '@/components/common/ThemeSwitch.vue'
 import { useAppStore } from '@/stores'
 
 import SiderToggler from './SiderToggler.vue'
@@ -18,9 +19,11 @@ const style = computed(() => ({
 
 <template>
   <a-layout-header :style="style">
-    <div class="h-full border-gray-100 border-b-solid bg-white px-3">
+    <div class="h-full flex items-center justify-between border-light-500 border-b-solid bg-white px-3 dark:border-dark-700 dark:bg-dark-800">
       <SiderToggler />
-      <slot />
+      <div class="flex items-center justify-end">
+        <ThemeSwitch />
+      </div>
     </div>
   </a-layout-header>
 </template>

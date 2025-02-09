@@ -30,8 +30,8 @@ function back() {
 
 <template>
   <div v-if="!isHomePage" class="h-[32px] flex items-center justify-center">
-    <span v-if="canBack" class="w-[32px] flex cursor-pointer select-none items-center self-stretch justify-center rounded text-xl hover:bg-gray-100 hover:text-gray-900">
-      <Icon name="icon-park-outline:left" @click="() => back()" />
+    <span v-if="canBack" class="w-[32px] flex cursor-pointer select-none items-center self-stretch justify-center rounded text-xl hover:bg-light-100 hover:text-light-900">
+      <Icon name="icon-park-outline:left" @click="back" />
     </span>
     <span v-else class="w-[32px] flex cursor-pointer select-none items-center self-stretch justify-center rounded text-xl">
       <Icon :name="menuIcon" />
