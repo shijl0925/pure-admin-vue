@@ -21,7 +21,7 @@ function handleClick() {
 
 <template>
   <div
-    class="flex cursor-pointer select-none items-center justify-center gap-2 text-gray-800 dark:text-gray-200" :style="logoStyle" @click="handleClick"
+    class="flex cursor-pointer select-none items-center justify-center gap-2 text-gray-800 dark:text-gray-200" :style="logoStyle" @click="() => handleClick()"
   >
     <div class="icon-local:logo text-3xl" />
     <h2

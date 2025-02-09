@@ -11,7 +11,7 @@ const { toggleSidebarCollapsed } = appStore
 
 <template>
   <div class="w-10">
-    <a-button type="text" block @click="toggleSidebarCollapsed">
+    <a-button type="text" block @click="() => toggleSidebarCollapsed()">
       <template #icon>
         <Icon
           v-show="!sidebarCollapsed"

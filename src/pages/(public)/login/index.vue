@@ -51,8 +51,8 @@ if (localStorage.getItem(rememberKey) === rememberValueTrue) {
 console.log(`🔥 ${rememberUsernameKey}`)
 console.log(`🔥 ${deCode(rememberUsernameKey)}`)
 
-function onRememberChange(e: CheckboxChangeEvent) {
-  if (!e.target.checked) {
+function onRememberChange(ev: CheckboxChangeEvent) {
+  if (!ev.target.checked) {
     clearRemember()
   }
 }
@@ -141,13 +141,13 @@ function clearRemember() {
                 :disabled="formLoading"
                 size="large"
                 class="cursor-pointer select-none"
-                @change="onRememberChange"
+                @change="(ev: CheckboxChangeEvent) => onRememberChange(ev)"
               >
                 记住我
               </a-checkbox>
               <a-typography-link
                 class="cursor-pointer select-none"
-                @click="onForgot"
+                @click="() => onForgot()"
               >
                 忘记密码
               </a-typography-link>
