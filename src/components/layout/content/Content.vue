@@ -16,10 +16,8 @@ const contentStyle = computed(() => ({
 
 <template>
   <a-layout-content :style="contentStyle">
-    <OverlayScrollbarsComponent :options="scrollbarOptions" defer class="h-full">
-      <div class="min-h-full bg-light-300 p-4">
-        <slot />
-      </div>
+    <OverlayScrollbarsComponent :options="scrollbarOptions" defer class="h-full bg-light-300 p-4">
+      <slot />
     </OverlayScrollbarsComponent>
   </a-layout-content>
 </template>

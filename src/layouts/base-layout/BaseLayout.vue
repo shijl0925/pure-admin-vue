@@ -6,16 +6,9 @@ import { Content, Header, Sider } from '@/components/layout'
   <a-layout>
     <Sider />
     <a-layout>
-      <Header>
-        <div>header</div>
-      </Header>
+      <Header />
       <Content>
-        <div>content1</div>
-        <div>content2</div>
-        <div>content3</div>
-        <div>content4</div>
-        <div>content5</div>
-        <div>content6</div>
+        <RouterView />
       </Content>
     </a-layout>
   </a-layout>
