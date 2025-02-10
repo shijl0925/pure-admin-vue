@@ -1,27 +1,10 @@
 import type { Plugin } from 'vite'
 
+import { cleanupSVG, importDirectory, isEmptyColor, parseColors, runSVGO } from '@iconify/tools'
 import fs from 'node:fs'
 import path from 'node:path'
-import { parse as parseSvg } from 'svg-parser'
 
-interface IconifyIcon {
-  body: string
-  width?: number
-  height?: number
-}
-
-interface IconifyJSON {
-  prefix: string
-  icons: Record<string, IconifyIcon>
-  width?: number
-  height?: number
-}
-
-interface SvgElement {
-  properties: { viewBox?: string, [key: string]: any }
-}
-
-export default function viteSvgToIconify(
+export default function svgToIconify(
   {
     options = {
       svgDir: 'src/assets/svg-icon',
@@ -31,7 +14,6 @@ export default function viteSvgToIconify(
     dts = 'virtual-local-icons.d.ts',
   },
 ): Plugin {
-  let iconifyJSON: IconifyJSON
   const virtualModuleId = 'virtual:local-icons'
   const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
@@ -57,70 +39,6 @@ export default function viteSvgToIconify(
       }
     },
 
-    async load(id) {
-      if (id === resolvedVirtualModuleId) {
-        const svgDir = path.resolve(process.cwd(), options.svgDir)
-        iconifyJSON = {
-          prefix: options.prefix,
-          icons: {},
-          width: 1024,
-          height: 1024,
-        }
-
-        // 读取所有 SVG 文件
-        const svgFiles = fs.readdirSync(svgDir)
-          .filter(file => file.endsWith('.svg'))
-
-        // 处理每个 SVG 文件
-        svgFiles.forEach((file) => {
-          const filePath = path.join(svgDir, file)
-          const svgContent = fs.readFileSync(filePath, 'utf-8')
-          const iconName = path.basename(file, '.svg')
-
-          try {
-            // 解析 SVG
-            const ast = parseSvg(svgContent)
-            const svgNode = ast.children[0]
-
-            if (svgNode && 'properties' in svgNode && (svgNode as SvgElement).properties?.viewBox) {
-              // 提取 viewBox
-              const viewBox = (svgNode as SvgElement).properties.viewBox as string
-              const [, , width, height] = viewBox.split(' ').map(Number)
-
-              // 提取 SVG 内容
-              const body = svgContent
-                .replace(/<svg[^>]*>/g, '')
-                .replace(/<\/svg>/g, '')
-                .replace(/[\n\r\t]/g, '')
-                .replace(/\s+/g, ' ')
-                .trim()
-
-              // 添加到 icons 集合
-              iconifyJSON.icons[iconName] = {
-                body,
-                width: width || 1024,
-                height: height || 1024,
-              }
-            }
-          }
-          catch (error) {
-            console.error(`Error processing ${file}:`, error)
-          }
-        })
-
-        // 生成虚拟模块代码
-        return `
-import { addCollection } from '@iconify/vue'
-
-const iconSet = ${JSON.stringify(iconifyJSON)}
-addCollection(iconSet)
-
-// 导出图标列表供类型提示使用
-export const icons = ${JSON.stringify(Object.keys(iconifyJSON.icons).map(name => `${options.prefix}:${name}`))}
-`
-      }
-    },
-
     configResolved(config) {
       // 确保类型声明文件目录存在
       const typesDir = path.resolve(config.root, 'types')
@@ -137,6 +55,76 @@ export const icons = ${JSON.stringify(Object.keys(iconifyJSON.icons).map(name =>
         dts,
         dtsContent,
       )
+    },
+
+    async load(id) {
+      if (id === resolvedVirtualModuleId) {
+        const svgDir = path.resolve(process.cwd(), options.svgDir)
+
+        // 读取所有 SVG 文件
+        const iconSet = await importDirectory(svgDir, {
+          prefix: options.prefix,
+        })
+        iconSet.forEach((name, type) => {
+          if (type !== 'icon') {
+            return
+          }
+
+          const svg = iconSet.toSVG(name)
+          if (!svg) {
+            // Invalid icon
+            iconSet.remove(name)
+            return
+          }
+          // Clean up and optimise icons
+          try {
+            // Clean up icon code
+            cleanupSVG(svg)
+
+            // Assume icon is monotone: replace color with currentColor, add if missing
+            // If icon is not monotone, remove this code
+            parseColors(svg, {
+              defaultColor: 'currentColor',
+              callback: (_attr, colorStr, color) => {
+                return !color || isEmptyColor(color)
+                  ? colorStr
+                  : 'currentColor'
+              },
+            })
+
+            // Optimise
+            runSVGO(svg)
+          }
+          catch (err) {
+            // Invalid icon
+            console.error(`Error parsing ${name}:`, err)
+            iconSet.remove(name)
+            return
+          }
+
+          // Update icon
+          iconSet.fromSVG(name, svg)
+        })
+
+        // 导出图标数据
+        const exported = iconSet.export()
+
+        const localIconSet = {
+          ...exported,
+          prefix: options.prefix,
+        }
+
+        // 生成虚拟模块代码
+        return `
+import { addCollection } from '@iconify/vue'
+
+const iconSet = ${JSON.stringify(localIconSet)}
+addCollection(iconSet)
+
+// 导出图标列表供类型提示使用
+export const icons = ${JSON.stringify(Object.keys(localIconSet.icons).map(name => `${options.prefix}:${name}`))}
+`
+      }
     },
   }
 }
