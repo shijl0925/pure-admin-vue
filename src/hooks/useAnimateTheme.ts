@@ -34,14 +34,14 @@ function injectBaseStyles() {
   }
 }
 
-export interface UseModeAnimationOptions {
+export interface UseAnimateThemeOptions {
   duration?: number
   easing?: string
   isDark: Ref<boolean>
   toggleDark: () => void
 }
 
-export function useAnimateDark(options: UseModeAnimationOptions) {
+export function useAnimateTheme(options: UseAnimateThemeOptions) {
   const {
     duration = 800,
     easing = 'ease-in-out',

@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 
 import { Icon } from '@/components/icon'
-import { useAnimateDark } from '@/hooks/useAnimateDark'
+import { useAnimateTheme } from '@/hooks/useAnimateTheme'
 import { useAppStore } from '@/stores'
 
 const appStore = useAppStore()
@@ -13,7 +13,7 @@ const {
   triggerRef,
   isLoading,
   animateToggleDark,
-} = useAnimateDark({
+} = useAnimateTheme({
   isDark,
   toggleDark,
 })
