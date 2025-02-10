@@ -1,2 +1,2 @@
-export { default as SiderSwitcher } from './SiderSwitcher.vue'
-export { default as ThemeSwitcher } from './ThemeSwitcher.vue'
+export { default as SiderToggle } from './SiderToggle.vue'
+export { default as ThemeToggle } from './ThemeToggle.vue'
