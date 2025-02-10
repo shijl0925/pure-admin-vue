@@ -12,6 +12,7 @@ const resolvePath = (path: string) => resolve(__dirname, path)
 export default defineConfig({
   plugins: [
     VueRouter({
+      routeBlockLang: 'yaml',
       dts: resolvePath('./types/typed-router.d.ts'),
     }),
     vue(),
