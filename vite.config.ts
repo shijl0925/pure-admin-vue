@@ -4,16 +4,21 @@ import UnoCSS from 'unocss/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 
+import viteSvgToIconify from './vite-plugins/svg-to-iconify'
+
 const resolvePath = (path: string) => resolve(__dirname, path)
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     VueRouter({
-      /* options */
+      dts: resolvePath('./types/typed-router.d.ts'),
     }),
     vue(),
     UnoCSS(),
+    viteSvgToIconify({
+      dts: resolvePath('./types/virtual-local-icons.d.ts'),
+    }),
   ],
   resolve: {
     alias: {
