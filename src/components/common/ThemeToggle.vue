@@ -7,15 +7,15 @@ import { useAppStore } from '@/stores'
 
 const appStore = useAppStore()
 const { isDark } = storeToRefs(appStore)
-const { toggleDark } = appStore
+const { toggleTheme } = appStore
 
 const {
   triggerRef,
   isLoading,
-  animateToggleDark,
+  animateToggleTheme,
 } = useAnimateTheme({
   isDark,
-  toggleDark,
+  toggleTheme,
 })
 </script>
 
@@ -26,7 +26,7 @@ const {
       :disabled="isLoading"
       type="text"
       block
-      @click="() => animateToggleDark()"
+      @click="() => animateToggleTheme()"
     >
       <template #icon>
         <Icon

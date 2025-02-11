@@ -38,7 +38,7 @@ export interface UseAnimateThemeOptions {
   duration?: number
   easing?: string
   isDark: Ref<boolean>
-  toggleDark: () => void
+  toggleTheme: () => void
 }
 
 export function useAnimateTheme(options: UseAnimateThemeOptions) {
@@ -46,7 +46,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions) {
     duration = 800,
     easing = 'ease-in-out',
     isDark,
-    toggleDark,
+    toggleTheme,
   } = options
   const isLoading = ref(false)
 
@@ -57,7 +57,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions) {
 
   const triggerRef = ref<ComponentPublicInstance>()
 
-  const animateToggleDark = async () => {
+  const animateToggleTheme = async () => {
     if (isLoading.value)
       return
 
@@ -68,7 +68,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions) {
       || !(document as any).startViewTransition
       || window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
-      toggleDark()
+      toggleTheme()
       return
     }
 
@@ -84,7 +84,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions) {
     document.documentElement.classList.add('stop-transition')
 
     await document.startViewTransition(async () => {
-      toggleDark()
+      toggleTheme()
       await nextTick()
     }).ready
 
@@ -109,6 +109,6 @@ export function useAnimateTheme(options: UseAnimateThemeOptions) {
   return {
     triggerRef,
     isLoading,
-    animateToggleDark,
+    animateToggleTheme,
   }
 }

@@ -19,10 +19,10 @@ export const useAppStore = defineStore('app', () => {
 
   // Theme
   const isDark = useDark()
-  const toggleDark = useToggle(isDark)
   const antdTheme = computed(() => ({
     algorithm: isDark.value ? theme.darkAlgorithm : theme.defaultAlgorithm,
   }))
+  const toggleTheme = useToggle(isDark)
 
   return {
     headerHeight,
@@ -32,6 +32,6 @@ export const useAppStore = defineStore('app', () => {
     toggleSidebarCollapsed,
     isDark,
     antdTheme,
-    toggleDark,
+    toggleTheme,
   }
 })
