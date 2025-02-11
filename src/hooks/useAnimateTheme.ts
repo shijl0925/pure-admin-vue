@@ -1,4 +1,4 @@
-import type { ComponentPublicInstance, Ref } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
 
 import { storeToRefs } from 'pinia'
 import { nextTick, onMounted, ref } from 'vue'
