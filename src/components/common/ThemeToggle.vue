@@ -8,6 +8,10 @@ const {
   isLoading,
   animateToggleTheme,
 } = useAnimateTheme()
+
+function handleClick() {
+  animateToggleTheme()
+}
 </script>
 
 <template>
@@ -18,6 +22,6 @@ const {
     type="text"
     block
     :disabled="isLoading"
-    @click="() => animateToggleTheme()"
+    @click="handleClick"
   />
 </template>

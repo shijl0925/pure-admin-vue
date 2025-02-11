@@ -4,7 +4,7 @@
 </route>
 
 <script setup lang="ts">
-import type { CheckboxChangeEvent } from 'ant-design-vue/es/checkbox/interface'
+import type { CheckboxProps } from 'ant-design-vue'
 
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { storeToRefs } from 'pinia'
@@ -51,8 +51,14 @@ if (localStorage.getItem(rememberKey) === rememberValueTrue) {
 console.log(`🔥 ${rememberUsernameKey}`)
 console.log(`🔥 ${deCode(rememberUsernameKey)}`)
 
-function onRememberChange(ev: CheckboxChangeEvent) {
-  if (!ev.target.checked) {
+// function onRememberChange(ev: CheckboxChangeEvent) {
+//   if (!ev.target.checked) {
+//     clearRemember()
+//   }
+// }
+
+const onRememberChange: CheckboxProps['onChange'] = (e) => {
+  if (!e.target.checked) {
     clearRemember()
   }
 }
@@ -141,13 +147,13 @@ function clearRemember() {
                 :disabled="formLoading"
                 size="large"
                 class="cursor-pointer select-none"
-                @change="(ev: CheckboxChangeEvent) => onRememberChange(ev)"
+                @change="onRememberChange"
               >
                 记住我
               </a-checkbox>
               <a-typography-link
                 class="cursor-pointer select-none"
-                @click="() => onForgot()"
+                @click="onForgot"
               >
                 忘记密码
               </a-typography-link>

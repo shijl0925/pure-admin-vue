@@ -7,6 +7,10 @@ import { useAppStore } from '@/stores'
 const appStore = useAppStore()
 const { sidebarCollapsed } = storeToRefs(appStore)
 const { toggleSidebarCollapsed } = appStore
+
+function handleClick() {
+  toggleSidebarCollapsed()
+}
 </script>
 
 <template>
@@ -15,6 +19,6 @@ const { toggleSidebarCollapsed } = appStore
     :icon="sidebarCollapsed ? 'icon-park-outline:menu-unfold' : 'icon-park-outline:menu-fold'"
     type="text"
     block
-    @click="() => toggleSidebarCollapsed()"
+    @click="handleClick"
   />
 </template>

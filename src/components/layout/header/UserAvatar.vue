@@ -2,14 +2,14 @@
 import { IconButton } from '@/components/button'
 import { Icon } from '@/components/icon'
 
-function handleMenuClick() {
+function handleClick() {
 }
 </script>
 
 <template>
   <a-dropdown placement="bottom">
     <template #overlay>
-      <a-menu @click="() => handleMenuClick()">
+      <a-menu @click="handleClick">
         <a-menu-item key="1">
           <Icon icon="icon-park-outline:user" class="mr-0.5" />
           个人中心
