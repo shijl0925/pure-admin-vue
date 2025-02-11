@@ -1,20 +1,36 @@
 <script setup lang="ts">
-import { IconButton } from '@/components/button'
+import type { MenuProps } from 'ant-design-vue'
 
-function handleMenuClick() {}
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+import { IconButton } from '@/components/button'
+import { LOCALES } from '@/constants/app'
+import { useAppStore } from '@/stores/app'
+
+const { locale } = useI18n()
+
+const appStore = useAppStore()
+const { currentLocale } = storeToRefs(appStore)
+const selectedKeys = computed(() => [currentLocale.value])
+
+const menuItems = computed(() => Object.entries(LOCALES).map(([key, value]) => ({
+  key,
+  label: value.label,
+})))
+
+const handleClick: MenuProps['onClick'] = (e) => {
+  const key = String(e.key)
+  locale.value = key
+  currentLocale.value = key
+}
 </script>
 
 <template>
   <a-dropdown placement="bottom">
     <template #overlay>
-      <a-menu @click="() => handleMenuClick()">
-        <a-menu-item key="1">
-          简体中文
-        </a-menu-item>
-        <a-menu-item key="2">
-          English
-        </a-menu-item>
-      </a-menu>
+      <a-menu :selected-keys="selectedKeys" :items="menuItems" @click="handleClick" />
     </template>
     <IconButton
       class="w-10"

@@ -30,7 +30,7 @@ export const useAppStore = defineStore('app', () => {
   const toggleTheme = useToggle(isDark)
 
   // -------------------- Locale --------------------
-  const locale = useLocalStorage(projectSign('locale'), DEFAULT_LOCALE)
+  const currentLocale = useLocalStorage(projectSign('locale'), DEFAULT_LOCALE)
 
   return {
     // Layout
@@ -46,6 +46,6 @@ export const useAppStore = defineStore('app', () => {
     toggleTheme,
 
     // Locale
-    locale,
+    currentLocale,
   }
 })

@@ -9,15 +9,15 @@ export const SIDEBAR_COLLAPSED_WIDTH = 60
 
 // Locales
 export const LOCALES = {
-  ZH_CN: {
-    value: 'zh-CN',
-    label: '简体中文',
-  },
-  EN_US: {
-    value: 'en-US',
-    label: 'English',
-  },
-}
+  'zh-CN': { label: '简体中文' },
+  'en-US': { label: 'English' },
+} as const
 
 // Default Locale
-export const DEFAULT_LOCALE = LOCALES.ZH_CN.value
+export const DEFAULT_LOCALE = 'zh-CN'
+
+// Fallback Locale
+export const FALLBACK_LOCALE = 'en-US'
+
+// 如果需要 value，可以直接使用对象的 key
+export type LocaleKey = keyof typeof LOCALES
