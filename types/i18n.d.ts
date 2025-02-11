@@ -5,7 +5,11 @@
 // It's recommended to commit this file.
 // Make sure to add this file to your tsconfig.json file as an "includes" or "files" entry.
 
-declare interface I18nMessages {
+declare module 'vue-i18n' {
+  export interface DefineLocaleMessage extends I18nMessages {}
+}
+
+export interface I18nMessages {
   common: {
     yesOrNo: {
       yes: string;
@@ -14,8 +18,4 @@ declare interface I18nMessages {
     userCenter: string;
     logout: string;
   }
-}
-
-declare interface I18n {
-  message: I18nMessages
 }

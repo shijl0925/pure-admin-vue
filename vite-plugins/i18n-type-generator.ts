@@ -34,7 +34,11 @@ export default function i18nTypeGenerator(options: I18nTypeGeneratorOptions = {}
       )
 
       let typeContent = `${generateTypeFileHeader(pluginName)}
-declare interface I18nMessages {
+declare module 'vue-i18n' {
+  export interface DefineLocaleMessage extends I18nMessages {}
+}
+
+export interface I18nMessages {
 `
 
       // recursive processing object structure
@@ -65,11 +69,6 @@ declare interface I18nMessages {
       })
 
       typeContent += '}\n'
-
-      typeContent += `
-declare interface I18n {
-  message: I18nMessages
-}\n`
 
       // ensure the output directory exists
       const outputDir = path.dirname(outputPath)
