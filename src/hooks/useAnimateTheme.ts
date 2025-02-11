@@ -1,6 +1,9 @@
 import type { ComponentPublicInstance, Ref } from 'vue'
 
+import { storeToRefs } from 'pinia'
 import { nextTick, onMounted, ref } from 'vue'
+
+import { useAppStore } from '@/stores'
 
 const isBrowser = typeof window !== 'undefined'
 
@@ -37,17 +40,18 @@ function injectBaseStyles() {
 export interface UseAnimateThemeOptions {
   duration?: number
   easing?: string
-  isDark: Ref<boolean>
-  toggleTheme: () => void
 }
 
-export function useAnimateTheme(options: UseAnimateThemeOptions) {
+export function useAnimateTheme(options: UseAnimateThemeOptions = {}) {
   const {
     duration = 800,
     easing = 'ease-in-out',
-    isDark,
-    toggleTheme,
   } = options
+
+  const appStore = useAppStore()
+  const { isDark } = storeToRefs(appStore)
+  const { toggleTheme } = appStore
+
   const isLoading = ref(false)
 
   // Inject base styles when the hook is initialized
@@ -108,6 +112,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions) {
 
   return {
     triggerRef,
+    isDark,
     isLoading,
     animateToggleTheme,
   }

@@ -1,22 +1,13 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-
 import { Icon } from '@/components/icon'
 import { useAnimateTheme } from '@/hooks/useAnimateTheme'
-import { useAppStore } from '@/stores'
-
-const appStore = useAppStore()
-const { isDark } = storeToRefs(appStore)
-const { toggleTheme } = appStore
 
 const {
   triggerRef,
+  isDark,
   isLoading,
   animateToggleTheme,
-} = useAnimateTheme({
-  isDark,
-  toggleTheme,
-})
+} = useAnimateTheme()
 </script>
 
 <template>
