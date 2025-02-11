@@ -7,7 +7,7 @@ import { HEADER_HEIGHT, SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from '@/constan
 import { projectSign } from '@/utils/string'
 
 export const useAppStore = defineStore('app', () => {
-  // Layout
+  // -------------------- Layout --------------------
   const headerHeight = ref(HEADER_HEIGHT)
   const sidebarWidth = ref(SIDEBAR_WIDTH)
   const sidebarCollapsedWidth = ref(SIDEBAR_COLLAPSED_WIDTH)
@@ -17,7 +17,7 @@ export const useAppStore = defineStore('app', () => {
     sidebarCollapsed.value = !sidebarCollapsed.value
   }
 
-  // Theme
+  // -------------------- Theme --------------------
   const isDark = useDark()
   const antdTheme = computed(() => ({
     algorithm: isDark.value ? theme.darkAlgorithm : theme.defaultAlgorithm,
@@ -25,11 +25,14 @@ export const useAppStore = defineStore('app', () => {
   const toggleTheme = useToggle(isDark)
 
   return {
+    // Layout
     headerHeight,
     sidebarWidth,
     sidebarCollapsedWidth,
     sidebarCollapsed,
     toggleSidebarCollapsed,
+
+    // Theme
     isDark,
     antdTheme,
     toggleTheme,
