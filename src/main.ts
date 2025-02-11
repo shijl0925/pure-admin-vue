@@ -7,7 +7,7 @@ import 'ant-design-vue/dist/reset.css'
 import 'virtual:uno.css'
 import 'virtual:local-icons'
 
-import { setupI18n } from '@/locales'
+import { i18n } from '@/locales'
 
 import App from './App.vue'
 import { router } from './router'
@@ -16,12 +16,9 @@ addCollection(iconParkOutline)
 
 const pinia = createPinia()
 
-const app = createApp(App)
-
-setupI18n(app)
-
-app
-  .use(router)
+createApp(App)
   .use(pinia)
+  .use(router)
   .use(Antd)
+  .use(i18n)
   .mount('#app')

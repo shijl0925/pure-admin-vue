@@ -18,6 +18,3 @@ export const DEFAULT_LOCALE = 'zh-CN'
 
 // Fallback Locale
 export const FALLBACK_LOCALE = 'en-US'
-
-// 如果需要 value，可以直接使用对象的 key
-export type LocaleKey = keyof typeof LOCALES

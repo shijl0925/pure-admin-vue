@@ -3,13 +3,13 @@ import type { Plugin } from 'vite'
 import { cleanupSVG, importDirectory, isEmptyColor, parseColors, runSVGO } from '@iconify/tools'
 import fs from 'node:fs'
 import path from 'node:path'
+import { generateTypeFileHeader } from './helper'
 
 export default function svgToIconify(
   {
     options = {
       svgDir: 'src/assets/svg-icon',
       prefix: 'icon-local',
-      dts: 'virtual-local-icons.d.ts',
     },
     dts = 'virtual-local-icons.d.ts',
   },
@@ -17,8 +17,10 @@ export default function svgToIconify(
   const virtualModuleId = 'virtual:local-icons'
   const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
+  const pluginName = 'vite-plugin-svg-to-iconify'
+
   return {
-    name: 'vite-plugin-svg-to-iconify',
+    name: pluginName,
 
     configureServer(server) {
       // 监听 SVG 文件变化
@@ -47,7 +49,8 @@ export default function svgToIconify(
       }
 
       // 生成类型声明文件
-      const dtsContent = `declare module 'virtual:local-icons' {
+      const dtsContent = `${generateTypeFileHeader(pluginName)}
+declare module 'virtual:local-icons' {
   export const icons: string[]
 }`
 
