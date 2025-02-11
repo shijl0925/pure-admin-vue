@@ -17,7 +17,7 @@ const {
   <div>
     <a-button v-bind="props">
       <template #icon>
-        <Icon :icon="icon" class="text-base text-gray-800 dark:text-gray-200" />
+        <Icon :icon="icon" class="text-theme dark:text-theme-dark text-base" />
       </template>
       <slot />
     </a-button>
