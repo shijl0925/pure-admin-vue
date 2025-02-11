@@ -3,7 +3,12 @@ import { theme } from 'ant-design-vue'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-import { HEADER_HEIGHT, SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_WIDTH } from '@/constants/app'
+import {
+  DEFAULT_LOCALE,
+  HEADER_HEIGHT,
+  SIDEBAR_COLLAPSED_WIDTH,
+  SIDEBAR_WIDTH,
+} from '@/constants/app'
 import { projectSign } from '@/utils/string'
 
 export const useAppStore = defineStore('app', () => {
@@ -24,6 +29,9 @@ export const useAppStore = defineStore('app', () => {
   }))
   const toggleTheme = useToggle(isDark)
 
+  // -------------------- Locale --------------------
+  const locale = useLocalStorage(projectSign('locale'), DEFAULT_LOCALE)
+
   return {
     // Layout
     headerHeight,
@@ -36,5 +44,8 @@ export const useAppStore = defineStore('app', () => {
     isDark,
     antdTheme,
     toggleTheme,
+
+    // Locale
+    locale,
   }
 })

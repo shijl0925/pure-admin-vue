@@ -24,7 +24,7 @@ function handleClick() {
   <div
     class="flex cursor-pointer select-none items-center justify-center gap-2 text-gray-800 dark:text-gray-200" :style="logoStyle" @click="() => handleClick()"
   >
-    <Icon name="icon-local:logo" class="text-3xl" />
+    <Icon icon="icon-local:logo" class="text-3xl" />
     <h2
       v-show="!sidebarCollapsed"
       class="mb-0 block overflow-hidden whitespace-nowrap text-xl font-bold"

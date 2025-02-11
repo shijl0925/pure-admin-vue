@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Icon } from '@/components/icon'
+import { IconButton } from '@/components/button'
 import { useAnimateTheme } from '@/hooks/useAnimateTheme'
 
 const {
@@ -11,26 +11,13 @@ const {
 </script>
 
 <template>
-  <div class="w-10">
-    <a-button
-      ref="triggerRef"
-      :disabled="isLoading"
-      type="text"
-      block
-      @click="() => animateToggleTheme()"
-    >
-      <template #icon>
-        <Icon
-          v-show="!isDark"
-          name="icon-park-outline:sun"
-          class="text-base text-gray-800 dark:text-gray-200"
-        />
-        <Icon
-          v-show="isDark"
-          name="icon-park-outline:moon"
-          class="text-base text-gray-800 dark:text-gray-200"
-        />
-      </template>
-    </a-button>
-  </div>
+  <IconButton
+    ref="triggerRef"
+    class="w-10"
+    :icon="isDark ? 'icon-park-outline:moon' : 'icon-park-outline:sun'"
+    type="text"
+    block
+    :disabled="isLoading"
+    @click="() => animateToggleTheme()"
+  />
 </template>

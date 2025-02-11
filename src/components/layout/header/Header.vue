@@ -2,8 +2,10 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
-import { SiderToggle, ThemeToggle } from '@/components/common'
+import { LangSelect, SiderToggle, ThemeToggle } from '@/components/common'
 import { useAppStore } from '@/stores'
+
+import UserAvatar from './UserAvatar.vue'
 
 const appStore = useAppStore()
 const { headerHeight } = storeToRefs(appStore)
@@ -20,7 +22,9 @@ const style = computed(() => ({
     <div class="h-full flex items-center justify-between border-light-500 border-b-solid bg-white px-3 dark:border-dark-700 dark:bg-dark-800">
       <SiderToggle />
       <div class="flex items-center justify-end">
+        <LangSelect />
         <ThemeToggle />
+        <UserAvatar />
       </div>
     </div>
   </a-layout-header>
