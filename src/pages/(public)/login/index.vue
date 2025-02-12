@@ -10,6 +10,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { useLoading } from '@/hooks/useLoading'
 
 import type { LoginData } from '@/types/user'
 
@@ -22,8 +23,8 @@ import { deCode, enCode } from '@/utils/string'
 const router = useRouter()
 const { t } = useI18n()
 const { login } = useUserStore()
+const { loading, loadingFnWrapper } = useLoading()
 
-const formLoading = ref(false)
 const form = reactive<LoginData>({
   username: 'pure-admin',
   password: '123456',
@@ -56,19 +57,16 @@ function onForgot() {
   // jump to forgot password page
 }
 
-async function onFinish(data: LoginData) {
-  formLoading.value = true
-  try {
-    await login(data)
+const handleLogin = loadingFnWrapper(async (loginData: LoginData) => {
+  await login(loginData)
+  if (isRemember.value) {
+    saveRemember(loginData.username, loginData.password)
+  }
+  router.push('/')
+})
 
-    if (isRemember.value) {
-      saveRemember(data.username, data.password)
-    }
-    router.push('/')
-  }
-  finally {
-    formLoading.value = false
-  }
+async function onFinish(data: LoginData) {
+  handleLogin(data)
 }
 
 function setRemember() {
@@ -113,7 +111,7 @@ function clearRemember() {
             <a-form-item name="username">
               <a-input
                 v-model:value="form.username"
-                :disabled="formLoading"
+                :disabled="loading"
                 size="large"
                 allow-clear
                 :placeholder="t('page.login.userNamePlaceholder')"
@@ -126,7 +124,7 @@ function clearRemember() {
             <a-form-item name="password">
               <a-input-password
                 v-model:value="form.password"
-                :disabled="formLoading"
+                :disabled="loading"
                 size="large"
                 allow-clear
                 :placeholder="t('page.login.passwordPlaceholder')"
@@ -139,7 +137,7 @@ function clearRemember() {
             <div class="mb-4 flex flex-row justify-between">
               <a-checkbox
                 v-model:checked="isRemember"
-                :disabled="formLoading"
+                :disabled="loading"
                 size="large"
                 class="cursor-pointer select-none"
                 @change="onRememberChange"
@@ -157,7 +155,7 @@ function clearRemember() {
               <a-button
                 type="primary"
                 html-type="submit"
-                :loading="formLoading"
+                :loading="loading"
                 size="large"
                 block
               >
