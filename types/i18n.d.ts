@@ -5,17 +5,10 @@
 // It's recommended to commit this file.
 // Make sure to add this file to your tsconfig.json file as an "includes" or "files" entry.
 
+import locale from '/Users/sunhaoxiang/Code/pure-admin-vue/src/locales/en-US.ts'
+
 declare module 'vue-i18n' {
   export interface DefineLocaleMessage extends I18nMessages {}
 }
 
-export interface I18nMessages {
-  common: {
-    yesOrNo: {
-      yes: string;
-      no: string;
-    }
-    userCenter: string;
-    logout: string;
-  }
-}
+export type I18nMessages = typeof locale

@@ -2,7 +2,6 @@ import type { Plugin } from 'vite'
 
 import fs from 'node:fs'
 import path from 'node:path'
-import ts from 'typescript'
 
 import { generateTypeFileHeader } from './helper'
 
@@ -25,51 +24,21 @@ export default function i18nTypeGenerator(options: I18nTypeGeneratorOptions = {}
 
   function generateTypes(sourcePath: string, outputPath: string) {
     try {
-      // read source file
-      const sourceFile = ts.createSourceFile(
-        sourcePath,
-        fs.readFileSync(sourcePath, 'utf-8'),
-        ts.ScriptTarget.Latest,
-        true,
-      )
+      // make sure the source file exists
+      if (!fs.existsSync(sourcePath)) {
+        console.error(`Source file ${sourcePath} does not exist.`)
+        return
+      }
 
-      let typeContent = `${generateTypeFileHeader(pluginName)}
+      const typeContent = `${generateTypeFileHeader(pluginName)}
+import locale from '${localeFile}'
+
 declare module 'vue-i18n' {
   export interface DefineLocaleMessage extends I18nMessages {}
 }
 
-export interface I18nMessages {
+export type I18nMessages = typeof locale
 `
-
-      // recursive processing object structure
-      function processNode(node: ts.Node, prefix: string = '') {
-        if (ts.isObjectLiteralExpression(node)) {
-          node.properties.forEach((prop) => {
-            if (ts.isPropertyAssignment(prop)) {
-              const propName = prop.name.getText(sourceFile)
-
-              if (ts.isObjectLiteralExpression(prop.initializer)) {
-                typeContent += `${prefix}${propName}: {\n`
-                processNode(prop.initializer, `${prefix}  `)
-                typeContent += `${prefix}}\n`
-              }
-              else if (ts.isStringLiteral(prop.initializer)) {
-                typeContent += `${prefix}${propName}: string;\n`
-              }
-            }
-          })
-        }
-      }
-
-      // find the default exported object
-      sourceFile.statements.forEach((node) => {
-        if (ts.isExportAssignment(node) && node.expression) {
-          processNode(node.expression, '  ')
-        }
-      })
-
-      typeContent += '}\n'
-
       // ensure the output directory exists
       const outputDir = path.dirname(outputPath)
       if (!fs.existsSync(outputDir)) {

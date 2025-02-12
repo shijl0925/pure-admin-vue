@@ -5,5 +5,5 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div>{{ t('common.userCenter') }}</div>
+  <div>{{ t('common.yesOrNo.yes') }}</div>
 </template>
