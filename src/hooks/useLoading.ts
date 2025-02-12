@@ -1,8 +1,8 @@
 import { ref } from 'vue'
 
-// 定义异步函数类型
+// Define async function type
 type AsyncFunction<T extends any[], R> = (...args: T) => Promise<R>
-// 定义普通函数类型
+// Define sync function type
 type SyncFunction<T extends any[], R> = (...args: T) => R
 
 export function useLoading() {
@@ -17,11 +17,11 @@ export function useLoading() {
   }
 
   /**
-   * 包装函数，为异步函数添加 loading 状态控制
-   * @template T - 函数参数类型数组
-   * @template R - 函数返回值类型
-   * @param fn - 要包装的异步或同步函数
-   * @returns 包装后的异步函数
+   * Wrapper function to add loading state control for async functions
+   * @template T - Array of function parameter types
+   * @template R - Function return type
+   * @param fn - Async or sync function to be wrapped
+   * @returns Wrapped async function
    */
   const wrapper = <T extends any[], R>(
     fn: AsyncFunction<T, R> | SyncFunction<T, R> = () => Promise.resolve() as any,
@@ -47,5 +47,5 @@ export function useLoading() {
   }
 }
 
-// 定义返回值类型
+// Define return type
 export type UseLoadingReturn = ReturnType<typeof useLoading>
