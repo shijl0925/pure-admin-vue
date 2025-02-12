@@ -20,7 +20,6 @@ export default antfu(
       'no-console': 'off', // 允许使用 console
       'no-unused-vars': 'off', // 关闭未使用变量检查
       '@typescript-eslint/no-unused-vars': 'off', // 关闭 TS 未使用变量检查
-      'ts/consistent-type-imports': 'off', // 关闭类型导入一致性检查
       'ts/no-use-before-define': 'off', // 允许在定义前使用变量
       'ts/strict-boolean-expressions': 'off', // 关闭布尔表达式严格检查
       'ts/no-unsafe-member-access': 'off', // 允许不安全的成员访问
