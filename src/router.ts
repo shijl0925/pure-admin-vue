@@ -7,8 +7,9 @@ export const router = createRouter({
   routes,
 })
 
-router.beforeEach((to, _from, next) => {
+router.beforeEach((to, from, next) => {
   console.log('🔥 to', to)
+  console.log('🔥 from', from)
   if (to.meta.isPublic) {
     console.log('🔥 public route')
     next()

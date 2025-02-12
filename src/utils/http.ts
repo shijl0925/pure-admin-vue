@@ -5,7 +5,7 @@ import Axios from 'axios'
 import { storeToRefs } from 'pinia'
 
 import { logout } from '@/core/system'
-import { useAuthStore } from '@/stores'
+import { useUserStore } from '@/stores'
 
 export const http = Axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -13,8 +13,8 @@ export const http = Axios.create({
 })
 
 http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const authStore = useAuthStore()
-  const { token } = storeToRefs(authStore)
+  const userStore = useUserStore()
+  const { token } = storeToRefs(userStore)
 
   if (token.value)
     config.headers.authorization = `Bearer ${token.value}`

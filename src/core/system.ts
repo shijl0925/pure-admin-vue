@@ -1,13 +1,13 @@
 import { storeToRefs } from 'pinia'
 
-import type { LoginData } from '@/types/auth'
+import type { LoginData } from '@/types/user'
 
-import { loginApi } from '@/apis/auth'
-import { useAuthStore } from '@/stores'
+import { loginApi } from '@/apis/user'
+import { useUserStore } from '@/stores'
 
 export function isLogin() {
-  const authStore = useAuthStore()
-  const { token } = storeToRefs(authStore)
+  const userStore = useUserStore()
+  const { token } = storeToRefs(userStore)
 
   return !!token.value
 }
@@ -15,8 +15,8 @@ export function isLogin() {
 export async function login(data: LoginData) {
   const res = await loginApi(data)
 
-  const authStore = useAuthStore()
-  const { token, refreshToken } = storeToRefs(authStore)
+  const userStore = useUserStore()
+  const { token, refreshToken } = storeToRefs(userStore)
 
   token.value = res.token
   refreshToken.value = res.refreshToken

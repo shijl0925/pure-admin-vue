@@ -7,25 +7,21 @@
 import type { CheckboxProps } from 'ant-design-vue'
 
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
-import { storeToRefs } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-import type { LoginData } from '@/types/auth'
+import type { LoginData } from '@/types/user'
 
-import { loginApi } from '@/apis/auth'
 import { LangSelect } from '@/components/common'
 import { Icon } from '@/components/icon'
 import { Wave } from '@/components/login'
-import { useAuthStore } from '@/stores'
+import { useUserStore } from '@/stores'
 import { deCode, enCode } from '@/utils/string'
 
 const router = useRouter()
 const { t } = useI18n()
-
-const authStore = useAuthStore()
-const { token, refreshToken } = storeToRefs(authStore)
+const { login } = useUserStore()
 
 const formLoading = ref(false)
 const form = reactive<LoginData>({
@@ -63,10 +59,8 @@ function onForgot() {
 async function onFinish(data: LoginData) {
   formLoading.value = true
   try {
-    const res = await loginApi(data)
-    console.log(res)
-    token.value = res.token
-    refreshToken.value = res.refreshToken
+    await login(data)
+
     if (isRemember.value) {
       saveRemember(data.username, data.password)
     }
