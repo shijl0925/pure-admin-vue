@@ -1,22 +1,32 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 import { IconButton } from '@/components/button'
 import { Icon } from '@/components/icon'
+
+const { t } = useI18n()
 
 function handleClick() {
 }
 </script>
 
 <template>
-  <a-dropdown placement="bottom">
+  <a-dropdown
+    placement="bottomRight"
+    :overlay-style="{
+      minWidth: '100px',
+      maxWidth: '200px',
+    }"
+  >
     <template #overlay>
       <a-menu @click="handleClick">
         <a-menu-item key="1">
           <Icon icon="icon-park-outline:user" class="mr-0.5" />
-          个人中心
+          {{ t('common.userCenter') }}
         </a-menu-item>
         <a-menu-item key="2">
           <Icon icon="icon-park-outline:logout" class="mr-0.5" />
-          退出登录
+          {{ t('common.logout') }}
         </a-menu-item>
       </a-menu>
     </template>
