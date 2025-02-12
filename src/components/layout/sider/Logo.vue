@@ -22,14 +22,14 @@ function handleClick() {
 
 <template>
   <div
-    class="text-theme dark:text-theme-dark flex cursor-pointer select-none items-center justify-center gap-2" :style="logoStyle" @click="handleClick"
+    class="flex cursor-pointer select-none items-center justify-center gap-2 dark:text-theme-dark text-theme" :style="logoStyle" @click="handleClick"
   >
     <Icon icon="icon-local:logo" class="text-3xl" />
     <h2
       v-show="!sidebarCollapsed"
       class="mb-0 block overflow-hidden whitespace-nowrap text-xl font-bold"
     >
-      PureAdmin
+      Pure Admin
     </h2>
   </div>
 </template>

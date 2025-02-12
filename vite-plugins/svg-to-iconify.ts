@@ -3,6 +3,7 @@ import type { Plugin } from 'vite'
 import { cleanupSVG, importDirectory, isEmptyColor, parseColors, runSVGO } from '@iconify/tools'
 import fs from 'node:fs'
 import path from 'node:path'
+
 import { generateTypeFileHeader } from './helper'
 
 export default function svgToIconify(
@@ -18,19 +19,53 @@ export default function svgToIconify(
   const resolvedVirtualModuleId = `\0${virtualModuleId}`
 
   const pluginName = 'vite-plugin-svg-to-iconify'
+  let lastUpdated: number | null = null
 
   return {
     name: pluginName,
 
+    // configureServer(server) {
+    //   // 监听 SVG 文件变化
+    //   server.watcher.add(path.resolve(process.cwd(), options.svgDir))
+    //   server.watcher.on('change', (file) => {
+    //     if (file.endsWith('.svg')) {
+    //       // 通知客户端重新加载
+    //       server.ws.send({
+    //         type: 'full-reload',
+    //       })
+    //     }
+    //   })
+    // },
+
     configureServer(server) {
-      // 监听 SVG 文件变化
       server.watcher.add(path.resolve(process.cwd(), options.svgDir))
-      server.watcher.on('change', (file) => {
+      server.watcher.on('change', async (file) => {
         if (file.endsWith('.svg')) {
-          // 通知客户端重新加载
-          server.ws.send({
-            type: 'full-reload',
-          })
+          // 获取更新时间戳
+          const stats = fs.statSync(file)
+          const updated = stats.mtimeMs
+
+          // 避免重复触发更新
+          if (updated !== lastUpdated) {
+            lastUpdated = updated
+
+            // 手动触发模块更新
+            const module = server.moduleGraph.getModuleById(resolvedVirtualModuleId)
+            if (module) {
+              server.moduleGraph.invalidateModule(module)
+              server.ws.send({
+                type: 'update',
+                updates: [
+                  {
+                    type: 'js-update',
+                    path: resolvedVirtualModuleId,
+                    acceptedPath: resolvedVirtualModuleId,
+                    timestamp: updated,
+                  },
+                ],
+              })
+            }
+          }
         }
       })
     },
