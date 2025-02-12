@@ -8,12 +8,12 @@ export default defineConfig({
   ],
   shortcuts: {
     // theme
-    'text-theme': 'text-gray-800',
-    'text-theme-dark': 'text-gray-200',
+    'text-theme': 'text-dark-800',
+    'text-theme-dark': 'text-light-300',
     'bg-theme-layout': 'bg-white',
     'bg-theme-layout-dark': 'bg-dark-800',
     'bg-theme-content': 'bg-light-300',
-    'bg-theme-content-dark': 'bg-dark-900',
+    'bg-theme-content-dark': 'bg-black',
     // icon
     'icon-wrapper': 'inline-block leading-0 h-1em w-1em text-inherit normal-case text-center align-[-0.125em] antialiased [&_svg]:inline-block [&_svg]:align-baseline',
     // background login waves
