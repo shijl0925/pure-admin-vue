@@ -1,4 +1,4 @@
-import type { InternalAxiosRequestConfig } from 'axios'
+import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
 import { message } from 'ant-design-vue'
 import Axios from 'axios'
@@ -22,7 +22,7 @@ http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 }, error => Promise.reject(error))
 
 http.interceptors.response.use(
-  (config) => {
+  (config: AxiosResponse) => {
     const userStore = useUserStore()
     const { logout } = userStore
     const { data } = config
