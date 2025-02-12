@@ -21,19 +21,16 @@ import { useAuthStore } from '@/stores'
 import { deCode, enCode } from '@/utils/string'
 
 const router = useRouter()
-
 const { t } = useI18n()
 
 const authStore = useAuthStore()
 const { token, refreshToken } = storeToRefs(authStore)
 
 const formLoading = ref(false)
-
 const form = reactive<LoginData>({
   username: 'pure-admin',
   password: '123456',
 })
-
 const rules = computed(() => ({
   username: [{ required: true, message: t('page.login.userNamePlaceholder') }],
   password: [
