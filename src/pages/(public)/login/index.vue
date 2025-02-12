@@ -8,7 +8,7 @@ import type { CheckboxProps } from 'ant-design-vue'
 
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { storeToRefs } from 'pinia'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
