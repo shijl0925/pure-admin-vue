@@ -23,15 +23,19 @@ export const useUserStore = defineStore('user', () => {
     refreshToken.value = null
   }
 
+  const getUserInfo = async () => {
+    const userInfoRes = await userInfoApi()
+    userInfo.value = userInfoRes
+    console.log('🔥 userInfo', userInfoRes)
+  }
+
   const login = async (data: LoginData) => {
     const loginRes = await loginApi(data)
 
     token.value = loginRes.token
     refreshToken.value = loginRes.refreshToken
 
-    const userInfoRes = await userInfoApi()
-    userInfo.value = userInfoRes
-    console.log('🔥 userInfo', userInfoRes)
+    await getUserInfo()
   }
 
   return {
@@ -41,5 +45,6 @@ export const useUserStore = defineStore('user', () => {
     setAllToken,
     clearAllToken,
     login,
+    getUserInfo,
   }
 })
