@@ -1,5 +1,6 @@
 export default {
   common: {
+    backHome: '返回首页',
     yesOrNo: {
       yes: '是',
       no: '否',
@@ -15,6 +16,9 @@ export default {
       rememberMe: '记住我',
       forgotPassword: '忘记密码？',
       login: '登录',
+    },
+    notFound: {
+      subTitle: '抱歉，您访问的页面不存在。',
     },
   },
 }

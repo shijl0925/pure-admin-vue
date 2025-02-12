@@ -8,7 +8,7 @@ import { Content, Header, Sider } from '@/components/layout'
     <a-layout>
       <Header />
       <Content>
-        <RouterView />
+        <slot />
       </Content>
     </a-layout>
   </a-layout>

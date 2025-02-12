@@ -1,5 +1,6 @@
 export default {
   common: {
+    backHome: 'Back Home',
     yesOrNo: {
       yes: 'Yes',
       no: 'No',
@@ -15,6 +16,9 @@ export default {
       rememberMe: 'Remember Me',
       forgotPassword: 'Forgot Password?',
       login: 'Login',
+    },
+    notFound: {
+      subTitle: 'Sorry, the page you visited does not exist.',
     },
   },
 }

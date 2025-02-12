@@ -1,1 +1,2 @@
-export { default as BaseLayout } from './base-layout/BaseLayout.vue'
+export { default as BaseLayout } from './BaseLayout.vue'
+export { default as BlankLayout } from './BlankLayout.vue'
