@@ -16,6 +16,7 @@ import type { LoginData } from '@/types/auth'
 
 import { loginApi } from '@/apis/auth'
 import { LangSelect } from '@/components/common'
+import { Icon } from '@/components/icon'
 import { Wave } from '@/components/login'
 import { useAuthStore } from '@/stores'
 import { deCode, enCode } from '@/utils/string'
@@ -102,8 +103,11 @@ function clearRemember() {
   <div class="relative bg-login">
     <div class="min-h-[80vh] w-screen flex flex-col items-center justify-center py-10">
       <div class="space-y-4">
-        <div class="text-center text-4xl text-white">
-          Pure Admin
+        <div class="flex items-center justify-center gap-4 text-center text-white">
+          <Icon icon="icon-local:logo" class="block text-5xl" />
+          <div class="text-3xl">
+            Pure Admin
+          </div>
         </div>
         <div class="w-80 border rounded-xl bg-white/80 p-4 shadow transition-all hover:shadow-2xl">
           <a-form
