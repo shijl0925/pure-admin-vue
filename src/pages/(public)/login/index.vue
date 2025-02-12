@@ -8,17 +8,21 @@ import type { CheckboxProps } from 'ant-design-vue'
 
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { storeToRefs } from 'pinia'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 import type { LoginData } from '@/types/auth'
 
 import { loginApi } from '@/apis/auth'
+import { LangSelect } from '@/components/common'
 import { Wave } from '@/components/login'
 import { useAuthStore } from '@/stores'
 import { deCode, enCode } from '@/utils/string'
 
 const router = useRouter()
+
+const { t } = useI18n()
 
 const authStore = useAuthStore()
 const { token, refreshToken } = storeToRefs(authStore)
@@ -30,13 +34,13 @@ const form = reactive<LoginData>({
   password: '123456',
 })
 
-const rules = reactive({
-  username: [{ required: true, message: '请输入用户名' }],
+const rules = computed(() => ({
+  username: [{ required: true, message: t('page.login.userNamePlaceholder') }],
   password: [
-    { required: true, message: '请输入密码' },
-    { min: 6, message: '密码长度不能小于6个字符' },
+    { required: true, message: t('page.login.passwordPlaceholder') },
+    { min: 6, message: t('page.login.passwordPlaceholder') },
   ],
-})
+}))
 
 const isRemember = ref(false)
 const rememberKey = enCode('LOGIN_REMEMBER')
@@ -47,15 +51,6 @@ const rememberPasswordKey = enCode('LOGIN_REMEMBER_PASSWORD')
 if (localStorage.getItem(rememberKey) === rememberValueTrue) {
   setRemember()
 }
-
-console.log(`🔥 ${rememberUsernameKey}`)
-console.log(`🔥 ${deCode(rememberUsernameKey)}`)
-
-// function onRememberChange(ev: CheckboxChangeEvent) {
-//   if (!ev.target.checked) {
-//     clearRemember()
-//   }
-// }
 
 const onRememberChange: CheckboxProps['onChange'] = (e) => {
   if (!e.target.checked) {
@@ -114,14 +109,19 @@ function clearRemember() {
           Pure Admin
         </div>
         <div class="w-80 border rounded-xl bg-white/80 p-4 shadow transition-all hover:shadow-2xl">
-          <a-form :model="form" :rules="rules" @finish="onFinish">
+          <a-form
+            :model="form"
+            :rules="rules"
+            validate-on-rule-change
+            @finish="onFinish"
+          >
             <a-form-item name="username">
               <a-input
                 v-model:value="form.username"
                 :disabled="formLoading"
                 size="large"
                 allow-clear
-                placeholder="请输入用户名"
+                :placeholder="t('page.login.userNamePlaceholder')"
               >
                 <template #prefix>
                   <UserOutlined style="color: #D9D9D9;" />
@@ -134,7 +134,7 @@ function clearRemember() {
                 :disabled="formLoading"
                 size="large"
                 allow-clear
-                placeholder="请输入密码"
+                :placeholder="t('page.login.passwordPlaceholder')"
               >
                 <template #prefix>
                   <LockOutlined style="color: #D9D9D9;" />
@@ -149,13 +149,13 @@ function clearRemember() {
                 class="cursor-pointer select-none"
                 @change="onRememberChange"
               >
-                记住我
+                {{ t('page.login.rememberMe') }}
               </a-checkbox>
               <a-typography-link
                 class="cursor-pointer select-none"
                 @click="onForgot"
               >
-                忘记密码
+                {{ t('page.login.forgotPassword') }}
               </a-typography-link>
             </div>
             <a-form-item>
@@ -166,10 +166,13 @@ function clearRemember() {
                 size="large"
                 block
               >
-                登录
+                {{ t('page.login.login') }}
               </a-button>
             </a-form-item>
           </a-form>
+          <div class="flex justify-end">
+            <LangSelect />
+          </div>
         </div>
       </div>
     </div>

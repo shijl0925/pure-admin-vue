@@ -7,4 +7,13 @@ export default {
     userCenter: '个人中心',
     logout: '退出登录',
   },
+  page: {
+    login: {
+      userNamePlaceholder: '请输入用户名',
+      passwordPlaceholder: '请输入密码',
+      rememberMe: '记住我',
+      forgotPassword: '忘记密码？',
+      login: '登录',
+    },
+  },
 }
