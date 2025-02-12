@@ -1,6 +1,7 @@
 import { useLocalStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import type { LoginData, UserInfo } from '@/types/user'
 
@@ -8,6 +9,8 @@ import { loginApi, userInfoApi } from '@/apis/user'
 import { projectSign } from '@/utils/string'
 
 export const useUserStore = defineStore('user', () => {
+  const router = useRouter()
+  const route = useRoute()
   const token = useLocalStorage<string>(projectSign('token'), null)
   const refreshToken = useLocalStorage<string>(projectSign('refreshToken'), null)
   const isLogin = computed(() => !!token.value)
@@ -29,6 +32,10 @@ export const useUserStore = defineStore('user', () => {
     console.log('🔥 userInfo', userInfoRes)
   }
 
+  const clearUserInfo = () => {
+    userInfo.value = null
+  }
+
   const login = async (data: LoginData) => {
     const loginRes = await loginApi(data)
 
@@ -36,6 +43,19 @@ export const useUserStore = defineStore('user', () => {
     refreshToken.value = loginRes.refreshToken
 
     await getUserInfo()
+
+    if (route.query.redirect) {
+      router.push(String(route.query.redirect))
+    }
+    else {
+      router.push('/')
+    }
+  }
+
+  const logout = () => {
+    clearAllToken()
+    clearUserInfo()
+    router.push(route.fullPath !== '/' ? `/login?redirect=${route.fullPath}` : '/login')
   }
 
   return {
@@ -44,7 +64,9 @@ export const useUserStore = defineStore('user', () => {
     isLogin,
     setAllToken,
     clearAllToken,
-    login,
     getUserInfo,
+    clearUserInfo,
+    login,
+    logout,
   }
 })

@@ -6,6 +6,7 @@ export default {
     },
     userCenter: 'User Center',
     logout: 'Logout',
+    logoutConfirm: 'Are you sure you want to log out?',
   },
   page: {
     login: {

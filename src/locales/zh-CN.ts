@@ -6,6 +6,7 @@ export default {
     },
     userCenter: '个人中心',
     logout: '退出登录',
+    logoutConfirm: '确认退出登录吗？',
   },
   page: {
     login: {

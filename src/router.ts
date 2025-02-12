@@ -1,5 +1,7 @@
+import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import { handleHotUpdate, routes } from 'vue-router/auto-routes'
+
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
 import { useUserStore } from '@/stores'
 
@@ -10,6 +12,8 @@ export const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
+  const { isLogin } = storeToRefs(userStore)
+
   console.log('🔥 to', to)
   console.log('🔥 from', from)
   if (to.meta.public) {
@@ -17,7 +21,7 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
   else {
-    if (userStore.isLogin) {
+    if (isLogin.value) {
       if (from.path !== '/login') {
         await Promise.all([
           userStore.getUserInfo(),
@@ -32,9 +36,7 @@ router.beforeEach(async (to, from, next) => {
       console.log('🔥 redirect to login')
       next({
         path: '/login',
-        query: {
-          redirect: to.fullPath,
-        },
+        query: to.fullPath !== '/' ? { redirect: to.fullPath } : undefined,
       })
     }
   }

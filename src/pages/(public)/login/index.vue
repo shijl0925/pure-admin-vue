@@ -9,19 +9,16 @@ import type { CheckboxProps } from 'ant-design-vue'
 import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter, useRoute } from 'vue-router'
-import { useLoading } from '@/hooks/useLoading'
 
 import type { LoginData } from '@/types/user'
 
 import { LangSelect } from '@/components/common'
 import { Icon } from '@/components/icon'
 import { Wave } from '@/components/login'
+import { useLoading } from '@/hooks/useLoading'
 import { useUserStore } from '@/stores'
 import { deCode, enCode } from '@/utils/string'
 
-const router = useRouter()
-const route = useRoute()
 const { t } = useI18n()
 const { login } = useUserStore()
 const { loading, loadingFnWrapper } = useLoading()
@@ -62,12 +59,6 @@ const handleLogin = loadingFnWrapper(async (loginData: LoginData) => {
   await login(loginData)
   if (isRemember.value) {
     saveRemember(loginData.username, loginData.password)
-  }
-  if (route.query.redirect) {
-    router.push(String(route.query.redirect))
-  }
-  else {
-    router.push('/')
   }
 })
 

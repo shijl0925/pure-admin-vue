@@ -4,7 +4,6 @@ import { message } from 'ant-design-vue'
 import Axios from 'axios'
 import { storeToRefs } from 'pinia'
 
-import { logout } from '@/core/system'
 import { useUserStore } from '@/stores'
 
 export const http = Axios.create({
@@ -24,6 +23,8 @@ http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 http.interceptors.response.use(
   (config) => {
+    const userStore = useUserStore()
+    const { logout } = userStore
     const { data } = config
     if (data.code >= 200 && data.code < 300) {
       return data.data

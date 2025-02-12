@@ -1,12 +1,31 @@
 <script setup lang="ts">
+import type { MenuProps } from 'ant-design-vue'
+
+import { Modal } from 'ant-design-vue'
 import { useI18n } from 'vue-i18n'
 
 import { IconButton } from '@/components/button'
 import { Icon } from '@/components/icon'
+import { useUserStore } from '@/stores/user'
 
 const { t } = useI18n()
+const userStore = useUserStore()
+const { logout } = userStore
 
-function handleClick() {
+const handleClick: MenuProps['onClick'] = (e) => {
+  switch (e.key) {
+    case 'userCenter':
+      // router.push('/userCenter')
+      break
+    case 'logout':
+      Modal.confirm({
+        title: t('common.logoutConfirm'),
+        onOk: () => {
+          logout()
+        },
+      })
+      break
+  }
 }
 </script>
 
@@ -20,11 +39,11 @@ function handleClick() {
   >
     <template #overlay>
       <a-menu @click="handleClick">
-        <a-menu-item key="1">
+        <a-menu-item key="userCenter">
           <Icon icon="icon-park-outline:user" class="mr-0.5" />
           {{ t('common.userCenter') }}
         </a-menu-item>
-        <a-menu-item key="2">
+        <a-menu-item key="logout">
           <Icon icon="icon-park-outline:logout" class="mr-0.5" />
           {{ t('common.logout') }}
         </a-menu-item>
