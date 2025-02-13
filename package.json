@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "eslint:inspect": "pnpm dlx @eslint/config-inspector@latest"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
