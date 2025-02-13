@@ -92,7 +92,7 @@ function clearRemember() {
   <div class="relative bg-login dark:bg-login-dark">
     <div class="min-h-[80vh] w-screen flex flex-col items-center justify-center py-10">
       <div class="space-y-4">
-        <div class="flex items-center justify-center gap-4 text-center text-white dark:text-black">
+        <div class="flex items-center justify-center gap-4 text-center text-white/88 dark:text-black/85">
           <Icon icon="icon-local:logo" class="block text-5xl" />
           <div class="text-3xl font-bold">
             Pure Admin

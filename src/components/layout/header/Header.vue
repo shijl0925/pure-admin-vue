@@ -19,7 +19,7 @@ const style = computed(() => ({
 
 <template>
   <a-layout-header :style="style">
-    <div class="bg-theme-layout dark:bg-theme-layout-dark h-full flex items-center justify-between border-light-500 border-b-solid px-3 dark:border-dark-700">
+    <div class="h-full flex items-center justify-between border-light-500 border-b-solid bg-theme-layout dark:bg-theme-layout-dark px-3 dark:border-dark-700">
       <SiderToggle />
       <div class="flex items-center justify-end">
         <LangSelect />

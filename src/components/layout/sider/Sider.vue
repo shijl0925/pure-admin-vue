@@ -8,6 +8,7 @@ import { useAppStore } from '@/stores'
 import { scrollbarOptions } from '@/utils/overlayscrollbars'
 
 import Logo from './Logo.vue'
+import Menu from './Menu.vue'
 
 const appStore = useAppStore()
 const {
@@ -30,10 +31,10 @@ const menuStyle = computed(() => ({
     :collapsed-width="sidebarCollapsedWidth"
     :trigger="null"
   >
-    <div class="bg-theme-layout dark:bg-theme-layout-dark h-full select-none shadow-lg">
+    <div class="h-full select-none bg-theme-layout dark:bg-theme-layout-dark shadow-lg">
       <Logo />
       <OverlayScrollbarsComponent :options="scrollbarOptions" defer :style="menuStyle">
-        <slot />
+        <Menu />
       </OverlayScrollbarsComponent>
     </div>
   </a-layout-sider>
