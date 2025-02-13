@@ -26,7 +26,7 @@ export const useUserStore = defineStore('user', () => {
     refreshToken.value = null
   }
 
-  const getUserInfo = async () => {
+  const fetchUserInfo = async () => {
     const userInfoRes = await userInfoApi()
     userInfo.value = userInfoRes
     console.log('🔥 userInfo', userInfoRes)
@@ -42,7 +42,7 @@ export const useUserStore = defineStore('user', () => {
     token.value = loginRes.token
     refreshToken.value = loginRes.refreshToken
 
-    await getUserInfo()
+    await fetchUserInfo()
 
     if (route.query.redirect) {
       router.push(String(route.query.redirect))
@@ -64,7 +64,8 @@ export const useUserStore = defineStore('user', () => {
     isLogin,
     setAllToken,
     clearAllToken,
-    getUserInfo,
+    userInfo,
+    fetchUserInfo,
     clearUserInfo,
     login,
     logout,

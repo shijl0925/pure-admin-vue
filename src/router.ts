@@ -13,6 +13,7 @@ export const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
   const { isLogin } = storeToRefs(userStore)
+  const { fetchUserInfo } = userStore
 
   console.log('🔥 to', to)
   console.log('🔥 from', from)
@@ -24,7 +25,7 @@ router.beforeEach(async (to, from, next) => {
     if (isLogin.value) {
       if (from.path !== '/login') {
         await Promise.all([
-          userStore.getUserInfo(),
+          fetchUserInfo(),
         ])
       }
 

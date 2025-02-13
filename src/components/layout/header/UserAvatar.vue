@@ -2,6 +2,7 @@
 import type { MenuProps } from 'ant-design-vue'
 
 import { Modal } from 'ant-design-vue'
+import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 
 import { IconButton } from '@/components/button'
@@ -10,6 +11,7 @@ import { useUserStore } from '@/stores/user'
 
 const { t } = useI18n()
 const userStore = useUserStore()
+const { userInfo } = storeToRefs(userStore)
 const { logout } = userStore
 
 const handleClick: MenuProps['onClick'] = (e) => {
@@ -54,7 +56,7 @@ const handleClick: MenuProps['onClick'] = (e) => {
       type="text"
     >
       <span class="pl-2 font-400">
-        Admin
+        {{ userInfo?.username }}
       </span>
     </IconButton>
   </a-dropdown>
