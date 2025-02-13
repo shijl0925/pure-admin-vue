@@ -101,8 +101,6 @@ export function useAnimateTheme(options: UseAnimateThemeOptions = {}) {
     )
 
     animation.addEventListener('finish', () => {
-      // remove stop-transition class
-      // document.documentElement.classList.remove('stop-transition')
       isLoading.value = false
     }, { once: true })
   }
