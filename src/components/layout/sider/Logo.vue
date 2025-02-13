@@ -22,7 +22,9 @@ function handleClick() {
 
 <template>
   <div
-    class="flex cursor-pointer select-none items-center justify-center gap-3 dark:text-theme-dark text-theme" :style="logoStyle" @click="handleClick"
+    class="flex cursor-pointer select-none items-center justify-center gap-3 dark:text-theme-dark text-theme"
+    :style="logoStyle"
+    @click="handleClick"
   >
     <Icon icon="icon-local:logo" class="text-3xl" />
     <h2

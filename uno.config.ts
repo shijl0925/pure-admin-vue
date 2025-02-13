@@ -10,10 +10,10 @@ export default defineConfig({
   ],
   shortcuts: {
     // theme
-    'text-theme': 'text-[rgba(0, 0, 0, 0.88)]',
-    'text-theme-dark': 'text-[rgba(255,255,255,0.85)]',
+    'text-theme': 'text-dark-800',
+    'text-theme-dark': 'text-light-300',
     'bg-theme-layout': 'bg-white',
-    'bg-theme-layout-dark': 'bg-[#141414]',
+    'bg-theme-layout-dark': 'bg-dark-800',
     'bg-theme-content': 'bg-light-300',
     'bg-theme-content-dark': 'bg-black',
     // icon

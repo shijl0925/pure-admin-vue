@@ -31,7 +31,7 @@ const menuStyle = computed(() => ({
     :collapsed-width="sidebarCollapsedWidth"
     :trigger="null"
   >
-    <div class="h-full select-none bg-theme-layout dark:bg-theme-layout-dark shadow-lg">
+    <div class="h-full select-none bg-theme-layout shadow-md dark:bg-[#141414]">
       <Logo />
       <OverlayScrollbarsComponent :options="scrollbarOptions" defer :style="menuStyle">
         <Menu />
