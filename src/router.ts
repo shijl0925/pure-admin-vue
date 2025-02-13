@@ -15,10 +15,7 @@ router.beforeEach(async (to, from, next) => {
   const { isLogin } = storeToRefs(userStore)
   const { fetchUserInfo } = userStore
 
-  console.log('🔥 to', to)
-  console.log('🔥 from', from)
   if (to.meta.public) {
-    console.log('🔥 public route')
     next()
   }
   else {
@@ -29,12 +26,9 @@ router.beforeEach(async (to, from, next) => {
         ])
       }
 
-      console.log('🔥 private route')
-      console.log('🔥 request user info')
       next()
     }
     else {
-      console.log('🔥 redirect to login')
       next({
         path: '/login',
         query: to.fullPath !== '/' ? { redirect: to.fullPath } : undefined,

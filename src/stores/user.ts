@@ -29,7 +29,6 @@ export const useUserStore = defineStore('user', () => {
   const fetchUserInfo = async () => {
     const userInfoRes = await userInfoApi()
     userInfo.value = userInfoRes
-    console.log('🔥 userInfo', userInfoRes)
   }
 
   const clearUserInfo = () => {
