@@ -12,7 +12,7 @@ import { useI18n } from 'vue-i18n'
 
 import type { LoginData } from '@/types/user'
 
-import { LangSelect } from '@/components/common'
+import { LangSelect, ThemeToggle } from '@/components/common'
 import { Icon } from '@/components/icon'
 import { Wave } from '@/components/login'
 import { useLoading } from '@/hooks/useLoading'
@@ -89,16 +89,16 @@ function clearRemember() {
 </script>
 
 <template>
-  <div class="relative bg-login">
+  <div class="relative bg-login dark:bg-login-dark">
     <div class="min-h-[80vh] w-screen flex flex-col items-center justify-center py-10">
       <div class="space-y-4">
-        <div class="flex items-center justify-center gap-4 text-center text-white">
+        <div class="flex items-center justify-center gap-4 text-center text-white dark:text-black">
           <Icon icon="icon-local:logo" class="block text-5xl" />
-          <div class="text-3xl">
+          <div class="text-3xl font-bold">
             Pure Admin
           </div>
         </div>
-        <div class="w-80 border rounded-xl bg-white/80 p-4 shadow transition-all hover:shadow-2xl">
+        <div class="w-80 border rounded-xl bg-white/80 p-4 shadow transition-all dark:bg-black/80 hover:shadow-2xl">
           <a-form
             :model="form"
             :rules="rules"
@@ -162,6 +162,7 @@ function clearRemember() {
           </a-form>
           <div class="flex justify-end">
             <LangSelect />
+            <ThemeToggle :animate="false" />
           </div>
         </div>
       </div>

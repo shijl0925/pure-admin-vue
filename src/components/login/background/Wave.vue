@@ -14,10 +14,10 @@
       />
     </defs>
     <g>
-      <use class="bg-login-wave-1" href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
-      <use class="bg-login-wave-2" href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-      <use class="bg-login-wave-3" href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-      <use class="bg-login-wave-4" href="#gentle-wave" x="48" y="7" fill="#fff" />
+      <use class="bg-login-wave-1 fill-white/70 dark:fill-black/70" href="#gentle-wave" x="48" y="0" />
+      <use class="bg-login-wave-2 fill-white/50 dark:fill-black/50" href="#gentle-wave" x="48" y="3" />
+      <use class="bg-login-wave-3 fill-white/30 dark:fill-black/30" href="#gentle-wave" x="48" y="5" />
+      <use class="bg-login-wave-4 fill-white dark:fill-black" href="#gentle-wave" x="48" y="7" />
     </g>
   </svg>
 </template>

@@ -3,14 +3,26 @@ import { IconButton } from '@/components/button'
 import { useAnimateTheme } from '@/hooks/useAnimateTheme'
 
 const {
+  animate = true,
+} = defineProps<{
+  animate?: boolean
+}>()
+
+const {
   triggerRef,
   isDark,
   isLoading,
+  toggleTheme,
   animateToggleTheme,
 } = useAnimateTheme()
 
 function handleClick() {
-  animateToggleTheme()
+  if (animate) {
+    animateToggleTheme()
+  }
+  else {
+    toggleTheme()
+  }
 }
 </script>
 

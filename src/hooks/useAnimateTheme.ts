@@ -15,9 +15,6 @@ function injectBaseStyles() {
       const style = document.createElement('style')
       style.id = styleId
       style.textContent = `
-        html.stop-transition * {
-          transition: none !important;
-        }
         ::view-transition-old(root),
         ::view-transition-new(root) {
           animation: none;
@@ -105,7 +102,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions = {}) {
 
     animation.addEventListener('finish', () => {
       // remove stop-transition class
-      document.documentElement.classList.remove('stop-transition')
+      // document.documentElement.classList.remove('stop-transition')
       isLoading.value = false
     }, { once: true })
   }
@@ -114,6 +111,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions = {}) {
     triggerRef,
     isDark,
     isLoading,
+    toggleTheme,
     animateToggleTheme,
   }
 }
