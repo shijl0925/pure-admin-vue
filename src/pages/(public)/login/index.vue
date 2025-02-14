@@ -1,8 +1,3 @@
-<route lang="yaml">
-  meta:
-    public: true
-</route>
-
 <script setup lang="ts">
 import type { CheckboxProps } from 'ant-design-vue'
 

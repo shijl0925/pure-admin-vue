@@ -15,6 +15,8 @@ router.beforeEach(async (to, from, next) => {
   const { isLogin, userInfo } = storeToRefs(userStore)
   const { fetchUserInfo } = userStore
 
+  console.log('🔥 meta', to.meta)
+
   if (to.meta.public) {
     next()
   }
@@ -28,7 +30,6 @@ router.beforeEach(async (to, from, next) => {
 
       if (to.meta.permission) {
         // TODO 检查权限
-        console.log('🔥 permission', to.meta.permission)
         next()
       }
       else {
