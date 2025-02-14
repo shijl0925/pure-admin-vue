@@ -12,7 +12,7 @@ export const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
-  const { isLogin } = storeToRefs(userStore)
+  const { isLogin, userInfo } = storeToRefs(userStore)
   const { fetchUserInfo } = userStore
 
   if (to.meta.public) {
@@ -20,7 +20,7 @@ router.beforeEach(async (to, from, next) => {
   }
   else {
     if (isLogin.value) {
-      if (from.path !== '/login') {
+      if (from.path !== '/login' && userInfo.value === null) {
         await Promise.all([
           fetchUserInfo(),
         ])

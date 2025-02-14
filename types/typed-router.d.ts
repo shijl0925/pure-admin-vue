@@ -20,6 +20,7 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/(admin)/(base-layout)': RouteRecordInfo<'/(admin)/(base-layout)', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/': RouteRecordInfo<'/(admin)/(base-layout)/', '/', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/system/user/': RouteRecordInfo<'/(admin)/(base-layout)/system/user/', '/system/user', Record<never, never>, Record<never, never>>,
     '/(admin)/(empty-layout)': RouteRecordInfo<'/(admin)/(empty-layout)', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(empty-layout)/[...path]': RouteRecordInfo<'/(admin)/(empty-layout)/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
     '/(admin)/(empty-layout)/403/': RouteRecordInfo<'/(admin)/(empty-layout)/403/', '/403', Record<never, never>, Record<never, never>>,

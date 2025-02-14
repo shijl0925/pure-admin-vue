@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+
 import type { MenuItem } from '@/types/menu'
 
 import { Icon } from '@/components/icon'
@@ -10,6 +12,14 @@ defineOptions({
 const { item } = defineProps<{
   item: MenuItem
 }>()
+
+const router = useRouter()
+
+function handleClick(item: MenuItem) {
+  if (item.route) {
+    router.push(item.route)
+  }
+}
 </script>
 
 <template>
@@ -29,7 +39,7 @@ const { item } = defineProps<{
     </a-sub-menu>
   </template>
   <template v-else>
-    <a-menu-item :key="item.id">
+    <a-menu-item :key="item.id" @click="handleClick(item)">
       <template #icon>
         <Icon class="!text-xl" :icon="item.icon" />
       </template>

@@ -22,8 +22,8 @@ const menuItems = computed(() => Object.entries(LOCALES).map(([key, value]) => (
 
 const handleClick: MenuProps['onClick'] = (e) => {
   const key = String(e.key)
-  locale.value = key
   currentLocale.value = key
+  locale.value = currentLocale.value
 }
 </script>
 
