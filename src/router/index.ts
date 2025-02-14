@@ -27,7 +27,7 @@ router.beforeEach(async (to, from, next) => {
       }
 
       if (to.meta.permission) {
-        // TODO: 检查权限
+        // TODO 检查权限
         console.log('🔥 permission', to.meta.permission)
         next()
       }

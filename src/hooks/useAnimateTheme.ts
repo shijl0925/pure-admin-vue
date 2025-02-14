@@ -7,7 +7,7 @@ import { useAppStore } from '@/stores'
 
 const isBrowser = typeof window !== 'undefined'
 
-// Inject base CSS for view transitions
+// 注入基础样式
 function injectBaseStyles() {
   if (isBrowser) {
     const styleId = 'theme-switch-base-style'
@@ -54,7 +54,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions = {}) {
 
   const isLoading = ref(false)
 
-  // Inject base styles when the hook is initialized
+  // 当钩子初始化时注入基础样式
   onMounted(() => {
     injectBaseStyles()
   })
@@ -104,7 +104,7 @@ export function useAnimateTheme(options: UseAnimateThemeOptions = {}) {
     )
 
     animation.addEventListener('finish', () => {
-      // remove stop-transition class
+      // 移除 stop-transition 类
       document.documentElement.classList.remove('stop-transition')
       isLoading.value = false
     }, { once: true })

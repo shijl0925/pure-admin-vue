@@ -6,9 +6,9 @@ import path from 'node:path'
 import { generateTypeFileHeader } from './helper'
 
 export interface I18nTypeGeneratorOptions {
-  // source locale file path
+  // 源语言文件路径
   localeFile?: string
-  // output type file path
+  // 输出类型文件路径
   dts?: string
 }
 
@@ -24,7 +24,7 @@ export default function i18nTypeGenerator(options: I18nTypeGeneratorOptions = {}
 
   function generateTypes(sourcePath: string, outputPath: string) {
     try {
-      // make sure the source file exists
+      // 确保源文件存在
       if (!existsSync(sourcePath)) {
         console.error(`Source file ${sourcePath} does not exist.`)
         return
@@ -39,13 +39,13 @@ declare module 'vue-i18n' {
 
 export type I18nMessages = typeof locale
 `
-      // ensure the output directory exists
+      // 确保输出目录存在
       const outputDir = path.dirname(outputPath)
       if (!existsSync(outputDir)) {
         mkdirSync(outputDir, { recursive: true })
       }
 
-      // write type file
+      // 写入类型文件
       writeFileSync(outputPath, typeContent)
     }
     catch (error) {
@@ -58,7 +58,7 @@ export type I18nMessages = typeof locale
 
     configureServer(server) {
       if (!isWatching) {
-        // watch file changes
+        // 监听文件变化
         server.watcher.add(localeFile)
         server.watcher.on('change', (changedPath) => {
           if (changedPath.includes(localeFile)) {

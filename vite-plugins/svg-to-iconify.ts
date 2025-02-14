@@ -22,19 +22,6 @@ export default function svgToIconify(
   return {
     name: pluginName,
 
-    // configureServer(server) {
-    //   // 监听 SVG 文件变化
-    //   server.watcher.add(path.resolve(process.cwd(), options.svgDir))
-    //   server.watcher.on('change', (file) => {
-    //     if (file.endsWith('.svg')) {
-    //       // 通知客户端重新加载
-    //       server.ws.send({
-    //         type: 'full-reload',
-    //       })
-    //     }
-    //   })
-    // },
-
     configureServer(server) {
       server.watcher.add(svgDir)
       server.watcher.on('change', async (file) => {
@@ -43,7 +30,7 @@ export default function svgToIconify(
           const stats = statSync(file)
           const updated = stats.mtimeMs
 
-          // 避免重复触发更新
+          // 避免重复更新
           if (updated !== lastUpdated) {
             lastUpdated = updated
 
@@ -109,17 +96,17 @@ declare module 'virtual:local-icons' {
 
           const svg = iconSet.toSVG(name)
           if (!svg) {
-            // Invalid icon
+            // 无效图标
             iconSet.remove(name)
             return
           }
-          // Clean up and optimise icons
+          // 清理和优化图标
           try {
-            // Clean up icon code
+            // 清理图标代码
             cleanupSVG(svg)
 
-            // Assume icon is monotone: replace color with currentColor, add if missing
-            // If icon is not monotone, remove this code
+            // 假设图标是单色的：用 currentColor 替换颜色，如果缺失则添加
+            // 如果图标不是单色的，请删除此代码
             parseColors(svg, {
               defaultColor: 'currentColor',
               callback: (_attr, colorStr, color) => {
@@ -129,17 +116,17 @@ declare module 'virtual:local-icons' {
               },
             })
 
-            // Optimise
+            // 优化图标
             runSVGO(svg)
           }
           catch (err) {
-            // Invalid icon
+            // 无效图标
             console.error(`Error parsing ${name}:`, err)
             iconSet.remove(name)
             return
           }
 
-          // Update icon
+          // 更新图标
           iconSet.fromSVG(name, svg)
         })
 
@@ -158,7 +145,7 @@ import { addCollection } from '@iconify/vue'
 const iconSet = ${JSON.stringify(localIconSet)}
 addCollection(iconSet)
 
-// 导出图标列表供类型提示使用
+// export icon list for type hinting
 export const icons = ${JSON.stringify(Object.keys(localIconSet.icons).map(name => `${prefix}:${name}`))}
 `
       }

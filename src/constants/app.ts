@@ -1,20 +1,20 @@
-// Header Height
+// Header 高度
 export const HEADER_HEIGHT = 50
 
-// Sidebar Width
+// Sidebar 宽度
 export const SIDEBAR_WIDTH = 220
 
-// Sidebar Collapsed Width
+// Sidebar 折叠宽度
 export const SIDEBAR_COLLAPSED_WIDTH = 60
 
-// Locales
+// 语言
 export const LOCALES = {
   'zh-CN': { label: '简体中文' },
   'en-US': { label: 'English' },
 } as const
 
-// Default Locale
+// 默认语言
 export const DEFAULT_LOCALE = 'zh-CN'
 
-// Fallback Locale
+// 回退语言
 export const FALLBACK_LOCALE = 'en-US'

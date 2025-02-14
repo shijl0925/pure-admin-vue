@@ -52,7 +52,7 @@ const onRememberChange: CheckboxProps['onChange'] = (e) => {
 }
 
 function onForgot() {
-  // jump to forgot password page
+  // 跳转到忘记密码页面
 }
 
 const handleLogin = loadingFnWrapper(async (loginData: LoginData) => {
