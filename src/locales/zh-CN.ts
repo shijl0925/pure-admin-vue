@@ -17,8 +17,17 @@ export default {
       forgotPassword: '忘记密码？',
       login: '登录',
     },
+    forbidden: {
+      title: '403',
+      subTitle: '抱歉，您没有权限访问该页面。',
+    },
     notFound: {
+      title: '404',
       subTitle: '抱歉，您访问的页面不存在。',
+    },
+    serverError: {
+      title: '500',
+      subTitle: '抱歉，服务器发生错误。',
     },
   },
 }

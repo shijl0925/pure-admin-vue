@@ -22,6 +22,8 @@ declare module 'vue-router/auto-routes' {
     '/(admin)/(base-layout)/': RouteRecordInfo<'/(admin)/(base-layout)/', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(empty-layout)': RouteRecordInfo<'/(admin)/(empty-layout)', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(empty-layout)/[...path]': RouteRecordInfo<'/(admin)/(empty-layout)/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
+    '/(admin)/(empty-layout)/403/': RouteRecordInfo<'/(admin)/(empty-layout)/403/', '/403', Record<never, never>, Record<never, never>>,
+    '/(admin)/(empty-layout)/500/': RouteRecordInfo<'/(admin)/(empty-layout)/500/', '/500', Record<never, never>, Record<never, never>>,
     '/(public)/login/': RouteRecordInfo<'/(public)/login/', '/login', Record<never, never>, Record<never, never>>,
   }
 }

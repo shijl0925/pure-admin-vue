@@ -8,8 +8,8 @@ const { t } = useI18n()
 
 <template>
   <Exception
-    status="404"
-    :title="t('page.notFound.title')"
-    :sub-title="t('page.notFound.subTitle')"
+    status="403"
+    :title="t('page.forbidden.title')"
+    :sub-title="t('page.forbidden.subTitle')"
   />
 </template>
