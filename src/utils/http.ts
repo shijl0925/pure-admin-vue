@@ -39,6 +39,18 @@ http.interceptors.response.use(
     }
   },
   (error) => {
+    const userStore = useUserStore()
+    const { logout } = userStore
+
+    const {
+      response: {
+        data,
+      },
+    } = error
+    if (data && data.code === 401) {
+      logout()
+    }
+    console.log('error', error)
     const errMsg = error.response?.data?.data?.message || error.message
     console.error(error)
     message.error(errMsg)

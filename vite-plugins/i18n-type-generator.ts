@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite'
 
-import fs from 'node:fs'
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
 import { generateTypeFileHeader } from './helper'
@@ -25,7 +25,7 @@ export default function i18nTypeGenerator(options: I18nTypeGeneratorOptions = {}
   function generateTypes(sourcePath: string, outputPath: string) {
     try {
       // make sure the source file exists
-      if (!fs.existsSync(sourcePath)) {
+      if (!existsSync(sourcePath)) {
         console.error(`Source file ${sourcePath} does not exist.`)
         return
       }
@@ -41,12 +41,12 @@ export type I18nMessages = typeof locale
 `
       // ensure the output directory exists
       const outputDir = path.dirname(outputPath)
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true })
+      if (!existsSync(outputDir)) {
+        mkdirSync(outputDir, { recursive: true })
       }
 
       // write type file
-      fs.writeFileSync(outputPath, typeContent)
+      writeFileSync(outputPath, typeContent)
     }
     catch (error) {
       console.error('Error generating i18n types:', error)
@@ -59,7 +59,7 @@ export type I18nMessages = typeof locale
     configureServer(server) {
       if (!isWatching) {
         // watch file changes
-        server.watcher.add(path.resolve(localeFile))
+        server.watcher.add(localeFile)
         server.watcher.on('change', (changedPath) => {
           if (changedPath.includes(localeFile)) {
             generateTypes(localeFile, dts)

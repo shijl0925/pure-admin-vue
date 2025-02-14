@@ -1,17 +1,15 @@
 import type { Plugin } from 'vite'
 
 import { cleanupSVG, importDirectory, isEmptyColor, parseColors, runSVGO } from '@iconify/tools'
-import fs from 'node:fs'
+import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
 import { generateTypeFileHeader } from './helper'
 
 export default function svgToIconify(
   {
-    options = {
-      svgDir: 'src/assets/svg-icon',
-      prefix: 'icon-local',
-    },
+    svgDir = 'src/assets/svg-icon',
+    prefix = 'icon-local',
     dts = 'virtual-local-icons.d.ts',
   },
 ): Plugin {
@@ -38,11 +36,11 @@ export default function svgToIconify(
     // },
 
     configureServer(server) {
-      server.watcher.add(path.resolve(process.cwd(), options.svgDir))
+      server.watcher.add(svgDir)
       server.watcher.on('change', async (file) => {
         if (file.endsWith('.svg')) {
           // 获取更新时间戳
-          const stats = fs.statSync(file)
+          const stats = statSync(file)
           const updated = stats.mtimeMs
 
           // 避免重复触发更新
@@ -76,11 +74,12 @@ export default function svgToIconify(
       }
     },
 
-    configResolved(config) {
+    configResolved() {
       // 确保类型声明文件目录存在
-      const typesDir = path.resolve(config.root, 'types')
-      if (!fs.existsSync(typesDir)) {
-        fs.mkdirSync(typesDir, { recursive: true })
+      // const typesDir = path.resolve(config.root, 'types')
+      const outputDir = path.dirname(dts)
+      if (!existsSync(outputDir)) {
+        mkdirSync(outputDir, { recursive: true })
       }
 
       // 生成类型声明文件
@@ -89,7 +88,7 @@ declare module 'virtual:local-icons' {
   export const icons: string[]
 }`
 
-      fs.writeFileSync(
+      writeFileSync(
         dts,
         dtsContent,
       )
@@ -97,11 +96,11 @@ declare module 'virtual:local-icons' {
 
     async load(id) {
       if (id === resolvedVirtualModuleId) {
-        const svgDir = path.resolve(process.cwd(), options.svgDir)
+        // const svgDir = path.resolve(process.cwd(), svgDir)
 
         // 读取所有 SVG 文件
         const iconSet = await importDirectory(svgDir, {
-          prefix: options.prefix,
+          prefix,
         })
         iconSet.forEach((name, type) => {
           if (type !== 'icon') {
@@ -149,7 +148,7 @@ declare module 'virtual:local-icons' {
 
         const localIconSet = {
           ...exported,
-          prefix: options.prefix,
+          prefix,
         }
 
         // 生成虚拟模块代码
@@ -160,7 +159,7 @@ const iconSet = ${JSON.stringify(localIconSet)}
 addCollection(iconSet)
 
 // 导出图标列表供类型提示使用
-export const icons = ${JSON.stringify(Object.keys(localIconSet.icons).map(name => `${options.prefix}:${name}`))}
+export const icons = ${JSON.stringify(Object.keys(localIconSet.icons).map(name => `${prefix}:${name}`))}
 `
       }
     },

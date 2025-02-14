@@ -1,33 +1,34 @@
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'node:path'
+import { fileURLToPath, URL } from 'node:url'
 import UnoCSS from 'unocss/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 
 import { i18nTypeGenerator, svgToIconify } from './vite-plugins'
 
-const resolvePath = (path: string) => resolve(__dirname, path)
-
+// https://vite.dev/config/
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     VueRouter({
       routeBlockLang: 'yaml',
-      dts: resolvePath('./types/typed-router.d.ts'),
+      dts: fileURLToPath(new URL('./types/typed-router.d.ts', import.meta.url)),
     }),
     vue(),
     UnoCSS(),
     svgToIconify({
-      dts: resolvePath('./types/virtual-local-icons.d.ts'),
+      svgDir: fileURLToPath(new URL('./src/assets/svg-icon', import.meta.url)),
+      prefix: 'icon-local',
+      dts: fileURLToPath(new URL('./types/virtual-local-icons.d.ts', import.meta.url)),
     }),
     i18nTypeGenerator({
-      localeFile: resolvePath('./src/locales/en-US.ts'),
-      dts: resolvePath('./types/i18n.d.ts'),
+      localeFile: fileURLToPath(new URL('./src/locales/en-US.ts', import.meta.url)),
+      dts: fileURLToPath(new URL('./types/i18n.d.ts', import.meta.url)),
     }),
   ],
   resolve: {
     alias: {
-      '@': resolvePath('./src'),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 })
