@@ -56,7 +56,7 @@ const handleClick: MenuProps['onClick'] = (e) => {
       type="text"
     >
       <span class="pl-2 font-400">
-        {{ userInfo?.username }}
+        {{ userInfo?.nickName || userInfo?.username }}
       </span>
     </IconButton>
   </a-dropdown>

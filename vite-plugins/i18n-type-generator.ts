@@ -47,7 +47,6 @@ export type I18nMessages = typeof locale
 
       // write type file
       fs.writeFileSync(outputPath, typeContent)
-      console.log('✨ I18n type definitions generated successfully!')
     }
     catch (error) {
       console.error('Error generating i18n types:', error)
