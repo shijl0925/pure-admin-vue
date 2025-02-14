@@ -4,6 +4,7 @@ import UnoCSS from 'unocss/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 
+import { setPermissionMeta } from './src/router/permissions'
 import { i18nTypeGenerator, svgToIconify } from './vite-plugins'
 
 // https://vite.dev/config/
@@ -13,6 +14,9 @@ export default defineConfig({
     VueRouter({
       routeBlockLang: 'yaml',
       dts: fileURLToPath(new URL('./types/typed-router.d.ts', import.meta.url)),
+      async extendRoute(route) {
+        setPermissionMeta(route)
+      },
     }),
     vue(),
     UnoCSS(),
