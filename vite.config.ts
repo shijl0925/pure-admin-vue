@@ -8,7 +8,6 @@ import { setPermissionMeta } from './src/router/routeMeta'
 import { i18nTypeGenerator, svgToIconify } from './vite-plugins'
 
 // https://vite.dev/config/
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     VueRouter({
