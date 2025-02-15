@@ -12,7 +12,6 @@ import { i18nTypeGenerator, svgToIconify } from './vite-plugins'
 export default defineConfig({
   plugins: [
     VueRouter({
-      routeBlockLang: 'yaml',
       dts: fileURLToPath(new URL('./types/typed-router.d.ts', import.meta.url)),
       async extendRoute(route) {
         setPermissionMeta(route)
