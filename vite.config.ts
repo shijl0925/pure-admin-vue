@@ -4,7 +4,7 @@ import UnoCSS from 'unocss/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 
-import { setPermissionMeta } from './src/router/permissions'
+import { setPermissionMeta } from './src/router/routeMeta'
 import { i18nTypeGenerator, svgToIconify } from './vite-plugins'
 
 // https://vite.dev/config/
