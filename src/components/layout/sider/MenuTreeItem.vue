@@ -43,7 +43,7 @@ function handleClick(item: MenuItem) {
       <template #icon>
         <Icon class="!text-xl" :icon="item.icon" />
       </template>
-      <template #title>
+      <template v-if="!item.parentId" #title>
         {{ item.label }}
       </template>
       <span class="text-sm">{{ item.label }}</span>
