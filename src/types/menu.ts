@@ -1,6 +1,6 @@
 export interface MenuItem {
   id: number
-  parentId?: number | null
+  parentId: number | null
   icon: string
   title: string
   path?: string

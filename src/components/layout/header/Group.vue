@@ -1,5 +1,0 @@
-<template>
-  <div class="flex flex-row p-2">
-    <slot />
-  </div>
-</template>

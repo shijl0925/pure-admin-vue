@@ -1,5 +1,5 @@
 /**
- * @description 用户管理
+ * 用户管理
  */
 export enum USER {
   LIST = 'system:user:list',

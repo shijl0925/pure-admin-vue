@@ -4,24 +4,19 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useUserStore } from '@/stores/user'
-import { flattenTree } from '@/utils/array'
 
 import MenuTreeItem from './MenuTreeItem.vue'
 
 const route = useRoute()
 const userStore = useUserStore()
-const { userMenus } = storeToRefs(userStore)
-
-const flatMenuItems = computed(() => {
-  return flattenTree(userMenus.value ?? [])
-})
+const { userMenus, flatUserMenus } = storeToRefs(userStore)
 
 const selectedKeys = computed(() => {
-  return [flatMenuItems.value.find(item => item.path === route.path)?.id]
+  return [flatUserMenus.value.find(item => item.path === route.path)?.id]
 })
 
 const openKeys = computed(() => {
-  return [flatMenuItems.value.find(item => item.path === route.path)?.parentId]
+  return [flatUserMenus.value.find(item => item.path === route.path)?.parentId]
 })
 </script>
 

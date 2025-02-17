@@ -6,7 +6,7 @@ import { computed, ref, watchEffect } from 'vue'
 import { useAppStore } from '@/stores'
 
 const { margin = 20 } = defineProps<{
-  margin: number
+  margin?: number
 }>()
 
 const appStore = useAppStore()

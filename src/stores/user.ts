@@ -6,6 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import type { LoginInfo, UserInfo } from '@/types/user'
 
 import { getUserInfoApi, loginApi } from '@/apis/user'
+import { flattenTree } from '@/utils/array'
 import { projectSign } from '@/utils/string'
 
 export const useUserStore = defineStore('user', () => {
@@ -29,6 +30,10 @@ export const useUserStore = defineStore('user', () => {
 
   const userMenus = computed(() => {
     return userInfo.value?.menus ?? []
+  })
+
+  const flatUserMenus = computed(() => {
+    return flattenTree(userMenus.value ?? [])
   })
 
   const fetchUserInfo = async () => {
@@ -70,6 +75,7 @@ export const useUserStore = defineStore('user', () => {
     clearAllToken,
     userInfo,
     userMenus,
+    flatUserMenus,
     fetchUserInfo,
     clearUserInfo,
     login,

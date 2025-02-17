@@ -17,7 +17,7 @@ export default defineConfig({
     'bg-theme-content': 'bg-light-300',
     'bg-theme-content-dark': 'bg-black',
     // 图标
-    'icon-wrapper': 'inline-block leading-0 h-1em w-1em text-inherit font-not-italic normal-case text-center align-[-0.125em] text-optimizeLegibility antialiased [&_svg]:inline-block [&_svg]:align-baseline',
+    'icon-wrapper': 'inline-block leading-0 h-1em w-1em text-inherit font-not-italic normal-case text-center align-[-0.2em] text-optimizeLegibility antialiased [&_svg]:inline-block [&_svg]:align-baseline',
     // 登录背景波浪
     'bg-login-waves': 'relative w-full h-20vh mb-[-7px] min-h-100px',
     'bg-login-wave-1': 'animate-wave-move animate-delay-[-2s] animate-duration-[7s]',
