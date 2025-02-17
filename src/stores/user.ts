@@ -36,6 +36,31 @@ export const useUserStore = defineStore('user', () => {
     return flattenTree(userMenus.value ?? [])
   })
 
+  const matchedMenuPath = computed(() => {
+    // 获取当前路由的所有可能父路径
+    const possiblePaths = route.matched.map(item => item.path)
+    // const possiblePaths = route.path.split('/').reduce((paths: string[], segment) => {
+    //   const previousPath = paths[paths.length - 1] || ''
+    //   const currentPath = `${previousPath}/${segment}`
+
+    //   if (segment) {
+    //     paths.push(currentPath)
+    //   }
+
+    //   return paths
+    // }, [])
+
+    // 找到最匹配的菜单路径
+    const matchedPath = possiblePaths
+      .reverse()
+      .find(path => flatUserMenus.value.some(menu => menu.path === path))
+
+    if (!matchedPath)
+      return []
+
+    return matchedPath
+  })
+
   const fetchUserInfo = async () => {
     const userInfoRes = await getUserInfoApi()
     userInfo.value = userInfoRes
@@ -76,6 +101,7 @@ export const useUserStore = defineStore('user', () => {
     userInfo,
     userMenus,
     flatUserMenus,
+    matchedMenuPath,
     fetchUserInfo,
     clearUserInfo,
     login,

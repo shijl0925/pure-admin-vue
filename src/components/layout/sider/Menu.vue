@@ -1,22 +1,20 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 
 import { useUserStore } from '@/stores/user'
 
 import MenuTreeItem from './MenuTreeItem.vue'
 
-const route = useRoute()
 const userStore = useUserStore()
-const { userMenus, flatUserMenus } = storeToRefs(userStore)
+const { userMenus, flatUserMenus, matchedMenuPath } = storeToRefs(userStore)
 
 const selectedKeys = computed(() => {
-  return [flatUserMenus.value.find(item => item.path === route.path)?.id]
+  return [flatUserMenus.value.find(item => item.path === matchedMenuPath.value)?.id]
 })
 
 const openKeys = computed(() => {
-  return [flatUserMenus.value.find(item => item.path === route.path)?.parentId]
+  return [flatUserMenus.value.find(item => item.path === matchedMenuPath.value)?.parentId]
 })
 </script>
 
