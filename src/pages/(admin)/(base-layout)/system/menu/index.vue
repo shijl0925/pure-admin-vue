@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>用户管理</h1>
+    <h1>菜单管理</h1>
   </div>
 </template>

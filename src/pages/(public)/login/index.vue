@@ -5,7 +5,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import type { LoginData } from '@/types/user'
+import type { LoginInfo } from '@/types/user'
 
 import { LangSelect, ThemeToggle } from '@/components/common'
 import { Icon } from '@/components/icon'
@@ -18,7 +18,7 @@ const { t } = useI18n()
 const { login } = useUserStore()
 const { loading, loadingFnWrapper } = useLoading()
 
-const form = reactive<LoginData>({
+const form = reactive<LoginInfo>({
   username: 'pure-admin',
   password: '123456',
 })
@@ -50,14 +50,14 @@ function onForgot() {
   // 跳转到忘记密码页面
 }
 
-const handleLogin = loadingFnWrapper(async (loginData: LoginData) => {
-  await login(loginData)
+const handleLogin = loadingFnWrapper(async (data: LoginInfo) => {
+  await login(data)
   if (isRemember.value) {
-    saveRemember(loginData.username, loginData.password)
+    saveRemember(data.username, data.password)
   }
 })
 
-async function onFinish(data: LoginData) {
+async function onFinish(data: LoginInfo) {
   handleLogin(data)
 }
 

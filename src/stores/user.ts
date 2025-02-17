@@ -3,9 +3,9 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import type { LoginData, UserInfo } from '@/types/user'
+import type { LoginInfo, UserInfo } from '@/types/user'
 
-import { loginApi, userInfoApi } from '@/apis/user'
+import { getUserInfoApi, loginApi } from '@/apis/user'
 import { projectSign } from '@/utils/string'
 
 export const useUserStore = defineStore('user', () => {
@@ -27,7 +27,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const fetchUserInfo = async () => {
-    const userInfoRes = await userInfoApi()
+    const userInfoRes = await getUserInfoApi()
     userInfo.value = userInfoRes
   }
 
@@ -35,7 +35,7 @@ export const useUserStore = defineStore('user', () => {
     userInfo.value = null
   }
 
-  const login = async (data: LoginData) => {
+  const login = async (data: LoginInfo) => {
     const loginRes = await loginApi(data)
 
     token.value = loginRes.token

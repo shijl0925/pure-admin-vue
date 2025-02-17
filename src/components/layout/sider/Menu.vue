@@ -14,23 +14,23 @@ const menuItems: MenuItem[] = [
   {
     id: 1,
     parentId: null,
-    route: '/',
+    path: '/',
     icon: 'icon-park-outline:home',
     label: '首页',
   },
   {
     id: 2,
     parentId: null,
-    route: '',
+    path: '',
     icon: 'icon-park-outline:setting',
     label: '系统设置',
     children: [
       {
         id: 3,
         parentId: 2,
-        route: '/system/user',
-        icon: 'icon-park-outline:user',
-        label: '用户管理',
+        path: '/system/menu',
+        icon: 'icon-park-outline:scatter-alignment',
+        label: '菜单管理',
       },
     ],
   },
@@ -39,11 +39,11 @@ const menuItems: MenuItem[] = [
 const flatMenuItems = flattenTree(menuItems)
 
 const selectedKeys = computed(() => {
-  return [flatMenuItems.find(item => item.route === route.path)?.id]
+  return [flatMenuItems.find(item => item.path === route.path)?.id]
 })
 
 const openKeys = computed(() => {
-  return [flatMenuItems.find(item => item.route === route.path)?.parentId]
+  return [flatMenuItems.find(item => item.path === route.path)?.parentId]
 })
 </script>
 

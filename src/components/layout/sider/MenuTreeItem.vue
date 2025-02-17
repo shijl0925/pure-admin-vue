@@ -16,8 +16,8 @@ const { item } = defineProps<{
 const router = useRouter()
 
 function handleClick(item: MenuItem) {
-  if (item.route) {
-    router.push(item.route)
+  if (item.path) {
+    router.push(item.path)
   }
 }
 </script>

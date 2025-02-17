@@ -3,8 +3,8 @@ export interface MenuItem {
   parentId?: number | null
   icon: string
   label: string
-  route?: string
+  path?: string
   children?: MenuItem[]
 }
 
-export type MenuTreeData = MenuItem[]
+export type MenuTree = MenuItem[]
