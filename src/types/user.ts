@@ -1,3 +1,5 @@
+import type { MenuTree } from '@/types/menu'
+
 export interface LoginInfo {
   username: string
   password: string
@@ -13,6 +15,5 @@ export interface UserInfo {
   username: string
   nickName: string
   headPic: string
-  email: string
-  phoneNumber: string
+  menus: MenuTree
 }

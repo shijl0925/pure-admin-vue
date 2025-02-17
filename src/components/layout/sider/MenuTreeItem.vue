@@ -29,7 +29,7 @@ function handleClick(item: MenuItem) {
         <Icon class="!text-xl" :icon="item.icon" />
       </template>
       <template #title>
-        <span class="text-sm">{{ item.label }}</span>
+        <span class="text-sm">{{ item.title }}</span>
       </template>
       <MenuTreeItem
         v-for="child in item.children"
@@ -44,9 +44,9 @@ function handleClick(item: MenuItem) {
         <Icon class="!text-xl" :icon="item.icon" />
       </template>
       <template v-if="!item.parentId" #title>
-        {{ item.label }}
+        {{ item.title }}
       </template>
-      <span class="text-sm">{{ item.label }}</span>
+      <span class="text-sm">{{ item.title }}</span>
     </a-menu-item>
   </template>
 </template>

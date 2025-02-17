@@ -2,7 +2,7 @@ export interface MenuItem {
   id: number
   parentId?: number | null
   icon: string
-  label: string
+  title: string
   path?: string
   children?: MenuItem[]
 }

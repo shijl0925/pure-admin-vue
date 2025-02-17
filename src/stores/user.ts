@@ -6,6 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import type { LoginInfo, UserInfo } from '@/types/user'
 
 import { getUserInfoApi, loginApi } from '@/apis/user'
+import { flattenTree } from '@/utils/array'
 import { projectSign } from '@/utils/string'
 
 export const useUserStore = defineStore('user', () => {
@@ -14,7 +15,6 @@ export const useUserStore = defineStore('user', () => {
   const token = useLocalStorage<string>(projectSign('token'), null)
   const refreshToken = useLocalStorage<string>(projectSign('refreshToken'), null)
   const isLogin = computed(() => !!token.value)
-  const userInfo = ref<UserInfo | null>(null)
 
   const setAllToken = (newToken: string, newRefreshToken: string) => {
     token.value = newToken
@@ -25,6 +25,12 @@ export const useUserStore = defineStore('user', () => {
     token.value = null
     refreshToken.value = null
   }
+
+  const userInfo = ref<UserInfo | null>(null)
+
+  const userMenus = computed(() => {
+    return userInfo.value?.menus ?? []
+  })
 
   const fetchUserInfo = async () => {
     const userInfoRes = await getUserInfoApi()
@@ -64,6 +70,7 @@ export const useUserStore = defineStore('user', () => {
     setAllToken,
     clearAllToken,
     userInfo,
+    userMenus,
     fetchUserInfo,
     clearUserInfo,
     login,

@@ -1,49 +1,27 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import type { MenuItem } from '@/types/menu'
-
+import { useUserStore } from '@/stores/user'
 import { flattenTree } from '@/utils/array'
 
 import MenuTreeItem from './MenuTreeItem.vue'
 
 const route = useRoute()
+const userStore = useUserStore()
+const { userMenus } = storeToRefs(userStore)
 
-const menuItems: MenuItem[] = [
-  {
-    id: 1,
-    parentId: null,
-    path: '/',
-    icon: 'icon-park-outline:home',
-    label: '首页',
-  },
-  {
-    id: 2,
-    parentId: null,
-    path: '',
-    icon: 'icon-park-outline:setting',
-    label: '系统设置',
-    children: [
-      {
-        id: 3,
-        parentId: 2,
-        path: '/system/menu',
-        icon: 'icon-park-outline:scatter-alignment',
-        label: '菜单管理',
-      },
-    ],
-  },
-]
-
-const flatMenuItems = flattenTree(menuItems)
+const flatMenuItems = computed(() => {
+  return flattenTree(userMenus.value ?? [])
+})
 
 const selectedKeys = computed(() => {
-  return [flatMenuItems.find(item => item.path === route.path)?.id]
+  return [flatMenuItems.value.find(item => item.path === route.path)?.id]
 })
 
 const openKeys = computed(() => {
-  return [flatMenuItems.find(item => item.path === route.path)?.parentId]
+  return [flatMenuItems.value.find(item => item.path === route.path)?.parentId]
 })
 </script>
 
@@ -55,7 +33,7 @@ const openKeys = computed(() => {
     class="!border-r-0"
     mode="inline"
   >
-    <MenuTreeItem v-for="item in menuItems" :key="item.id" :item="item" />
+    <MenuTreeItem v-for="item in userMenus" :key="item.id" :item="item" />
   </a-menu>
 </template>
 
