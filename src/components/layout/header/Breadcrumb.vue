@@ -41,6 +41,8 @@ const breadcrumbItems = computed(() => {
     }
   }
 
+  console.log(menuPath)
+
   return menuPath
 })
 </script>
@@ -48,7 +50,14 @@ const breadcrumbItems = computed(() => {
 <template>
   <a-breadcrumb>
     <a-breadcrumb-item v-for="item in breadcrumbItems" :key="item.id">
-      {{ item.title }}
+      <template v-if="item.path">
+        <RouterLink :to="item.path">
+          {{ item.title }}
+        </RouterLink>
+      </template>
+      <template v-else>
+        {{ item.title }}
+      </template>
     </a-breadcrumb-item>
   </a-breadcrumb>
 </template>

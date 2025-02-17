@@ -4,7 +4,6 @@ import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { RouterView } from 'vue-router'
 
 import { useAppStore } from '@/stores/app'
 
