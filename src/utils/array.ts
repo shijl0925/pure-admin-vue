@@ -1,31 +1,24 @@
 /**
- * 树节点类型
- */
-type TreeNode<T extends Record<string, any>> = T & {
-  children?: TreeNode<T>[]
-}
-
-/**
  * 扁平化树结构
  * @param items 树结构数据
- * @param childrenKey 子节点的键名，默认为 'children'
- * @returns 扁平化后的数据（不包含 children 字段）
+ * @returns 扁平化后的数据
  */
-export function flattenTree<T extends Record<string, any>>(
-  items: TreeNode<T>[],
-  childrenKey: keyof TreeNode<T> = 'children',
-): Omit<T, 'children'>[] {
-  const flatList: Omit<T, 'children'>[] = []
+export function flattenTree<
+  T,
+  K extends keyof T = 'children' extends keyof T ? 'children' : keyof T,
+>(
+  items: T[],
+  childrenKey: K = 'children' as K,
+): Omit<T, K>[] {
+  const flatList: Omit<T, K>[] = []
 
   items.forEach((item) => {
     const { [childrenKey]: children, ...rest } = item
 
-    // 添加当前节点（不包含 children）
-    flatList.push(rest as Omit<T, 'children'>)
+    flatList.push(rest as Omit<T, K>)
 
-    // 递归处理子节点
-    if (Array.isArray(children) && children.length > 0) {
-      flatList.push(...flattenTree(children, childrenKey))
+    if (children && Array.isArray(children) && children.length > 0) {
+      flatList.push(...flattenTree(children as T[], childrenKey))
     }
   })
 

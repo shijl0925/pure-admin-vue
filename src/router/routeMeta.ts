@@ -5,19 +5,19 @@ import { USER } from '../constants/permissions'
 import { flattenTree } from '../utils/array'
 
 const routeMetaConfig = [
-  { name: '登录', route: '/login', meta: { public: true } },
+  { name: '登录', path: '/login', meta: { public: true } },
   {
     name: '系统设置',
     children: [
-      { name: '用户列表', route: '/system/user', meta: { permission: USER.LIST } },
+      { name: '用户列表', path: '/system/user', meta: { permission: USER.LIST } },
     ],
   },
 ]
 
-const flatMetaRoutes = flattenTree(routeMetaConfig).filter(item => item.route && item.meta)
+const flatMetaRoutes = flattenTree(routeMetaConfig).filter(item => item.path && item.meta)
 
 export function setPermissionMeta(route: EditableTreeNode) {
-  const routeItem = flatMetaRoutes.find(item => route.fullPath === item.route)
+  const routeItem = flatMetaRoutes.find(item => route.fullPath === item.path)
   if (routeItem && routeItem.meta) {
     route.addToMeta(routeItem.meta)
   }
