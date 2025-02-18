@@ -26,6 +26,7 @@ const menuStyle = computed(() => ({
 <template>
   <a-layout-sider
     v-model:collapsed="sidebarCollapsed"
+    class="z-1"
     collapsible
     :width="sidebarWidth"
     :collapsed-width="sidebarCollapsedWidth"

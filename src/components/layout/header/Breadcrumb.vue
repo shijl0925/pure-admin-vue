@@ -41,8 +41,6 @@ const breadcrumbItems = computed(() => {
     }
   }
 
-  console.log(menuPath)
-
   return menuPath
 })
 </script>

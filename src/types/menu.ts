@@ -8,3 +8,5 @@ export interface MenuItem {
 }
 
 export type MenuTree = MenuItem[]
+
+export type FlatMenu = Omit<MenuItem, 'children'>
