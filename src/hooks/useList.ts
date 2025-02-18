@@ -8,18 +8,16 @@ import { useAppStore } from '@/stores'
 export function useList() {
   const { token } = theme.useToken()
   const { height: windowHeight } = useWindowSize()
+
   const appStore = useAppStore()
   const { headerHeight } = storeToRefs(appStore)
 
   const searchCardRef = ref()
-
   const { height: searchCardHeight } = useElementSize(searchCardRef)
-
   const space = computed(() => {
     const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize)
     return rootFontSize * 0.5 // gap-2 = 0.5rem
   })
-
   const tableCardHeight = computed(() => {
     return windowHeight.value - headerHeight.value - searchCardHeight.value - space.value * 3
   })
