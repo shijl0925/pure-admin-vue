@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 
-import { toRefs } from 'vue'
+import { toRef } from 'vue'
 
 const props = defineProps<{
   searchCardRef: Ref<HTMLElement>
   tableCardHeight: Ref<number>
 }>()
 
-const { tableCardHeight } = toRefs(props)
+const tableCardHeight = toRef(props, 'tableCardHeight')
 </script>
 
 <template>
