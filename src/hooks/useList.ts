@@ -61,7 +61,8 @@ export function useList() {
   })
 
   const tableScroll = computed(() => {
-    const scrollableTableHeight = tableCardHeight.value - tableHeaderHeight.value - paginationHeight.value - token.value.margin * 2
+    const offsetHeight = 6
+    const scrollableTableHeight = tableCardHeight.value - tableHeaderHeight.value - paginationHeight.value - token.value.margin * 2 - offsetHeight
 
     return {
       x: '100%',
