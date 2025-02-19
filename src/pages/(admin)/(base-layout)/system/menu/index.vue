@@ -125,7 +125,6 @@ const columns = ref([
       </a-button>
     </template>
     <a-table
-      bordered
       :data-source="dataSource"
       :columns="columns"
       :pagination="{

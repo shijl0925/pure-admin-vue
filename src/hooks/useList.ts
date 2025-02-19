@@ -22,12 +22,21 @@ export function useList() {
     return windowHeight.value - headerHeight.value - searchCardHeight.value - space.value * 3
   })
 
-  const tableHeaderRef = ref()
-  const { height: tableHeaderHeight } = useElementSize(tableHeaderRef)
+  const theadRef = ref()
+  const { height: tableHeaderHeight } = useElementSize(theadRef)
   function updateTableHeaderRef() {
     const header = document.querySelector('.ant-table-thead')
     if (header) {
-      tableHeaderRef.value = header
+      theadRef.value = header
+    }
+  }
+
+  const tbodyRef = ref()
+  const { height: tableBodyHeight } = useElementSize(tbodyRef)
+  function updateTableBodyRef() {
+    const body = document.querySelector('.ant-table-tbody')
+    if (body) {
+      tbodyRef.value = body
     }
   }
 
@@ -40,20 +49,25 @@ export function useList() {
     }
   }
 
-  function updateAllRef() {
+  function updateTableRef() {
     updateTableHeaderRef()
+    updateTableBodyRef()
     updatePaginationRef()
   }
 
-  useMutationObserver(document.body, updateAllRef, {
+  useMutationObserver(document.body, updateTableRef, {
     childList: true,
     subtree: true,
   })
 
-  const tableScroll = computed(() => ({
-    x: '100%',
-    y: tableCardHeight.value - tableHeaderHeight.value - paginationHeight.value - token.value.marginXL,
-  }))
+  const tableScroll = computed(() => {
+    const scrollableTableHeight = tableCardHeight.value - tableHeaderHeight.value - paginationHeight.value - token.value.margin * 2
+
+    return {
+      x: '100%',
+      y: tableBodyHeight.value >= scrollableTableHeight ? scrollableTableHeight : undefined,
+    }
+  })
 
   const listContainerProps = computed(() => ({
     searchCardRef,
@@ -62,11 +76,14 @@ export function useList() {
   }))
 
   const tableProps = computed(() => ({
+    bordered: true,
+    sticky: true,
     scroll: tableScroll.value,
   }))
 
   return {
     listContainerProps,
     tableProps,
+    tableBodyHeight,
   }
 }
