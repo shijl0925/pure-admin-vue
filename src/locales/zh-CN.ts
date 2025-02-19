@@ -8,6 +8,8 @@ export default {
     userCenter: '个人中心',
     logout: '退出登录',
     logoutConfirm: '确认退出登录吗？',
+    expand: '展开',
+    collapse: '收起',
   },
   page: {
     login: {

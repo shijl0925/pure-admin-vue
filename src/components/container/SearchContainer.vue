@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { AnimatePresence, Motion } from 'motion-v'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { Icon } from '@/components/icon'
+
+const { t } = useI18n()
 
 const isVisible = ref(false)
 </script>
@@ -35,7 +38,7 @@ const isVisible = ref(false)
   >
     <a-space>
       <Icon icon="icon-park-outline:down" class="transition-transform duration-300" :class="isVisible ? 'rotate-180' : ''" />
-      <span>{{ isVisible ? '收起' : '展开' }}</span>
+      <span>{{ isVisible ? t('common.collapse') : t('common.expand') }}</span>
     </a-space>
   </div>
 </template>
