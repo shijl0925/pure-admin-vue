@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { ListContainer, SearchCol, SearchRow } from '@/components/container'
+import { ListContainer, SearchCol, SearchContainer, SearchRow } from '@/components/container'
 import { useList } from '@/hooks/useList'
 
 const {
@@ -97,32 +97,41 @@ const columns = ref([
   <ListContainer v-bind="listContainerProps">
     <template #searchForm>
       <a-form :colon="false">
-        <SearchRow>
-          <SearchCol label="input1">
-            <a-input />
-          </SearchCol>
-          <SearchCol label="input2">
-            <a-input />
-          </SearchCol>
-          <SearchCol label="input3">
-            <a-input />
-          </SearchCol>
-          <SearchCol label="input4">
-            <a-input />
-          </SearchCol>
-          <template v-if="isVisible">
-            <SearchCol label="input5">
+        <SearchContainer>
+          <SearchRow>
+            <SearchCol label="input1">
               <a-input />
             </SearchCol>
-            <SearchCol label="input6">
+            <SearchCol label="input2">
               <a-input />
             </SearchCol>
+            <SearchCol label="input3">
+              <a-input />
+            </SearchCol>
+            <SearchCol label="input4">
+              <a-input />
+            </SearchCol>
+          </SearchRow>
+          <template #extra>
+            <SearchRow>
+              <SearchCol label="input5">
+                <a-input />
+              </SearchCol>
+              <SearchCol label="input6">
+                <a-input />
+              </SearchCol>
+            </SearchRow>
           </template>
-        </SearchRow>
+          <template #actions>
+            <a-button type="primary" @click="isVisible = !isVisible">
+              搜索
+            </a-button>
+            <a-button type="primary" @click="isVisible = !isVisible">
+              搜索2
+            </a-button>
+          </template>
+        </SearchContainer>
       </a-form>
-      <a-button type="primary" @click="isVisible = !isVisible">
-        搜索
-      </a-button>
     </template>
     <a-table
       :data-source="dataSource"
