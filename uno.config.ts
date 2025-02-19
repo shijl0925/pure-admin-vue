@@ -1,4 +1,4 @@
-import { defineConfig, presetUno } from 'unocss'
+import { defineConfig, presetWind3 } from 'unocss'
 
 export default defineConfig({
   rules: [
@@ -42,6 +42,6 @@ export default defineConfig({
     },
   },
   presets: [
-    presetUno(),
+    presetWind3(),
   ],
 })
