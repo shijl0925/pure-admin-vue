@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
     "@iconify/vue": "^4.3.0",
+    "@tanstack/vue-query": "^5.66.4",
     "@vueuse/core": "^12.7.0",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",
