@@ -48,7 +48,7 @@ const breadcrumbItems = computed(() => {
 <template>
   <a-breadcrumb>
     <a-breadcrumb-item v-for="item in breadcrumbItems" :key="item.id">
-      <template v-if="item.path">
+      <template v-if="item.path && item.path !== route.path">
         <RouterLink :to="item.path">
           {{ item.title }}
         </RouterLink>

@@ -1,6 +1,6 @@
-import type { MenuTree } from '@/types/menu'
-import type { AuthTokens, LoginInfo, UserInfo, User, UserListParams } from '@/types/user'
 import type { BasePageList } from '@/types/base'
+import type { MenuTree } from '@/types/menu'
+import type { AuthTokens, LoginInfo, User, UserInfo, UserListParams } from '@/types/user'
 
 import { http } from '@/utils/http'
 

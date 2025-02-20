@@ -58,7 +58,6 @@ onAfterRequest((list) => {
 <template>
   <SearchTableLayout v-bind="listContainerProps">
     <template #searchForm>
-      {{ isLoading }}
       <a-form :model="formState" :colon="false" @finish="handleSearch">
         <SearchContainer>
           <SearchRow>
@@ -76,7 +75,7 @@ onAfterRequest((list) => {
             </SearchCol>
           </SearchRow>
           <template #actions>
-            <a-button type="primary" html-type="submit">
+            <a-button type="primary" html-type="submit" :loading="isLoading">
               搜索
             </a-button>
           </template>
