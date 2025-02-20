@@ -1,13 +1,43 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { ListContainer, SearchCol, SearchContainer, SearchRow } from '@/components/container'
-import { useTableLayout } from '@/hooks/useTableLayout'
+import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
+import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
+import { useTable } from '@/hooks/useTable'
+
+const columns = ref([
+  {
+    title: '姓名',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: '年龄',
+    dataIndex: 'age',
+    key: 'age',
+  },
+  {
+    title: '住址',
+    dataIndex: 'address',
+    key: 'address',
+  },
+])
 
 const {
   listContainerProps,
+  tableScrollY,
+} = useSearchTableLayout()
+
+const {
   tableProps,
-} = useTableLayout()
+} = useTable({
+  key: 'menus',
+  apiFn: () => {
+    return Promise.resolve([])
+  },
+  columns,
+  scrollY: tableScrollY,
+})
 
 const isVisible = ref(false)
 
@@ -73,28 +103,10 @@ const dataSource = ref([
     address: '西湖区湖底公园1号',
   },
 ])
-
-const columns = ref([
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '年龄',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: '住址',
-    dataIndex: 'address',
-    key: 'address',
-  },
-])
 </script>
 
 <template>
-  <ListContainer v-bind="listContainerProps">
+  <SearchTableLayout v-bind="listContainerProps">
     <template #searchForm>
       <a-form :colon="false">
         <SearchContainer>
@@ -135,12 +147,8 @@ const columns = ref([
     </template>
     <a-table
       :data-source="dataSource"
-      :columns="columns"
-      :pagination="{
-        pageSize: 10,
-        total: 20,
-      }"
+      :pagination="false"
       v-bind="tableProps"
     />
-  </ListContainer>
+  </SearchTableLayout>
 </template>

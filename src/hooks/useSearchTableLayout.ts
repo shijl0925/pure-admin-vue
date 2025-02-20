@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 
 import { useAppStore } from '@/stores'
 
-export function useTableLayout() {
+export function useSearchTableLayout() {
   const { token } = theme.useToken()
   const { height: windowHeight } = useWindowSize()
 
@@ -60,14 +60,10 @@ export function useTableLayout() {
     subtree: true,
   })
 
-  const tableScroll = computed(() => {
+  const tableScrollY = computed(() => {
     const offsetHeight = 6
     const scrollableTableHeight = tableCardHeight.value - theadHeight.value - paginationHeight.value - token.value.margin * 2 - offsetHeight
-
-    return {
-      x: '100%',
-      y: tbodyHeight.value >= scrollableTableHeight ? scrollableTableHeight : undefined,
-    }
+    return tbodyHeight.value >= scrollableTableHeight ? scrollableTableHeight : undefined
   })
 
   const listContainerProps = computed(() => ({
@@ -76,14 +72,8 @@ export function useTableLayout() {
     tableCardHeight,
   }))
 
-  const tableProps = computed(() => ({
-    bordered: true,
-    sticky: true,
-    scroll: tableScroll.value,
-  }))
-
   return {
     listContainerProps,
-    tableProps,
+    tableScrollY,
   }
 }

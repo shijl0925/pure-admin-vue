@@ -1,7 +1,7 @@
 import type { EditableTreeNode } from 'unplugin-vue-router'
 
 // 这里不能使用路径别名，因为要在 vite.config.ts 中使用
-import { MENU } from '../constants/permissions'
+import { MENU, USER } from '../constants/permissions'
 import { flattenTree } from '../utils/array'
 
 const routeMetaConfig = [
@@ -9,6 +9,7 @@ const routeMetaConfig = [
   {
     name: '系统设置',
     children: [
+      { name: '用户管理', path: '/system/user', meta: { permission: USER.READ } },
       { name: '菜单管理', path: '/system/menu', meta: { permission: MENU.READ } },
     ],
   },

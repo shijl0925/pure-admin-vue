@@ -1,146 +1,69 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import type { User, UserListParams } from '@/types/user'
 
-import { ListContainer, SearchCol, SearchContainer, SearchRow } from '@/components/container'
-import { useTableLayout } from '@/hooks/useTableLayout'
+import { getUserListApi } from '@/apis/user'
+import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
+import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
+import { useTable } from '@/hooks/useTable'
 
 const {
   listContainerProps,
+  tableScrollY,
+} = useSearchTableLayout()
+
+const {
+  formState,
+  formSubmit,
   tableProps,
-} = useTableLayout()
-
-const isVisible = ref(false)
-
-const dataSource = ref([
-  {
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号',
+} = useTable<User, UserListParams>({
+  key: 'users',
+  apiFn: getUserListApi,
+  scrollY: tableScrollY,
+  form: {
+    username: null,
+    nickName: null,
+    email: null,
+    phoneNumber: null,
   },
-  {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '3',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '4',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '5',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '6',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '7',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '8',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '9',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '10',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-])
-
-const columns = ref([
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '年龄',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: '住址',
-    dataIndex: 'address',
-    key: 'address',
-  },
-])
+  columns: [
+    { title: '用户名', dataIndex: 'username' },
+    { title: '昵称', dataIndex: 'nickName' },
+    { title: '邮箱', dataIndex: 'email' },
+    { title: '手机号', dataIndex: 'phoneNumber' },
+    { title: '是否冻结', dataIndex: 'isFrozen' },
+    { title: '创建时间', dataIndex: 'createTime' },
+    { title: '更新时间', dataIndex: 'updateTime' },
+  ],
+})
 </script>
 
 <template>
-  <ListContainer v-bind="listContainerProps">
+  <SearchTableLayout v-bind="listContainerProps">
     <template #searchForm>
-      <a-form :colon="false">
+      <a-form :model="formState" :colon="false" @finish="formSubmit">
         <SearchContainer>
           <SearchRow>
-            <SearchCol label="input1">
-              <a-input />
+            <SearchCol name="username" label="用户名">
+              <a-input v-model:value="formState.username" />
             </SearchCol>
-            <SearchCol label="input2">
-              <a-input />
+            <SearchCol name="nickName" label="昵称">
+              <a-input v-model:value="formState.nickName" />
             </SearchCol>
-            <SearchCol label="input3">
-              <a-input />
+            <SearchCol name="email" label="邮箱">
+              <a-input v-model:value="formState.email" />
             </SearchCol>
-            <SearchCol label="input4">
-              <a-input />
+            <SearchCol name="phoneNumber" label="手机号">
+              <a-input v-model:value="formState.phoneNumber" />
             </SearchCol>
           </SearchRow>
-          <template #extra>
-            <SearchRow>
-              <SearchCol label="input5">
-                <a-input />
-              </SearchCol>
-              <SearchCol label="input6">
-                <a-input />
-              </SearchCol>
-            </SearchRow>
-          </template>
           <template #actions>
-            <a-button type="primary" @click="isVisible = !isVisible">
+            <a-button type="primary" html-type="submit">
               搜索
-            </a-button>
-            <a-button type="primary" @click="isVisible = !isVisible">
-              搜索2
             </a-button>
           </template>
         </SearchContainer>
       </a-form>
     </template>
-    <a-table
-      :data-source="dataSource"
-      :columns="columns"
-      :pagination="{
-        pageSize: 10,
-        total: 20,
-      }"
-      v-bind="tableProps"
-    />
-  </ListContainer>
+    <a-table v-bind="tableProps" />
+  </SearchTableLayout>
 </template>
