@@ -2,6 +2,7 @@ import type { TableProps } from 'ant-design-vue'
 import type { Ref } from 'vue'
 
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
+import { createEventHook } from '@vueuse/core'
 import { computed, isRef, ref, unref } from 'vue'
 
 import type { BasePageList, BasePageParams } from '@/types/base'
@@ -14,6 +15,7 @@ interface UseTableOptions<TData, TParams extends BasePageParams> {
   form: Omit<TParams, 'page' | 'pageSize'>
   rules?: Record<string, any>
   columns: Ref<TableProps['columns']> | TableProps['columns']
+  idKey?: string
   scrollX?: string
   scrollY?: Ref<number | undefined> | number | undefined
 }
@@ -31,6 +33,7 @@ export function useTable<TItem, TParams extends BasePageParams>({
   dataStaleTime = 1000 * 60 * 10, // 默认 10 分钟内数据保持新鲜
   apiFn,
   form = {} as Omit<TParams, 'page' | 'pageSize'>,
+  idKey = 'id',
   rules = {},
   columns,
   scrollX = '100%',
@@ -45,6 +48,39 @@ export function useTable<TItem, TParams extends BasePageParams>({
     ...unref(form),
   })
   const formRules = rules
+
+  const beforeRequestHook = createEventHook<[Omit<TParams, 'page' | 'pageSize'>]>()
+  const afterRequestHook = createEventHook<[BasePageList<TItem>]>()
+
+  // 处理表单数据转换
+  const transformForm = async () => {
+    const transformedForm = { ...queryState.value }
+
+    // 触发钩子，允许外部转换
+    const hookResults = await beforeRequestHook.trigger(transformedForm as Omit<TParams, 'page' | 'pageSize'>)
+
+    // 如果有转换结果，使用最后一个
+    if (hookResults && hookResults.length > 0) {
+      return hookResults[hookResults.length - 1]
+    }
+
+    return transformedForm
+  }
+
+  // 处理响应数据转换
+  const transformResponse = async (response: BasePageList<TItem>) => {
+    // 触发钩子，允许外部转换
+    const hookResults = await afterRequestHook.trigger(response)
+    console.log('response', response)
+    console.log('hookResults', hookResults)
+
+    // 如果有转换结果，使用最后一个
+    if (hookResults && hookResults.length > 0) {
+      return hookResults[hookResults.length - 1]
+    }
+
+    return response
+  }
 
   function formSubmit() {
     queryState.value = { ...formState.value }
@@ -64,13 +100,19 @@ export function useTable<TItem, TParams extends BasePageParams>({
   }
 
   // -------------------- @tanstack/vue-query --------------------
-  const { data, isPending, refetch } = useQuery({
+  // 明确指定 queryFn 的返回类型
+  const { data, isPending, refetch } = useQuery<BasePageList<TItem>, Error>({
     queryKey: [key],
-    queryFn: () => apiFn({
-      ...queryState.value,
-      page: page.value,
-      pageSize: pageSize.value,
-    } as TParams),
+    queryFn: async () => {
+      const transformedForm = await transformForm()
+      const response = await apiFn({
+        ...transformedForm,
+        page: page.value,
+        pageSize: pageSize.value,
+      } as TParams)
+
+      return transformResponse(response) as Promise<BasePageList<TItem>>
+    },
     staleTime: cacheEnabled ? dataStaleTime : 0,
     gcTime: cacheEnabled ? dataStaleTime : 0,
   })
@@ -148,5 +190,7 @@ export function useTable<TItem, TParams extends BasePageParams>({
     data,
     isLoading: isPending.value,
     clearSavedState,
+    onBeforeRequest: beforeRequestHook.on,
+    onAfterRequest: afterRequestHook.on,
   }
 }

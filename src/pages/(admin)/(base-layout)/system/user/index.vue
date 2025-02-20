@@ -15,6 +15,8 @@ const {
   formState,
   formSubmit,
   tableProps,
+  onBeforeRequest,
+  onAfterRequest,
 } = useTable<User, UserListParams>({
   key: 'users',
   apiFn: getUserListApi,
@@ -34,6 +36,25 @@ const {
     { title: '创建时间', dataIndex: 'createTime' },
     { title: '更新时间', dataIndex: 'updateTime' },
   ],
+})
+
+onBeforeRequest((form) => {
+  console.log('form', form)
+
+  return {
+    ...form,
+    xyz: '123',
+  }
+})
+
+onAfterRequest((response) => {
+  return {
+    ...response,
+    list: response.list.map(item => ({
+      ...item,
+      isFrozen: 0,
+    })),
+  }
 })
 </script>
 
