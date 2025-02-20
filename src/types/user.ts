@@ -1,5 +1,6 @@
-import type { MenuTree } from '@/types/menu'
 import type { BasePageParams } from '@/types/base'
+import type { MenuTree } from '@/types/menu'
+
 export interface LoginInfo {
   username: string
   password: string

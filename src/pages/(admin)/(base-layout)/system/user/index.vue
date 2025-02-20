@@ -12,8 +12,9 @@ const {
 } = useSearchTableLayout()
 
 const {
+  isLoading,
   formState,
-  formSubmit,
+  handleSearch,
   tableProps,
   onBeforeRequest,
   onAfterRequest,
@@ -39,29 +40,26 @@ const {
 })
 
 onBeforeRequest((form) => {
-  console.log('form', form)
-
   return {
     ...form,
     xyz: '123',
   }
 })
 
-onAfterRequest((response) => {
-  return {
-    ...response,
-    list: response.list.map(item => ({
-      ...item,
-      isFrozen: 0,
-    })),
-  }
+onAfterRequest((list) => {
+  console.log('list', list)
+  return list.map(item => ({
+    ...item,
+    isFrozen: 0,
+  }))
 })
 </script>
 
 <template>
   <SearchTableLayout v-bind="listContainerProps">
     <template #searchForm>
-      <a-form :model="formState" :colon="false" @finish="formSubmit">
+      {{ isLoading }}
+      <a-form :model="formState" :colon="false" @finish="handleSearch">
         <SearchContainer>
           <SearchRow>
             <SearchCol name="username" label="用户名">

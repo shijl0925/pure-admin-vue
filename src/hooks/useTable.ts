@@ -5,10 +5,11 @@ import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import { createEventHook } from '@vueuse/core'
 import { computed, isRef, ref, unref } from 'vue'
 
-import type { BasePageList, BasePageParams } from '@/types/base'
+import type { ApiResponse, BasePageList, BasePageParams } from '@/types/base'
 
 interface UseTableOptions<TData, TParams extends BasePageParams> {
   apiFn: (params?: TParams) => Promise<TData>
+  pagination?: boolean
   key: string
   cacheEnabled?: boolean
   dataStaleTime?: number
@@ -27,117 +28,58 @@ interface QueryState<TParams> {
   pageSize: number
 }
 
+// 辅助函数：判断是否为分页响应
+function isPageResponse<T>(data: ApiResponse<T>): data is BasePageList<T> {
+  return !Array.isArray(data) && 'total' in data && 'list' in data
+}
+
 export function useTable<TItem, TParams extends BasePageParams>({
   key,
   cacheEnabled = true, // 是否启用缓存，默认启用
   dataStaleTime = 1000 * 60 * 10, // 默认 10 分钟内数据保持新鲜
   apiFn,
+  pagination = true,
   form = {} as Omit<TParams, 'page' | 'pageSize'>,
   idKey = 'id',
   rules = {},
   columns,
   scrollX = '100%',
   scrollY = undefined,
-}: UseTableOptions<BasePageList<TItem>, TParams>) {
-  // -------------------- Pagination --------------------
+}: UseTableOptions<ApiResponse<TItem>, TParams>) {
+  // -------------------- Types & Hooks --------------------
+  const beforeRequestHook = createEventHook<[Omit<TParams, 'page' | 'pageSize'>]>()
+  const afterRequestHook = createEventHook<[TItem[]]>()
+
+  // -------------------- State Management --------------------
+  // 分页状态
   const page = ref(1)
   const pageSize = ref(10)
 
-  // -------------------- Form --------------------
-  const formState = ref({
-    ...unref(form),
-  })
+  // 表单状态
+  const formState = ref({ ...unref(form) })
   const formRules = rules
+  const queryState = ref({ ...unref(form) })
 
-  const beforeRequestHook = createEventHook<[Omit<TParams, 'page' | 'pageSize'>]>()
-  const afterRequestHook = createEventHook<[BasePageList<TItem>]>()
-
+  // -------------------- Data Transformation --------------------
   // 处理表单数据转换
-  const transformForm = async () => {
+  async function transformForm() {
     const transformedForm = { ...queryState.value }
+    // const hookResults = await beforeRequestHook.trigger(transformedForm as Omit<TParams, 'page' | 'pageSize'>)
+    const hookResults = await beforeRequestHook.trigger(transformedForm)
 
-    // 触发钩子，允许外部转换
-    const hookResults = await beforeRequestHook.trigger(transformedForm as Omit<TParams, 'page' | 'pageSize'>)
-
-    // 如果有转换结果，使用最后一个
-    if (hookResults && hookResults.length > 0) {
-      return hookResults[hookResults.length - 1]
-    }
-
-    return transformedForm
+    return hookResults?.length ? hookResults[hookResults.length - 1] : transformedForm
   }
 
   // 处理响应数据转换
-  const transformResponse = async (response: BasePageList<TItem>) => {
-    // 触发钩子，允许外部转换
-    const hookResults = await afterRequestHook.trigger(response)
-    console.log('response', response)
-    console.log('hookResults', hookResults)
+  async function transformResponse(data: TItem[]) {
+    const hookResults = await afterRequestHook.trigger(data)
 
-    // 如果有转换结果，使用最后一个
-    if (hookResults && hookResults.length > 0) {
-      return hookResults[hookResults.length - 1]
-    }
-
-    return response
+    return hookResults?.length ? hookResults[hookResults.length - 1] : data
   }
 
-  function formSubmit() {
-    queryState.value = { ...formState.value }
-    page.value = 1
-    saveQueryState() // 保存查询状态
-    refetch()
-  }
-
-  function formReset() {
-    const defaultForm = unref(form)
-    formState.value = { ...defaultForm }
-    queryState.value = { ...defaultForm }
-    page.value = 1
-    pageSize.value = 10
-    saveQueryState() // 保存查询状态
-    refetch()
-  }
-
-  // -------------------- @tanstack/vue-query --------------------
-  // 明确指定 queryFn 的返回类型
-  const { data, isPending, refetch } = useQuery<BasePageList<TItem>, Error>({
-    queryKey: [key],
-    queryFn: async () => {
-      const transformedForm = await transformForm()
-      const response = await apiFn({
-        ...transformedForm,
-        page: page.value,
-        pageSize: pageSize.value,
-      } as TParams)
-
-      return transformResponse(response) as Promise<BasePageList<TItem>>
-    },
-    staleTime: cacheEnabled ? dataStaleTime : 0,
-    gcTime: cacheEnabled ? dataStaleTime : 0,
-  })
-
+  // -------------------- Cache Management --------------------
   const queryClient = useQueryClient()
-
-  // 状态持久化的 key
   const stateKey = `${key}-state`
-
-  // 查询状态 - 用于实际查询
-  const queryState = ref({
-    ...unref(form),
-  })
-
-  if (cacheEnabled) {
-    // 初始化状态
-    const initialState = queryClient.getQueryData<QueryState<TParams>>([stateKey])
-
-    if (initialState) {
-      formState.value = { ...initialState.params }
-      queryState.value = { ...initialState.params }
-      page.value = initialState.page
-      pageSize.value = initialState.pageSize
-    }
-  }
 
   // 保存查询状态
   function saveQueryState() {
@@ -158,39 +100,142 @@ export function useTable<TItem, TParams extends BasePageParams>({
     }
   }
 
-  // -------------------- Table --------------------
+  if (cacheEnabled) {
+    // 初始化状态
+    const initialState = queryClient.getQueryData<QueryState<TParams>>([stateKey])
+
+    if (initialState) {
+      formState.value = { ...initialState.params }
+      queryState.value = { ...initialState.params }
+      if (pagination) {
+        page.value = initialState.page
+        pageSize.value = initialState.pageSize
+      }
+    }
+  }
+
+  // -------------------- Query & Data Fetching --------------------
+  const { data, refetch, isFetching } = useQuery<ApiResponse<TItem>, Error>({
+    queryKey: [key],
+    queryFn: async () => {
+      const transformedForm = await transformForm()
+      const params = {
+        ...transformedForm,
+        ...(pagination ? { page: page.value, pageSize: pageSize.value } : {}),
+      } as TParams
+      const response = await apiFn(params)
+
+      if (isPageResponse(response)) {
+        const processedList = await transformResponse(response.list)
+        return {
+          total: response.total,
+          list: processedList,
+        } as BasePageList<TItem>
+      }
+      return transformResponse(response) as Promise<TItem[]>
+    },
+    staleTime: cacheEnabled ? dataStaleTime : 0,
+    gcTime: cacheEnabled ? dataStaleTime : 0,
+  })
+
+  // -------------------- Computed Properties --------------------
+  const list = computed(() => {
+    if (!data.value)
+      return []
+    return isPageResponse(data.value) ? data.value.list : data.value
+  })
+
+  const total = computed(() => {
+    if (!data.value)
+      return 0
+    return isPageResponse(data.value) ? data.value.total : data.value.length
+  })
+
+  // -------------------- Actions --------------------
+  function handleSearch() {
+    queryState.value = { ...formState.value }
+    if (pagination) {
+      page.value = 1
+    }
+    saveQueryState()
+    refetch()
+  }
+
+  function handleReset() {
+    const defaultForm = unref(form)
+    formState.value = { ...defaultForm }
+    queryState.value = { ...defaultForm }
+    if (pagination) {
+      page.value = 1
+      pageSize.value = 10
+    }
+    saveQueryState()
+    refetch()
+  }
+
+  async function handleCreate() {}
+
+  async function handleEdit() {}
+
+  async function handleDelete() {}
+
+  // -------------------- Table Props --------------------
   const tableProps = computed(() => ({
     columns: isRef(columns) ? columns.value : columns,
-    dataSource: data.value?.list,
+    dataSource: list.value,
     scroll: {
       x: scrollX,
       y: isRef(scrollY) ? scrollY.value : scrollY,
     },
-    loading: isPending.value,
+    rowKey: idKey,
+    loading: isFetching.value,
     sticky: true,
-    pagination: {
-      current: page.value,
-      pageSize: pageSize.value,
-      total: data.value?.total || 0,
-      onChange: (newPage: number, newPageSize: number) => {
-        page.value = newPage
-        pageSize.value = newPageSize
-        refetch()
-        saveQueryState() // 保存分页状态
-      },
-    },
+    pagination: pagination
+      ? {
+          current: page.value,
+          pageSize: pageSize.value,
+          total: total.value,
+          onChange: (newPage: number, newPageSize: number) => {
+            page.value = newPage
+            pageSize.value = newPageSize
+            refetch()
+            saveQueryState()
+          },
+        }
+      : false,
   }))
 
   return {
+    // 表单
     formState,
     formRules,
-    formSubmit,
-    formReset,
+
+    // 事件
+    handleSearch,
+    handleReset,
+
+    // 表格
     tableProps,
+
+    // 数据
+    isLoading: isFetching,
     data,
-    isLoading: isPending.value,
+    list,
+    total,
+
+    // 清除状态
     clearSavedState,
+
+    // Hooks
     onBeforeRequest: beforeRequestHook.on,
     onAfterRequest: afterRequestHook.on,
+
+    // 分页状态
+    ...(pagination
+      ? {
+          currentPage: page,
+          currentPageSize: pageSize,
+        }
+      : {}),
   }
 }
