@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 
 import { useAppStore } from '@/stores'
 
-export function useList() {
+export function useTableLayout() {
   const { token } = theme.useToken()
   const { height: windowHeight } = useWindowSize()
 
