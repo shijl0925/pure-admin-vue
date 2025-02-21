@@ -8,9 +8,10 @@ import { Icon } from '@/components/icon'
 export interface ButtonProps extends AntdButtonProps {
   icon?: string
   iconPosition?: 'left' | 'right'
+  loading?: boolean
 }
 
-const { icon, iconPosition = 'left', size = 'middle', ...props } = defineProps<ButtonProps>()
+const { icon, iconPosition = 'left', size = 'middle', loading = false, ...props } = defineProps<ButtonProps>()
 
 const iconClass = computed(() => {
   return {
@@ -33,7 +34,7 @@ const space = computed(() => {
 </script>
 
 <template>
-  <a-button v-bind="props">
+  <a-button v-bind="props" :loading="loading">
     <template v-if="icon">
       <a-space v-if="$slots.default" :size="space">
         <Icon :icon="icon" :class="iconClass" />

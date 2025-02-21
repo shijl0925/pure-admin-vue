@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/userStore'
 
 import MenuTreeItem from './MenuTreeItem.vue'
 

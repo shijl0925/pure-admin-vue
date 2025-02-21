@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { useAppStore } from '@/stores/app'
+import { useAppStore } from '@/stores/appStore'
 
 const appStore = useAppStore()
 const { antdTheme } = storeToRefs(appStore)

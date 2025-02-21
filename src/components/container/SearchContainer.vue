@@ -27,9 +27,7 @@ const isVisible = ref(false)
     </Motion>
   </AnimatePresence>
   <div class="flex items-center justify-end">
-    <a-space>
-      <slot name="actions" />
-    </a-space>
+    <slot name="actions" />
   </div>
   <div
     v-if="$slots.extra"

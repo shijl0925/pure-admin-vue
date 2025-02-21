@@ -8,9 +8,12 @@ export default {
     userCenter: 'User Center',
     logout: 'Logout',
     logoutConfirm: 'Are you sure you want to log out?',
+    networkError: 'Network error, please try again later',
     expand: 'Expand',
     collapse: 'Collapse',
-    networkError: 'Network error, please try again later',
+    search: 'Search',
+    reset: 'Reset',
+    create: 'Create',
   },
   page: {
     login: {

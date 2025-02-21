@@ -1,11 +1,14 @@
-import type { TableProps } from 'ant-design-vue'
+import type { FormProps, TableProps } from 'ant-design-vue'
 import type { Ref } from 'vue'
 
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import { createEventHook } from '@vueuse/core'
 import { computed, isRef, ref, unref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import type { ApiResponse, BasePageList, BasePageParams } from '@/types/base'
+
+import { usePageTransfer } from '@/hooks/usePageTransfer'
 
 interface UseTableOptions<TData, TParams extends BasePageParams> {
   apiFn: (params?: TParams) => Promise<TData>
@@ -14,11 +17,13 @@ interface UseTableOptions<TData, TParams extends BasePageParams> {
   cacheEnabled?: boolean
   dataStaleTime?: number
   form: Omit<TParams, 'page' | 'pageSize'>
-  rules?: Record<string, any>
+  rules?: FormProps['rules']
   columns: Ref<TableProps['columns']> | TableProps['columns']
   idKey?: string
   scrollX?: string
   scrollY?: Ref<number | undefined> | number | undefined
+  pageCreatePath?: string
+  pageEditPath?: string
 }
 
 // 定义查询参数的类型
@@ -45,7 +50,11 @@ export function useTable<TItem, TParams extends BasePageParams>({
   columns,
   scrollX = '100%',
   scrollY = undefined,
+  pageCreatePath, // 新建页面路径
+  pageEditPath, // 编辑页面路径
 }: UseTableOptions<ApiResponse<TItem>, TParams>) {
+  const route = useRoute()
+
   // -------------------- Types & Hooks --------------------
   const beforeRequestHook = createEventHook<[Omit<TParams, 'page' | 'pageSize'>]>()
   const afterRequestHook = createEventHook<[TItem[]]>()
@@ -173,7 +182,34 @@ export function useTable<TItem, TParams extends BasePageParams>({
     refetch()
   }
 
-  async function handleCreate() {}
+  async function handleCreate(transferData = null, query = {}) {
+    const { navigateWithData } = usePageTransfer()
+    if (pageCreatePath) {
+      navigateWithData(
+        {
+          path: pageCreatePath,
+          query,
+        },
+        transferData,
+      )
+    }
+    else {
+      navigateWithData(
+        {
+          path: `${route.path}/create/new`,
+          query,
+        },
+        transferData,
+      )
+    }
+    // navigateWithData(
+    //   {
+    //     path: pageCreatePath,
+    //     query,
+    //   },
+    //   transferData,
+    // )
+  }
 
   async function handleEdit() {}
 
@@ -213,6 +249,9 @@ export function useTable<TItem, TParams extends BasePageParams>({
     // 事件
     handleSearch,
     handleReset,
+    handleCreate,
+    handleEdit,
+    handleDelete,
 
     // 表格
     tableProps,

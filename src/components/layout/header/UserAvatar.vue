@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 
 import { Icon } from '@/components/icon'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/userStore'
 
 const { t } = useI18n()
 const userStore = useUserStore()

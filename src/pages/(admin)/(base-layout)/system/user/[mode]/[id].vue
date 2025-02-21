@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import { FormLayout } from '@/components/container'
+</script>
+
 <template>
-  <div>
+  <FormLayout>
     <h1>create</h1>
-  </div>
+  </FormLayout>
 </template>

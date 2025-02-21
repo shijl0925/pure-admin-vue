@@ -8,9 +8,12 @@ export default {
     userCenter: '个人中心',
     logout: '退出登录',
     logoutConfirm: '确认退出登录吗？',
+    networkError: '网络异常，请稍后再试',
     expand: '展开',
     collapse: '收起',
-    networkError: '网络异常，请稍后再试',
+    search: '查询',
+    reset: '重置',
+    create: '新建',
   },
   page: {
     login: {

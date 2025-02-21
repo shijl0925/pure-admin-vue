@@ -2,7 +2,7 @@
 import type { User, UserListParams } from '@/types/user'
 
 import { getUserListApi } from '@/apis/user'
-import { Button } from '@/components/button'
+import { CreateButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
@@ -16,6 +16,8 @@ const {
   isLoading,
   formState,
   handleSearch,
+  handleReset,
+  handleCreate,
   tableProps,
   onBeforeRequest,
   onAfterRequest,
@@ -76,14 +78,12 @@ onAfterRequest((list) => {
             </SearchCol>
           </SearchRow>
           <template #actions>
-            <Button
-              type="primary"
-              html-type="submit"
-              :loading="isLoading"
-              icon="icon-park-outline:search"
-            >
-              搜索
-            </Button>
+            <a-space>
+              <SearchButton :loading="isLoading" />
+              <ResetButton @click="handleReset" />
+            </a-space>
+            <a-divider type="vertical" />
+            <CreateButton @click="handleCreate" />
           </template>
         </SearchContainer>
       </a-form>
