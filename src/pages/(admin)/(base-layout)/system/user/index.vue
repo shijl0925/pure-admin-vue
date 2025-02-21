@@ -2,6 +2,7 @@
 import type { User, UserListParams } from '@/types/user'
 
 import { getUserListApi } from '@/apis/user'
+import { Button } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
@@ -75,9 +76,14 @@ onAfterRequest((list) => {
             </SearchCol>
           </SearchRow>
           <template #actions>
-            <a-button type="primary" html-type="submit" :loading="isLoading">
+            <Button
+              type="primary"
+              html-type="submit"
+              :loading="isLoading"
+              icon="icon-park-outline:search"
+            >
               搜索
-            </a-button>
+            </Button>
           </template>
         </SearchContainer>
       </a-form>

@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { IconButton } from '@/components/button'
+import { Icon } from '@/components/icon'
 import { LOCALES } from '@/constants/app'
 import { useAppStore } from '@/stores/app'
 
@@ -32,11 +32,16 @@ const handleClick: MenuProps['onClick'] = (e) => {
     <template #overlay>
       <a-menu :selected-keys="selectedKeys" :items="menuItems" @click="handleClick" />
     </template>
-    <IconButton
-      class="w-10"
-      icon="icon-park-outline:translate"
-      type="text"
-      block
-    />
+    <div class="w-10">
+      <a-button type="text" block>
+        <template #icon>
+          <Icon
+            icon="icon-park-outline:translate"
+            class="text-base dark:text-theme-dark text-theme"
+          />
+        </template>
+        <slot />
+      </a-button>
+    </div>
   </a-dropdown>
 </template>

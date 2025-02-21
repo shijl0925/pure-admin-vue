@@ -10,6 +10,7 @@ export default {
     logoutConfirm: 'Are you sure you want to log out?',
     expand: 'Expand',
     collapse: 'Collapse',
+    networkError: 'Network error, please try again later',
   },
   page: {
     login: {

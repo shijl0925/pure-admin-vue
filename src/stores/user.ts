@@ -89,7 +89,7 @@ export const useUserStore = defineStore('user', () => {
   const logout = () => {
     clearAllToken()
     clearUserInfo()
-    router.push(route.fullPath !== '/' ? `/login?redirect=${route.fullPath}` : '/login')
+    router.push(route.fullPath !== '/' && route.fullPath !== '/login' ? `/login?redirect=${route.fullPath}` : '/login')
   }
 
   return {

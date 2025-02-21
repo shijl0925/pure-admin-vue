@@ -4,6 +4,7 @@ import { message } from 'ant-design-vue'
 import Axios from 'axios'
 import { storeToRefs } from 'pinia'
 
+import { i18n } from '@/locales'
 import { useUserStore } from '@/stores'
 
 export const http = Axios.create({
@@ -41,6 +42,12 @@ http.interceptors.response.use(
   (error) => {
     const userStore = useUserStore()
     const { logout } = userStore
+    console.log('error')
+    if (!error.response) {
+      message.error(i18n.global.t('common.networkError'))
+      logout()
+      return Promise.reject(error)
+    }
 
     const {
       response: {

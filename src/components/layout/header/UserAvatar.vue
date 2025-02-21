@@ -51,13 +51,18 @@ const handleClick: MenuProps['onClick'] = (e) => {
         </a-menu-item>
       </a-menu>
     </template>
-    <IconButton
-      icon="icon-park-outline:user"
-      type="text"
-    >
-      <span class="pl-2 font-400">
-        {{ userInfo?.nickName || userInfo?.username }}
-      </span>
-    </IconButton>
+    <div>
+      <a-button type="text">
+        <template #icon>
+          <Icon
+            icon="icon-park-outline:user"
+            class="text-base dark:text-theme-dark text-theme"
+          />
+        </template>
+        <span class="pl-2 font-400">
+          {{ userInfo?.nickName || userInfo?.username }}
+        </span>
+      </a-button>
+    </div>
   </a-dropdown>
 </template>

@@ -8,7 +8,7 @@ const { icon = '' } = defineProps<{
 
 const loading = ref(false)
 
-watch(() => name, async () => {
+watch(() => icon, async () => {
   loading.value = true
   await nextTick()
   loading.value = false

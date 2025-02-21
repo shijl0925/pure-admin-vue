@@ -39,7 +39,7 @@ router.beforeEach(async (to, from, next) => {
     else {
       next({
         path: '/login',
-        query: to.fullPath !== '/' ? { redirect: to.fullPath } : undefined,
+        query: to.fullPath !== '/' && to.fullPath !== '/login' ? { redirect: to.fullPath } : undefined,
       })
     }
   }

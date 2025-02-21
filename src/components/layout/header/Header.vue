@@ -2,10 +2,11 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
-import { LangSelect, SiderToggle, ThemeToggle } from '@/components/common'
+import { LangSelect, ThemeToggle } from '@/components/common'
 import { useAppStore } from '@/stores'
 
 import Breadcrumb from './Breadcrumb.vue'
+import SiderToggle from './SiderToggle.vue'
 import UserAvatar from './UserAvatar.vue'
 
 const appStore = useAppStore()

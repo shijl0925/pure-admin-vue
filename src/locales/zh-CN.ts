@@ -10,6 +10,7 @@ export default {
     logoutConfirm: '确认退出登录吗？',
     expand: '展开',
     collapse: '收起',
+    networkError: '网络异常，请稍后再试',
   },
   page: {
     login: {
