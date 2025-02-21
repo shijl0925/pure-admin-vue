@@ -5,7 +5,6 @@ import { Modal } from 'ant-design-vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 
-import { IconButton } from '@/components/button'
 import { Icon } from '@/components/icon'
 import { useUserStore } from '@/stores/user'
 
