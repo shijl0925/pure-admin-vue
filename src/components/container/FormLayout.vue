@@ -4,15 +4,18 @@ import { storeToRefs } from 'pinia'
 import { computed, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { Button } from '@/components/button'
+import { BackButton } from '@/components/button'
 import { useAppStore } from '@/stores'
 
-const { margin = 20 } = defineProps<{
+const {
+  margin = 20,
+  title = '',
+} = defineProps<{
   margin?: number
+  title?: string
 }>()
 
 const router = useRouter()
-
 const appStore = useAppStore()
 const { sidebarWidth } = storeToRefs(appStore)
 
@@ -57,11 +60,9 @@ function handleBack() {
 
 <template>
   <div class="m-2">
-    <a-card>
+    <a-card :title="title">
       <template #extra>
-        <Button icon="icon-park-outline:back" @click="handleBack">
-          返回
-        </Button>
+        <BackButton @click="handleBack" />
       </template>
       <div class="mx-auto" :style="style">
         <slot />

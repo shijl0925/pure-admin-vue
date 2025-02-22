@@ -5,7 +5,7 @@ import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import { computed, isRef, ref, unref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import type { ApiResponse, BasePageList, BasePageParams } from '@/types/base'
+import type { ApiResponse, BasePageList } from '@/types/base'
 
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
@@ -20,6 +20,7 @@ interface UseTableOptions<TData, TParams = void> {
   key: string
   cacheEnabled?: boolean
   dataStaleTime?: number
+  pagination?: boolean
   form?: FormType<TParams>
   rules?: FormProps['rules']
   columns: Ref<TableProps['columns']> | TableProps['columns']
@@ -47,22 +48,23 @@ export function useTable<TItem, TParams = void>({
   key,
   cacheEnabled = true, // 是否启用缓存，默认启用
   dataStaleTime = 1000 * 60 * 10, // 默认 10 分钟内数据保持新鲜
+  pagination = true,
   form = {} as FormType<TParams>,
   idKey = 'id',
   rules = {},
   columns,
   scrollX = '100%',
   scrollY = undefined,
-  pageCreatePath, // 新建页面路径
-  pageEditPath, // 编辑页面路径
+  pageCreatePath,
+  pageEditPath,
 }: UseTableOptions<ApiResponse<TItem>, TParams>) {
   const route = useRoute()
   const listQueryKey = `${key}-list`
   const stateQueryKey = `${key}-list-state`
 
-  const hasPagination = computed(() => {
-    return 'page' in formState.value && 'pageSize' in formState.value
-  })
+  // const hasPagination = computed(() => {
+  //   return 'page' in formState.value && 'pageSize' in formState.value
+  // })
 
   // -------------------- State Management --------------------
   // 分页状态
@@ -104,7 +106,7 @@ export function useTable<TItem, TParams = void>({
     if (initialState) {
       formState.value = { ...initialState.params }
       queryState.value = { ...initialState.params }
-      if (hasPagination.value) {
+      if (pagination) {
         page.value = initialState.page
         pageSize.value = initialState.pageSize
       }
@@ -121,7 +123,7 @@ export function useTable<TItem, TParams = void>({
       }
 
       // 有查询参数并且分页
-      if (hasPagination.value) {
+      if (pagination) {
         const params = {
           ...queryState.value,
           page: page.value,
@@ -155,7 +157,7 @@ export function useTable<TItem, TParams = void>({
   // -------------------- Actions --------------------
   function handleSearch() {
     queryState.value = { ...formState.value }
-    if (hasPagination.value) {
+    if (pagination) {
       page.value = 1
     }
     saveQueryState()
@@ -165,7 +167,7 @@ export function useTable<TItem, TParams = void>({
   function handleReset() {
     formRef.value?.resetFields?.()
     queryState.value = { ...formState.value }
-    if (hasPagination.value) {
+    if (pagination) {
       page.value = 1
       pageSize.value = 10
     }
@@ -193,16 +195,26 @@ export function useTable<TItem, TParams = void>({
         transferData,
       )
     }
-    // navigateWithData(
-    //   {
-    //     path: pageCreatePath,
-    //     query,
-    //   },
-    //   transferData,
-    // )
   }
 
-  async function handleEdit() {}
+  async function handleEdit(data: TItem, transferData = null, query = {}) {
+    const { navigateWithData } = usePageTransfer()
+    if (pageEditPath) {
+      navigateWithData(
+        {
+          path: pageEditPath,
+          query,
+        },
+        transferData,
+      )
+    }
+    else {
+      navigateWithData(
+        { path: `${route.path}/edit/${(data as Record<string, any>)[idKey]}`, query },
+        transferData,
+      )
+    }
+  }
 
   async function handleDelete() {}
 
@@ -217,7 +229,7 @@ export function useTable<TItem, TParams = void>({
     rowKey: idKey,
     loading: isFetching.value,
     sticky: true,
-    pagination: hasPagination.value
+    pagination: pagination
       ? {
           current: page.value,
           pageSize: pageSize.value,
@@ -258,7 +270,7 @@ export function useTable<TItem, TParams = void>({
     clearSavedState,
 
     // 分页状态
-    ...(hasPagination.value
+    ...(pagination
       ? {
           currentPage: page,
           currentPageSize: pageSize,

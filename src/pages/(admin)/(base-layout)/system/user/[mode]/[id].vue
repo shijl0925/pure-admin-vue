@@ -9,8 +9,12 @@ import { FormLayout } from '@/components/container'
 import { useForm } from '@/hooks/useForm'
 
 const {
+  title,
+  isCreateMode,
   formProps,
   formState,
+  isLoading,
+  handleSubmit,
 } = useForm<Omit<User, 'id'>, User>({
   key: 'user',
   getApiFn: getUserApi,
@@ -35,12 +39,12 @@ const {
 </script>
 
 <template>
-  <FormLayout>
+  <FormLayout :title="title">
     <a-form v-bind="formProps">
       <a-form-item label="用户名" name="username" autocomplete="off">
         <a-input v-model:value="formState.username" />
       </a-form-item>
-      <a-form-item label="密码" name="password">
+      <a-form-item v-if="isCreateMode" label="密码" name="password">
         <a-input-password v-model:value="formState.password" />
       </a-form-item>
       <a-form-item label="昵称" name="nickName">
@@ -56,7 +60,7 @@ const {
         <a-switch v-model:checked="formState.isFrozen" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
-        <SaveButton />
+        <SaveButton type="primary" :loading="isLoading" @click="handleSubmit" />
       </a-form-item>
     </a-form>
   </FormLayout>

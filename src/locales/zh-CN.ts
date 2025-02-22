@@ -14,7 +14,11 @@ export default {
     search: '查询',
     reset: '重置',
     create: '新建',
+    edit: '编辑',
     save: '保存',
+    delete: '删除',
+    deleteConfirm: '确定删除吗？',
+    back: '返回',
   },
   page: {
     login: {

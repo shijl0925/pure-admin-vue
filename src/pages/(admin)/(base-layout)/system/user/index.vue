@@ -4,7 +4,7 @@ import type { FormInstance } from 'ant-design-vue'
 import type { User, UserListParams } from '@/types/user'
 
 import { getUserListApi } from '@/apis/user'
-import { CreateButton, ResetButton, SearchButton } from '@/components/button'
+import { CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
@@ -36,6 +36,7 @@ const {
   handleSearch,
   handleReset,
   handleCreate,
+  handleEdit,
 } = useTable<User, UserListParams>({
   key: 'user',
   apiFn,
@@ -51,9 +52,8 @@ const {
     { title: '昵称', dataIndex: 'nickName' },
     { title: '邮箱', dataIndex: 'email' },
     { title: '手机号', dataIndex: 'phoneNumber' },
-    { title: '是否冻结', dataIndex: 'isFrozen' },
-    { title: '创建时间', dataIndex: 'createTime' },
-    { title: '更新时间', dataIndex: 'updateTime' },
+    { title: '状态', dataIndex: 'isFrozen' },
+    { title: '操作', key: 'actions', fixed: 'right', width: 100 },
   ],
 })
 </script>
@@ -88,6 +88,12 @@ const {
         </SearchContainer>
       </a-form>
     </template>
-    <a-table v-bind="tableProps" />
+    <a-table v-bind="tableProps">
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'actions'">
+          <EditButton type="text" size="small" no-text @click="handleEdit(record)" />
+        </template>
+      </template>
+    </a-table>
   </SearchTableLayout>
 </template>

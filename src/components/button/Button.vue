@@ -34,7 +34,7 @@ const space = computed(() => {
 </script>
 
 <template>
-  <a-button v-bind="props" :loading="loading">
+  <a-button v-bind="props" :size="size" :loading="loading">
     <template v-if="icon">
       <a-space v-if="$slots.default" :size="space">
         <Icon :icon="icon" :class="iconClass" />

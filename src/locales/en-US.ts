@@ -14,7 +14,11 @@ export default {
     search: 'Search',
     reset: 'Reset',
     create: 'Create',
+    edit: 'Edit',
     save: 'Save',
+    delete: 'Delete',
+    deleteConfirm: 'Are you sure you want to delete?',
+    back: 'Back',
   },
   page: {
     login: {
