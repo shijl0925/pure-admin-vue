@@ -9,11 +9,11 @@ import type { ApiResponse, BasePageList, BasePageParams } from '@/types/base'
 
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
-type HasPaginationParams<T> = T extends { page: number, pageSize: number } ? true : false
-
-type FormType<T> = HasPaginationParams<T> extends true
-  ? Omit<T, 'page' | 'pageSize'>
-  : T
+type FormType<T> = T extends void
+  ? Record<string, never>
+  : T extends { page: number, pageSize: number }
+    ? Omit<T, 'page' | 'pageSize'>
+    : T
 
 interface UseTableOptions<TData, TParams = void> {
   apiFn: TParams extends void ? () => Promise<TData> : (params: TParams) => Promise<TData>
@@ -47,7 +47,7 @@ export function useTable<TItem, TParams = void>({
   key,
   cacheEnabled = true, // 是否启用缓存，默认启用
   dataStaleTime = 1000 * 60 * 10, // 默认 10 分钟内数据保持新鲜
-  form = {} as any,
+  form = {} as FormType<TParams>,
   idKey = 'id',
   rules = {},
   columns,
