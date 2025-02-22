@@ -14,7 +14,7 @@ const {
   isLoading,
   handleSubmit,
 } = useForm<Omit<User, 'id'>, User>({
-  key: 'user',
+  key: 'users',
   getApiFn: getUserApi,
   createApiFn: createUserApi,
   updateApiFn: updateUserApi,

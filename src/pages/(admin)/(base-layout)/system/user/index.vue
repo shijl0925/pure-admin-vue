@@ -3,8 +3,8 @@ import type { FormInstance } from 'ant-design-vue'
 
 import type { User, UserListParams } from '@/types/user'
 
-import { deleteUserApi, getUserListApi } from '@/apis/user'
-import { CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
+import { batchDeleteUserApi, deleteUserApi, getUserListApi } from '@/apis/user'
+import { BatchDeleteButton, CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
@@ -25,11 +25,17 @@ const {
   handleCreate,
   handleEdit,
   handleDelete,
+  handleBatchDelete,
+  isBatchDeleting,
+  selectedCount,
+  selectedIsEmpty,
 } = useTable<User, UserListParams>({
-  key: 'user',
+  key: 'users',
   listApiFn: getUserListApi,
   deleteApiFn: deleteUserApi,
+  batchDeleteApiFn: batchDeleteUserApi,
   scrollY: tableScrollY,
+  selectable: true,
   form: {
     username: null,
     nickName: null,
@@ -71,6 +77,8 @@ const {
               <SearchButton :loading="isLoading" />
               <ResetButton @click="handleReset" />
             </a-space>
+            <a-divider type="vertical" />
+            <BatchDeleteButton :loading="isBatchDeleting" :disabled="selectedIsEmpty" :count="selectedCount" @confirm="handleBatchDelete" />
             <a-divider type="vertical" />
             <CreateButton @click="handleCreate" />
           </template>

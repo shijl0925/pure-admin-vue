@@ -17,15 +17,17 @@ type FormType<T> = T extends void
 
 interface UseTableOptions<TData, TParams = void> {
   listApiFn: TParams extends void ? () => Promise<TData> : (params: TParams) => Promise<TData>
-  deleteApiFn: (id: number) => Promise<void>
+  deleteApiFn?: (id: number) => Promise<void>
+  batchDeleteApiFn?: (ids: number[]) => Promise<void>
   key: string
+  idKey?: string
   cacheEnabled?: boolean
   dataStaleTime?: number
   pagination?: boolean
+  selectable?: boolean
   form?: FormType<TParams>
   rules?: FormProps['rules']
   columns: Ref<TableProps['columns']> | TableProps['columns']
-  idKey?: string
   scrollX?: string
   scrollY?: Ref<number | undefined> | number | undefined
   pageCreatePath?: string
@@ -47,12 +49,14 @@ function isPageResponse<T>(data: ApiResponse<T>): data is BasePageList<T> {
 export function useTable<TItem, TParams = void>({
   listApiFn,
   deleteApiFn,
+  batchDeleteApiFn,
   key,
+  idKey = 'id',
   cacheEnabled = true, // 是否启用缓存，默认启用
   dataStaleTime = 1000 * 60 * 10, // 默认 10 分钟内数据保持新鲜
   pagination = true,
+  selectable = false,
   form = {} as FormType<TParams>,
-  idKey = 'id',
   rules = {},
   columns,
   scrollX = '100%',
@@ -64,10 +68,6 @@ export function useTable<TItem, TParams = void>({
   const listQueryKey = `${key}-list`
   const stateQueryKey = `${key}-list-state`
 
-  // const hasPagination = computed(() => {
-  //   return 'page' in formState.value && 'pageSize' in formState.value
-  // })
-
   // -------------------- State Management --------------------
   // 分页状态
   const page = ref(1)
@@ -78,6 +78,19 @@ export function useTable<TItem, TParams = void>({
   const formState = ref({ ...unref(form) })
   const queryState = ref({ ...unref(form) })
   const formRules = rules
+
+  // -------------------- Selected State --------------------
+  const selectedState = ref<number[]>([])
+  const selectedCount = computed(() => selectedState.value.length)
+  const selectedIsEmpty = computed(() => selectedCount.value === 0)
+
+  function setSelectedState(keys: number[]) {
+    selectedState.value = keys
+  }
+
+  function resetSelectedState() {
+    selectedState.value = []
+  }
 
   // -------------------- Cache Management --------------------
   const queryClient = useQueryClient()
@@ -151,17 +164,26 @@ export function useTable<TItem, TParams = void>({
     },
   })
 
+  const { mutateAsync: batchDeleteMutation, isPending: isBatchDeleting } = useMutation({
+    mutationFn: batchDeleteApiFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [listQueryKey] })
+      resetSelectedState()
+    },
+  })
+
   // -------------------- Actions --------------------
-  function handleSearch() {
+  async function handleSearch() {
     queryState.value = { ...formState.value }
     if (pagination) {
       page.value = 1
     }
     saveQueryState()
-    refetch()
+    await refetch()
+    resetSelectedState()
   }
 
-  function handleReset() {
+  async function handleReset() {
     formRef.value?.resetFields?.()
     formState.value = { ...unref(form) }
     queryState.value = { ...formState.value }
@@ -170,7 +192,8 @@ export function useTable<TItem, TParams = void>({
       pageSize.value = 10
     }
     saveQueryState()
-    refetch()
+    await refetch()
+    resetSelectedState()
   }
 
   async function handleCreate(transferData = null, query = {}) {
@@ -218,6 +241,10 @@ export function useTable<TItem, TParams = void>({
     await deleteMutation(id)
   }
 
+  async function handleBatchDelete() {
+    await batchDeleteMutation(selectedState.value)
+  }
+
   // -------------------- Computed Properties --------------------
   const list = computed(() => {
     if (!data.value)
@@ -233,25 +260,35 @@ export function useTable<TItem, TParams = void>({
 
   // -------------------- Table Props --------------------
   const tableProps = computed(() => ({
+    rowKey: idKey,
     columns: isRef(columns) ? columns.value : columns,
     dataSource: list.value,
+    loading: isFetching.value,
+    sticky: true,
+    ...(selectable
+      ? {
+          rowSelection: {
+            type: 'checkbox',
+            selectedRowKeys: selectedState.value,
+            onChange: (keys: number[]) => setSelectedState(keys),
+          },
+        }
+      : {}),
     scroll: {
       x: scrollX,
       y: isRef(scrollY) ? scrollY.value : scrollY,
     },
-    rowKey: idKey,
-    loading: isFetching.value,
-    sticky: true,
     pagination: pagination
       ? {
           current: page.value,
           pageSize: pageSize.value,
           total: total.value,
-          onChange: (newPage: number, newPageSize: number) => {
+          onChange: async (newPage: number, newPageSize: number) => {
             page.value = newPage
             pageSize.value = newPageSize
-            refetch()
+            await refetch()
             saveQueryState()
+            resetSelectedState()
           },
         }
       : false,
@@ -266,9 +303,12 @@ export function useTable<TItem, TParams = void>({
     // 表格
     tableProps,
 
-    // 数据
+    // 状态
     isLoading: isFetching,
     isDeleting,
+    isBatchDeleting,
+
+    // 数据
     data,
     list,
     total,
@@ -279,8 +319,16 @@ export function useTable<TItem, TParams = void>({
     handleCreate,
     handleEdit,
     handleDelete,
+    handleBatchDelete,
 
-    // 清除状态
+    // 选中状态
+    selectedState,
+    selectedCount,
+    selectedIsEmpty,
+    setSelectedState,
+    resetSelectedState,
+
+    // 清除缓存状态
     clearSavedState,
 
     // 分页状态

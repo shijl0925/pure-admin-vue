@@ -18,6 +18,8 @@ export default {
     save: 'Save',
     delete: 'Delete',
     deleteConfirm: 'Are you sure you want to delete?',
+    batchDelete: 'Batch Delete',
+    batchDeleteConfirm: 'Are you sure you want to delete {count} records?',
     back: 'Back',
   },
   page: {

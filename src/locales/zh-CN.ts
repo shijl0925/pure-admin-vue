@@ -18,6 +18,8 @@ export default {
     save: '保存',
     delete: '删除',
     deleteConfirm: '确定删除吗？',
+    batchDelete: '批量删除',
+    batchDeleteConfirm: '确认要删除 {count} 条记录吗 ？',
     back: '返回',
   },
   page: {

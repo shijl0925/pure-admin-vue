@@ -1,4 +1,5 @@
 export { default as BackButton } from './BackButton.vue'
+export { default as BatchDeleteButton } from './BatchDeleteButton.vue'
 export { default as Button } from './Button.vue'
 export { default as ConfirmButton } from './ConfirmButton.vue'
 export { default as CreateButton } from './CreateButton.vue'

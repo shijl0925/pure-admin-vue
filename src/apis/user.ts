@@ -35,3 +35,7 @@ export function updateUserApi(id: number, data: Partial<User>): Promise<User> {
 export function deleteUserApi(id: number): Promise<void> {
   return http.delete(`/users/${id}`)
 }
+
+export function batchDeleteUserApi(ids: number[]): Promise<void> {
+  return http.delete('/users', { data: { ids } })
+}
