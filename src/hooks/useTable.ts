@@ -9,13 +9,18 @@ import type { ApiResponse, BasePageList, BasePageParams } from '@/types/base'
 
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
-interface UseTableOptions<TData, TParams extends BasePageParams> {
-  apiFn: (params?: TParams) => Promise<TData>
-  pagination?: boolean
+type HasPaginationParams<T> = T extends { page: number, pageSize: number } ? true : false
+
+type FormType<T> = HasPaginationParams<T> extends true
+  ? Omit<T, 'page' | 'pageSize'>
+  : T
+
+interface UseTableOptions<TData, TParams = void> {
+  apiFn: TParams extends void ? () => Promise<TData> : (params: TParams) => Promise<TData>
   key: string
   cacheEnabled?: boolean
   dataStaleTime?: number
-  form: Omit<TParams, 'page' | 'pageSize'>
+  form?: FormType<TParams>
   rules?: FormProps['rules']
   columns: Ref<TableProps['columns']> | TableProps['columns']
   idKey?: string
@@ -27,7 +32,7 @@ interface UseTableOptions<TData, TParams extends BasePageParams> {
 
 // 定义查询参数的类型
 interface QueryState<TParams> {
-  params: TParams
+  params: TParams extends void ? Record<string, never> : TParams
   page: number
   pageSize: number
 }
@@ -37,13 +42,12 @@ function isPageResponse<T>(data: ApiResponse<T>): data is BasePageList<T> {
   return !Array.isArray(data) && 'total' in data && 'list' in data
 }
 
-export function useTable<TItem, TParams extends BasePageParams>({
+export function useTable<TItem, TParams = void>({
+  apiFn,
   key,
   cacheEnabled = true, // 是否启用缓存，默认启用
   dataStaleTime = 1000 * 60 * 10, // 默认 10 分钟内数据保持新鲜
-  apiFn,
-  pagination = true,
-  form = {} as Omit<TParams, 'page' | 'pageSize'>,
+  form = {} as any,
   idKey = 'id',
   rules = {},
   columns,
@@ -55,6 +59,10 @@ export function useTable<TItem, TParams extends BasePageParams>({
   const route = useRoute()
   const listQueryKey = `${key}-list`
   const stateQueryKey = `${key}-list-state`
+
+  const hasPagination = computed(() => {
+    return 'page' in formState.value && 'pageSize' in formState.value
+  })
 
   // -------------------- State Management --------------------
   // 分页状态
@@ -96,7 +104,7 @@ export function useTable<TItem, TParams extends BasePageParams>({
     if (initialState) {
       formState.value = { ...initialState.params }
       queryState.value = { ...initialState.params }
-      if (pagination) {
+      if (hasPagination.value) {
         page.value = initialState.page
         pageSize.value = initialState.pageSize
       }
@@ -107,11 +115,25 @@ export function useTable<TItem, TParams extends BasePageParams>({
   const { data, refetch, isFetching } = useQuery<ApiResponse<TItem>, Error>({
     queryKey: [listQueryKey],
     queryFn: () => {
-      const params = {
-        ...queryState.value,
-        ...(pagination ? { page: page.value, pageSize: pageSize.value } : {}),
-      } as TParams
-      return apiFn(params)
+      // 如果没有查询参数，直接调用
+      if (Object.keys(queryState.value).length === 0) {
+        return (apiFn as () => Promise<ApiResponse<TItem>>)()
+      }
+
+      // 有查询参数并且分页
+      if (hasPagination.value) {
+        const params = {
+          ...queryState.value,
+          page: page.value,
+          pageSize: pageSize.value,
+        } as TParams
+        return (apiFn as (params: TParams) => Promise<ApiResponse<TItem>>)(params)
+      }
+
+      // 有查询参数但不分页
+      return (apiFn as (params: TParams) => Promise<ApiResponse<TItem>>)(
+        queryState.value as TParams,
+      )
     },
     staleTime: cacheEnabled ? dataStaleTime : 0,
     gcTime: cacheEnabled ? dataStaleTime : 0,
@@ -133,7 +155,7 @@ export function useTable<TItem, TParams extends BasePageParams>({
   // -------------------- Actions --------------------
   function handleSearch() {
     queryState.value = { ...formState.value }
-    if (pagination) {
+    if (hasPagination.value) {
       page.value = 1
     }
     saveQueryState()
@@ -143,7 +165,7 @@ export function useTable<TItem, TParams extends BasePageParams>({
   function handleReset() {
     formRef.value?.resetFields?.()
     queryState.value = { ...formState.value }
-    if (pagination) {
+    if (hasPagination.value) {
       page.value = 1
       pageSize.value = 10
     }
@@ -195,7 +217,7 @@ export function useTable<TItem, TParams extends BasePageParams>({
     rowKey: idKey,
     loading: isFetching.value,
     sticky: true,
-    pagination: pagination
+    pagination: hasPagination.value
       ? {
           current: page.value,
           pageSize: pageSize.value,
@@ -236,7 +258,7 @@ export function useTable<TItem, TParams extends BasePageParams>({
     clearSavedState,
 
     // 分页状态
-    ...(pagination
+    ...(hasPagination.value
       ? {
           currentPage: page,
           currentPageSize: pageSize,

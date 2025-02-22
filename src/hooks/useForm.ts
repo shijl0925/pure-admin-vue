@@ -1,9 +1,9 @@
-import { useRoute, useRouter } from 'vue-router'
-import { ref, unref, computed ,isRef } from 'vue'
-import { useQuery, useQueryClient } from '@tanstack/vue-query'
-
 import type { FormProps } from 'ant-design-vue'
 import type { Ref } from 'vue'
+
+import { useQuery, useQueryClient } from '@tanstack/vue-query'
+import { computed, isRef, ref, unref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export const formLabelCol = {
   xs: { span: 24 },
@@ -46,7 +46,7 @@ export function useForm<TFormData, TApiData>({
   const detailQueryKey = `${key}-detail`
 
   // -------------------- Mode --------------------
-  const { mode, id } = route.params as { mode: string; id: string }
+  const { mode, id } = route.params as { mode: string, id: string }
   const isCreateMode = mode === 'create'
   const isEditMode = mode === 'edit'
 
@@ -61,7 +61,7 @@ export function useForm<TFormData, TApiData>({
     rules: formRules.value,
     labelCol: formLabelCol,
     wrapperCol: formWrapperCol,
-    autocomplete: 'off'
+    autocomplete: 'off',
   }))
 
   return {

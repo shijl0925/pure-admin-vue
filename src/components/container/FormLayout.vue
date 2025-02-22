@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { Button } from '@/components/button'
-import { useRouter } from 'vue-router'
-import { useBreakpoints, breakpointsTailwind } from '@vueuse/core'
-import { computed, ref, watchEffect } from 'vue'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
+import { computed, ref, watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 
+import { Button } from '@/components/button'
 import { useAppStore } from '@/stores'
-
-const router = useRouter()
 
 const { margin = 20 } = defineProps<{
   margin?: number
 }>()
+
+const router = useRouter()
 
 const appStore = useAppStore()
 const { sidebarWidth } = storeToRefs(appStore)
@@ -59,7 +59,9 @@ function handleBack() {
   <div class="m-2">
     <a-card>
       <template #extra>
-        <Button icon="icon-park-outline:back" @click="handleBack">返回</Button>
+        <Button icon="icon-park-outline:back" @click="handleBack">
+          返回
+        </Button>
       </template>
       <div class="mx-auto" :style="style">
         <slot />

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { FormInstance } from 'ant-design-vue'
+
 import type { User, UserListParams } from '@/types/user'
 
 import { getUserListApi } from '@/apis/user'
@@ -6,9 +8,8 @@ import { CreateButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
-import type { FormInstance } from 'ant-design-vue'
 
-async function apiFn (form?: UserListParams) {
+async function apiFn(form: UserListParams) {
   console.log('form', form)
   const result = await getUserListApi(form)
   console.log('result', result)
@@ -35,12 +36,9 @@ const {
   handleSearch,
   handleReset,
   handleCreate,
-  // onBeforeRequest,
-  // onAfterRequest,
 } = useTable<User, UserListParams>({
   key: 'user',
   apiFn,
-  pagination: true,
   scrollY: tableScrollY,
   form: {
     username: null,

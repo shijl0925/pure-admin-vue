@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { FormLayout } from '@/components/container'
-import { SaveButton } from '@/components/button'
 import { computed } from 'vue'
-import { useForm } from '@/hooks/useForm'
-import { getUserApi, createUserApi, updateUserApi } from '@/apis/user'
 
 import type { User } from '@/types/user'
 
+import { createUserApi, getUserApi, updateUserApi } from '@/apis/user'
+import { SaveButton } from '@/components/button'
+import { FormLayout } from '@/components/container'
+import { useForm } from '@/hooks/useForm'
+
 const {
   formProps,
-  formState
+  formState,
 } = useForm<Omit<User, 'id'>, User>({
   key: 'user',
   getApiFn: getUserApi,
