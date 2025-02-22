@@ -13,7 +13,7 @@ const {
 } = defineProps<{
   noText?: boolean
   loading?: boolean
-  size?: 'small' | 'middle' | 'large'
+  size?: ButtonProps['size']
   type?: ButtonProps['type']
 }>()
 
