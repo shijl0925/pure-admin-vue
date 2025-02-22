@@ -27,9 +27,9 @@ export const formWrapperCol = {
 
 interface UseFormOptions<TFormData, TApiData> {
   key: string
-  getApiFn?: (id: string) => Promise<TApiData>
+  getApiFn?: (id: number) => Promise<TApiData>
   createApiFn: (data: Omit<TApiData, 'id'>) => Promise<TApiData>
-  updateApiFn: (data: Partial<TApiData>) => Promise<TApiData>
+  updateApiFn: (id: number, data: Partial<TApiData>) => Promise<TApiData>
   form: TFormData
   rules?: FormProps['rules'] | Ref<FormProps['rules']>
   backAfterSuccess?: boolean
@@ -71,7 +71,7 @@ export function useForm<TFormData, TApiData>({
   // -------------------- Detail --------------------
   const { data: detailData, isLoading: isLoadingDetail } = useQuery({
     queryKey: [detailQueryKey, id],
-    queryFn: () => getApiFn?.(id),
+    queryFn: () => getApiFn?.(Number(id)),
     enabled: isEditMode && !!getApiFn,
     select: (data) => {
       if (data) {
@@ -105,7 +105,7 @@ export function useForm<TFormData, TApiData>({
   })
 
   const updateMutation = useMutation({
-    mutationFn: updateApiFn,
+    mutationFn: (id: number) => updateApiFn(id, formState.value),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [listQueryKey] })
       queryClient.invalidateQueries({ queryKey: [detailQueryKey, id] })
@@ -123,7 +123,7 @@ export function useForm<TFormData, TApiData>({
       await createMutation.mutateAsync(formState.value as Omit<TApiData, 'id'>)
     }
     else if (isEditMode) {
-      await updateMutation.mutateAsync({ ...formState.value, id } as Partial<TApiData>)
+      await updateMutation.mutateAsync(Number(id), formState.value)
     }
   }
 
