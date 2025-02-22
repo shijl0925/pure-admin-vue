@@ -163,6 +163,7 @@ export function useTable<TItem, TParams = void>({
 
   function handleReset() {
     formRef.value?.resetFields?.()
+    formState.value = { ...unref(form) }
     queryState.value = { ...formState.value }
     if (pagination) {
       page.value = 1
