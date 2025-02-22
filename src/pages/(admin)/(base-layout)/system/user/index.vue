@@ -6,6 +6,21 @@ import { CreateButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
+import type { FormInstance } from 'ant-design-vue'
+
+async function apiFn (form?: UserListParams) {
+  console.log('form', form)
+  const result = await getUserListApi(form)
+  console.log('result', result)
+  const data = {
+    ...result,
+    list: result.list.map(item => ({
+      ...item,
+      isFrozen: true,
+    })),
+  }
+  return data
+}
 
 const {
   listContainerProps,
@@ -13,17 +28,19 @@ const {
 } = useSearchTableLayout()
 
 const {
-  isLoading,
+  formRef,
   formState,
+  tableProps,
+  isLoading,
   handleSearch,
   handleReset,
   handleCreate,
-  tableProps,
-  onBeforeRequest,
-  onAfterRequest,
+  // onBeforeRequest,
+  // onAfterRequest,
 } = useTable<User, UserListParams>({
-  key: 'users',
-  apiFn: getUserListApi,
+  key: 'user',
+  apiFn,
+  pagination: true,
   scrollY: tableScrollY,
   form: {
     username: null,
@@ -41,27 +58,12 @@ const {
     { title: '更新时间', dataIndex: 'updateTime' },
   ],
 })
-
-onBeforeRequest((form) => {
-  return {
-    ...form,
-    xyz: '123',
-  }
-})
-
-onAfterRequest((list) => {
-  console.log('list', list)
-  return list.map(item => ({
-    ...item,
-    isFrozen: 0,
-  }))
-})
 </script>
 
 <template>
   <SearchTableLayout v-bind="listContainerProps">
     <template #searchForm>
-      <a-form :model="formState" :colon="false" @finish="handleSearch">
+      <a-form :ref="(el: FormInstance) => formRef = el" :model="formState" :colon="false" @finish="handleSearch">
         <SearchContainer>
           <SearchRow>
             <SearchCol name="username" label="用户名">

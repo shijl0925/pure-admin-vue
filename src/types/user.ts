@@ -21,14 +21,15 @@ export interface UserInfo {
 
 export interface User {
   id: number
-  username: string
-  nickName?: string
-  email?: string
-  phoneNumber?: string
-  headPic?: string
+  username: string | null
+  password?: string | null
+  nickName?: string | null
+  email?: string | null
+  phoneNumber?: string | null
+  headPic?: string | null
   isFrozen: boolean
-  createTime: string
-  updateTime: string
+  createTime?: string | null
+  updateTime?: string | null
 }
 
 export interface UserListParams extends BasePageParams {

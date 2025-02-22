@@ -2,7 +2,6 @@ import type { FormProps, TableProps } from 'ant-design-vue'
 import type { Ref } from 'vue'
 
 import { useQuery, useQueryClient } from '@tanstack/vue-query'
-import { createEventHook } from '@vueuse/core'
 import { computed, isRef, ref, unref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -54,10 +53,8 @@ export function useTable<TItem, TParams extends BasePageParams>({
   pageEditPath, // 编辑页面路径
 }: UseTableOptions<ApiResponse<TItem>, TParams>) {
   const route = useRoute()
-
-  // -------------------- Types & Hooks --------------------
-  const beforeRequestHook = createEventHook<[Omit<TParams, 'page' | 'pageSize'>]>()
-  const afterRequestHook = createEventHook<[TItem[]]>()
+  const listQueryKey = `${key}-list`
+  const stateQueryKey = `${key}-list-state`
 
   // -------------------- State Management --------------------
   // 分页状态
@@ -65,30 +62,13 @@ export function useTable<TItem, TParams extends BasePageParams>({
   const pageSize = ref(10)
 
   // 表单状态
+  const formRef = ref()
   const formState = ref({ ...unref(form) })
-  const formRules = rules
   const queryState = ref({ ...unref(form) })
-
-  // -------------------- Data Transformation --------------------
-  // 处理表单数据转换
-  async function transformForm() {
-    const transformedForm = { ...queryState.value }
-    // const hookResults = await beforeRequestHook.trigger(transformedForm as Omit<TParams, 'page' | 'pageSize'>)
-    const hookResults = await beforeRequestHook.trigger(transformedForm)
-
-    return hookResults?.length ? hookResults[hookResults.length - 1] : transformedForm
-  }
-
-  // 处理响应数据转换
-  async function transformResponse(data: TItem[]) {
-    const hookResults = await afterRequestHook.trigger(data)
-
-    return hookResults?.length ? hookResults[hookResults.length - 1] : data
-  }
+  const formRules = rules
 
   // -------------------- Cache Management --------------------
   const queryClient = useQueryClient()
-  const stateKey = `${key}-state`
 
   // 保存查询状态
   function saveQueryState() {
@@ -98,20 +78,20 @@ export function useTable<TItem, TParams extends BasePageParams>({
         page: page.value,
         pageSize: pageSize.value,
       }
-      queryClient.setQueryData([stateKey], state)
+      queryClient.setQueryData([stateQueryKey], state)
     }
   }
 
   // 清除保存的查询状态
   function clearSavedState() {
     if (cacheEnabled) {
-      queryClient.removeQueries({ queryKey: [stateKey] })
+      queryClient.removeQueries({ queryKey: [stateQueryKey] })
     }
   }
 
   if (cacheEnabled) {
     // 初始化状态
-    const initialState = queryClient.getQueryData<QueryState<TParams>>([stateKey])
+    const initialState = queryClient.getQueryData<QueryState<TParams>>([stateQueryKey])
 
     if (initialState) {
       formState.value = { ...initialState.params }
@@ -125,23 +105,13 @@ export function useTable<TItem, TParams extends BasePageParams>({
 
   // -------------------- Query & Data Fetching --------------------
   const { data, refetch, isFetching } = useQuery<ApiResponse<TItem>, Error>({
-    queryKey: [key],
-    queryFn: async () => {
-      const transformedForm = await transformForm()
+    queryKey: [listQueryKey],
+    queryFn: () => {
       const params = {
-        ...transformedForm,
+        ...queryState.value,
         ...(pagination ? { page: page.value, pageSize: pageSize.value } : {}),
       } as TParams
-      const response = await apiFn(params)
-
-      if (isPageResponse(response)) {
-        const processedList = await transformResponse(response.list)
-        return {
-          total: response.total,
-          list: processedList,
-        } as BasePageList<TItem>
-      }
-      return transformResponse(response) as Promise<TItem[]>
+      return apiFn(params)
     },
     staleTime: cacheEnabled ? dataStaleTime : 0,
     gcTime: cacheEnabled ? dataStaleTime : 0,
@@ -171,9 +141,8 @@ export function useTable<TItem, TParams extends BasePageParams>({
   }
 
   function handleReset() {
-    const defaultForm = unref(form)
-    formState.value = { ...defaultForm }
-    queryState.value = { ...defaultForm }
+    formRef.value?.resetFields?.()
+    queryState.value = { ...formState.value }
     if (pagination) {
       page.value = 1
       pageSize.value = 10
@@ -243,15 +212,9 @@ export function useTable<TItem, TParams extends BasePageParams>({
 
   return {
     // 表单
+    formRef,
     formState,
     formRules,
-
-    // 事件
-    handleSearch,
-    handleReset,
-    handleCreate,
-    handleEdit,
-    handleDelete,
 
     // 表格
     tableProps,
@@ -262,12 +225,15 @@ export function useTable<TItem, TParams extends BasePageParams>({
     list,
     total,
 
+    // 事件
+    handleSearch,
+    handleReset,
+    handleCreate,
+    handleEdit,
+    handleDelete,
+
     // 清除状态
     clearSavedState,
-
-    // Hooks
-    onBeforeRequest: beforeRequestHook.on,
-    onAfterRequest: afterRequestHook.on,
 
     // 分页状态
     ...(pagination

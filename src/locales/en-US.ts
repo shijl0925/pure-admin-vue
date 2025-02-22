@@ -14,6 +14,7 @@ export default {
     search: 'Search',
     reset: 'Reset',
     create: 'Create',
+    save: 'Save',
   },
   page: {
     login: {

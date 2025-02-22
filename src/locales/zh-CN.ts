@@ -14,6 +14,7 @@ export default {
     search: '查询',
     reset: '重置',
     create: '新建',
+    save: '保存',
   },
   page: {
     login: {
