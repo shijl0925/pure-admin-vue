@@ -118,12 +118,12 @@ export function useForm<TFormData, TApiData>({
   })
 
   // -------------------- Actions --------------------
-  function handleSubmit() {
+  async function handleSubmit() {
     if (isCreateMode) {
-      createMutation.mutate(formState.value as Omit<TApiData, 'id'>)
+      await createMutation.mutateAsync(formState.value as Omit<TApiData, 'id'>)
     }
     else if (isEditMode) {
-      updateMutation.mutate({ ...formState.value, id } as Partial<TApiData>)
+      await updateMutation.mutateAsync({ ...formState.value, id } as Partial<TApiData>)
     }
   }
 

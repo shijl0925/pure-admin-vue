@@ -3,25 +3,11 @@ import type { FormInstance } from 'ant-design-vue'
 
 import type { User, UserListParams } from '@/types/user'
 
-import { getUserListApi } from '@/apis/user'
+import { deleteUserApi, getUserListApi } from '@/apis/user'
 import { CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
-
-async function apiFn(form: UserListParams) {
-  console.log('form', form)
-  const result = await getUserListApi(form)
-  console.log('result', result)
-  const data = {
-    ...result,
-    list: result.list.map(item => ({
-      ...item,
-      isFrozen: true,
-    })),
-  }
-  return data
-}
 
 const {
   listContainerProps,
@@ -33,13 +19,16 @@ const {
   formState,
   tableProps,
   isLoading,
+  isDeleting,
   handleSearch,
   handleReset,
   handleCreate,
   handleEdit,
+  handleDelete,
 } = useTable<User, UserListParams>({
   key: 'user',
-  apiFn,
+  listApiFn: getUserListApi,
+  deleteApiFn: deleteUserApi,
   scrollY: tableScrollY,
   form: {
     username: null,
@@ -92,6 +81,7 @@ const {
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'actions'">
           <EditButton type="text" size="small" no-text @click="handleEdit(record)" />
+          <DeleteButton type="text" size="small" no-text :loading="isDeleting" @confirm="handleDelete(record.id)" />
         </template>
       </template>
     </a-table>

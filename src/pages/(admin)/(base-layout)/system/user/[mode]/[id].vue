@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
 import type { User } from '@/types/user'
 
 import { createUserApi, getUserApi, updateUserApi } from '@/apis/user'

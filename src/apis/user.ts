@@ -32,6 +32,6 @@ export function updateUserApi(data: Partial<User>): Promise<User> {
   return http.put(`/user/${data.id}`, data)
 }
 
-export function deleteUserApi(id: string): Promise<void> {
+export function deleteUserApi(id: number): Promise<void> {
   return http.delete(`/user/${id}`)
 }

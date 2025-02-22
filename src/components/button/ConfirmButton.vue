@@ -14,10 +14,18 @@ const {
   confirmProps = {},
   buttonProps = {},
 } = defineProps<ConfirmButtonProps>()
+
+const emit = defineEmits<{
+  (e: 'confirm'): void
+}>()
+
+function handleConfirm() {
+  emit('confirm')
+}
 </script>
 
 <template>
-  <a-popconfirm v-bind="confirmProps">
+  <a-popconfirm v-bind="confirmProps" @confirm="handleConfirm">
     <Button v-bind="buttonProps">
       <slot />
     </Button>

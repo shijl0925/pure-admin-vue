@@ -1,7 +1,7 @@
 import type { FormProps, TableProps } from 'ant-design-vue'
 import type { Ref } from 'vue'
 
-import { useQuery, useQueryClient } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { computed, isRef, ref, unref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -16,7 +16,8 @@ type FormType<T> = T extends void
     : T
 
 interface UseTableOptions<TData, TParams = void> {
-  apiFn: TParams extends void ? () => Promise<TData> : (params: TParams) => Promise<TData>
+  listApiFn: TParams extends void ? () => Promise<TData> : (params: TParams) => Promise<TData>
+  deleteApiFn: (id: number) => Promise<void>
   key: string
   cacheEnabled?: boolean
   dataStaleTime?: number
@@ -44,7 +45,8 @@ function isPageResponse<T>(data: ApiResponse<T>): data is BasePageList<T> {
 }
 
 export function useTable<TItem, TParams = void>({
-  apiFn,
+  listApiFn,
+  deleteApiFn,
   key,
   cacheEnabled = true, // 是否启用缓存，默认启用
   dataStaleTime = 1000 * 60 * 10, // 默认 10 分钟内数据保持新鲜
@@ -119,7 +121,7 @@ export function useTable<TItem, TParams = void>({
     queryFn: () => {
       // 如果没有查询参数，直接调用
       if (Object.keys(queryState.value).length === 0) {
-        return (apiFn as () => Promise<ApiResponse<TItem>>)()
+        return (listApiFn as () => Promise<ApiResponse<TItem>>)()
       }
 
       // 有查询参数并且分页
@@ -129,11 +131,11 @@ export function useTable<TItem, TParams = void>({
           page: page.value,
           pageSize: pageSize.value,
         } as TParams
-        return (apiFn as (params: TParams) => Promise<ApiResponse<TItem>>)(params)
+        return (listApiFn as (params: TParams) => Promise<ApiResponse<TItem>>)(params)
       }
 
       // 有查询参数但不分页
-      return (apiFn as (params: TParams) => Promise<ApiResponse<TItem>>)(
+      return (listApiFn as (params: TParams) => Promise<ApiResponse<TItem>>)(
         queryState.value as TParams,
       )
     },
@@ -141,17 +143,12 @@ export function useTable<TItem, TParams = void>({
     gcTime: cacheEnabled ? dataStaleTime : 0,
   })
 
-  // -------------------- Computed Properties --------------------
-  const list = computed(() => {
-    if (!data.value)
-      return []
-    return isPageResponse(data.value) ? data.value.list : data.value
-  })
-
-  const total = computed(() => {
-    if (!data.value)
-      return 0
-    return isPageResponse(data.value) ? data.value.total : data.value.length
+  // -------------------- Mutation --------------------
+  const { mutateAsync: deleteMutation, isPending: isDeleting } = useMutation({
+    mutationFn: deleteApiFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [listQueryKey] })
+    },
   })
 
   // -------------------- Actions --------------------
@@ -216,7 +213,22 @@ export function useTable<TItem, TParams = void>({
     }
   }
 
-  async function handleDelete() {}
+  async function handleDelete(id: number) {
+    await deleteMutation(id)
+  }
+
+  // -------------------- Computed Properties --------------------
+  const list = computed(() => {
+    if (!data.value)
+      return []
+    return isPageResponse(data.value) ? data.value.list : data.value
+  })
+
+  const total = computed(() => {
+    if (!data.value)
+      return 0
+    return isPageResponse(data.value) ? data.value.total : data.value.length
+  })
 
   // -------------------- Table Props --------------------
   const tableProps = computed(() => ({
@@ -255,6 +267,7 @@ export function useTable<TItem, TParams = void>({
 
     // 数据
     isLoading: isFetching,
+    isDeleting,
     data,
     list,
     total,
