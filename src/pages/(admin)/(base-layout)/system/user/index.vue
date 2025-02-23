@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue'
 
-import type { User, UserListParams } from '@/types/user'
+import type { User } from '@/types/user'
 
 import { batchDeleteUserApi, deleteUserApi, getUserListApi } from '@/apis/user'
 import { BatchDeleteButton, CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
@@ -29,8 +29,8 @@ const {
   isBatchDeleting,
   selectedCount,
   selectedIsEmpty,
-} = useTable<User, UserListParams>({
-  key: 'users',
+} = useTable<User>({
+  key: 'user',
   listApiFn: getUserListApi,
   deleteApiFn: deleteUserApi,
   batchDeleteApiFn: batchDeleteUserApi,
@@ -56,7 +56,13 @@ const {
 <template>
   <SearchTableLayout v-bind="listContainerProps">
     <template #searchForm>
-      <a-form :ref="(el: FormInstance) => formRef = el" :model="formState" :colon="false" @finish="handleSearch">
+      <a-form
+        :ref="(el: FormInstance) => formRef = el"
+        :model="formState"
+        :colon="false"
+        autocomplete="off"
+        @finish="handleSearch"
+      >
         <SearchContainer>
           <SearchRow>
             <SearchCol name="username" label="用户名">

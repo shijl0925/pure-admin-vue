@@ -25,17 +25,17 @@ export const formWrapperCol = {
   xxl: { span: 12 },
 }
 
-interface UseFormOptions<TFormData, TApiData> {
+interface UseFormOptions<TModel> {
   key: string
-  getApiFn?: (id: number) => Promise<TApiData>
-  createApiFn: (data: Omit<TApiData, 'id'>) => Promise<TApiData>
-  updateApiFn: (id: number, data: Partial<TApiData>) => Promise<TApiData>
-  form: TFormData
+  getApiFn?: (id: number) => Promise<TModel>
+  createApiFn: (data: Omit<TModel, 'id'>) => Promise<TModel>
+  updateApiFn: (id: number, data: Partial<TModel>) => Promise<TModel>
+  form: Record<string, any>
   rules?: FormProps['rules'] | Ref<FormProps['rules']>
   backAfterSuccess?: boolean
 }
 
-export function useForm<TFormData, TApiData>({
+export function useForm<TModel>({
   key,
   getApiFn,
   createApiFn,
@@ -43,7 +43,9 @@ export function useForm<TFormData, TApiData>({
   form,
   rules = {},
   backAfterSuccess = true,
-}: UseFormOptions<TFormData, TApiData>) {
+}: UseFormOptions<TModel>) {
+  type InferredFormData = typeof form
+
   const route = useRoute()
   const router = useRouter()
   const listQueryKey = `${key}-list`
@@ -65,7 +67,7 @@ export function useForm<TFormData, TApiData>({
 
   // -------------------- Form --------------------
   const formRef = ref()
-  const formState = ref({ ...unref(form) })
+  const formState = ref<InferredFormData>({ ...unref(form) })
   const formRules = isRef(rules) ? rules : computed(() => rules)
 
   // -------------------- Detail --------------------
@@ -105,7 +107,7 @@ export function useForm<TFormData, TApiData>({
   })
 
   const updateMutation = useMutation({
-    mutationFn: (id: number) => updateApiFn(id, formState.value),
+    mutationFn: (id: number) => updateApiFn(id, formState.value as Partial<TModel>),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [listQueryKey] })
       queryClient.invalidateQueries({ queryKey: [detailQueryKey, id] })
@@ -120,7 +122,7 @@ export function useForm<TFormData, TApiData>({
   // -------------------- Actions --------------------
   async function handleSubmit() {
     if (isCreateMode) {
-      await createMutation.mutateAsync(formState.value as Omit<TApiData, 'id'>)
+      await createMutation.mutateAsync(formState.value as Omit<TModel, 'id'>)
     }
     else if (isEditMode) {
       await updateMutation.mutateAsync(Number(id), formState.value)

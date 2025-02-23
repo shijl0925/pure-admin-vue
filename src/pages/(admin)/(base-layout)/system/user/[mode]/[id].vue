@@ -13,8 +13,8 @@ const {
   formState,
   isLoading,
   handleSubmit,
-} = useForm<Omit<User, 'id'>, User>({
-  key: 'users',
+} = useForm<User>({
+  key: 'user',
   getApiFn: getUserApi,
   createApiFn: createUserApi,
   updateApiFn: updateUserApi,

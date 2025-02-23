@@ -9,14 +9,8 @@ import type { ApiResponse, BasePageList } from '@/types/base'
 
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
-type FormType<T> = T extends void
-  ? Record<string, never>
-  : T extends { page: number, pageSize: number }
-    ? Omit<T, 'page' | 'pageSize'>
-    : T
-
-interface UseTableOptions<TData, TParams = void> {
-  listApiFn: TParams extends void ? () => Promise<TData> : (params: TParams) => Promise<TData>
+interface UseTableOptions<TItem> {
+  listApiFn: (params: any) => Promise<ApiResponse<TItem>>
   deleteApiFn?: (id: number) => Promise<void>
   batchDeleteApiFn?: (ids: number[]) => Promise<void>
   key: string
@@ -25,7 +19,7 @@ interface UseTableOptions<TData, TParams = void> {
   dataStaleTime?: number
   pagination?: boolean
   selectable?: boolean
-  form?: FormType<TParams>
+  form?: Record<string, any>
   rules?: FormProps['rules']
   columns: Ref<TableProps['columns']> | TableProps['columns']
   scrollX?: string
@@ -34,19 +28,12 @@ interface UseTableOptions<TData, TParams = void> {
   pageEditPath?: string
 }
 
-// 定义查询参数的类型
-interface QueryState<TParams> {
-  params: TParams extends void ? Record<string, never> : TParams
-  page: number
-  pageSize: number
-}
-
 // 辅助函数：判断是否为分页响应
 function isPageResponse<T>(data: ApiResponse<T>): data is BasePageList<T> {
   return !Array.isArray(data) && 'total' in data && 'list' in data
 }
 
-export function useTable<TItem, TParams = void>({
+export function useTable<TItem>({
   listApiFn,
   deleteApiFn,
   batchDeleteApiFn,
@@ -56,14 +43,22 @@ export function useTable<TItem, TParams = void>({
   dataStaleTime = 1000 * 60 * 10, // 默认 10 分钟内数据保持新鲜
   pagination = true,
   selectable = false,
-  form = {} as FormType<TParams>,
+  form = {} as const,
   rules = {},
   columns,
   scrollX = '100%',
   scrollY = undefined,
   pageCreatePath,
   pageEditPath,
-}: UseTableOptions<ApiResponse<TItem>, TParams>) {
+}: UseTableOptions<TItem>) {
+  type InferredParams = typeof form
+
+  interface QueryState {
+    params: InferredParams
+    page: number
+    pageSize: number
+  }
+
   const route = useRoute()
   const listQueryKey = `${key}-list`
   const stateQueryKey = `${key}-list-state`
@@ -75,8 +70,8 @@ export function useTable<TItem, TParams = void>({
 
   // 表单状态
   const formRef = ref()
-  const formState = ref({ ...unref(form) })
-  const queryState = ref({ ...unref(form) })
+  const formState = ref<InferredParams>({ ...unref(form) })
+  const queryState = ref<InferredParams>({ ...unref(form) })
   const formRules = rules
 
   // -------------------- Selected State --------------------
@@ -98,7 +93,7 @@ export function useTable<TItem, TParams = void>({
   // 保存查询状态
   function saveQueryState() {
     if (cacheEnabled) {
-      const state: QueryState<TParams> = {
+      const state: QueryState = {
         params: { ...formState.value },
         page: page.value,
         pageSize: pageSize.value,
@@ -116,7 +111,7 @@ export function useTable<TItem, TParams = void>({
 
   if (cacheEnabled) {
     // 初始化状态
-    const initialState = queryClient.getQueryData<QueryState<TParams>>([stateQueryKey])
+    const initialState = queryClient.getQueryData<QueryState>([stateQueryKey])
 
     if (initialState) {
       formState.value = { ...initialState.params }
@@ -143,13 +138,13 @@ export function useTable<TItem, TParams = void>({
           ...queryState.value,
           page: page.value,
           pageSize: pageSize.value,
-        } as TParams
-        return (listApiFn as (params: TParams) => Promise<ApiResponse<TItem>>)(params)
+        } as QueryState
+        return (listApiFn as (params: QueryState) => Promise<ApiResponse<TItem>>)(params)
       }
 
       // 有查询参数但不分页
-      return (listApiFn as (params: TParams) => Promise<ApiResponse<TItem>>)(
-        queryState.value as TParams,
+      return (listApiFn as (params: QueryState) => Promise<ApiResponse<TItem>>)(
+        queryState.value as QueryState,
       )
     },
     staleTime: cacheEnabled ? dataStaleTime : 0,

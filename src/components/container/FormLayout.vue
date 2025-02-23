@@ -62,7 +62,7 @@ function handleBack() {
   <div class="m-2">
     <a-card :title="title">
       <template #extra>
-        <BackButton @click="handleBack" />
+        <BackButton type="text" @click="handleBack" />
       </template>
       <div class="mx-auto" :style="style">
         <slot />
