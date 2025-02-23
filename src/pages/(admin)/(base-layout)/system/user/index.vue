@@ -29,6 +29,7 @@ const {
   selectedIsEmpty,
 } = useTable({
   key: 'user',
+  pagination: true,
   listApiFn: getUserListApi,
   deleteApiFn: deleteUserApi,
   batchDeleteApiFn: batchDeleteUserApi,

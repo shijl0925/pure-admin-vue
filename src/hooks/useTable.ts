@@ -257,6 +257,7 @@ export function useTable<
   }
 
   // -------------------- Computed Properties --------------------
+
   const list = computed(() => {
     if (!data.value)
       return []

@@ -1,0 +1,5 @@
+export enum MENU_TYPE {
+  DIRECTORY = 'DIRECTORY',
+  MENU = 'MENU',
+  BUTTON = 'BUTTON',
+}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import type { MenuItem } from '@/types/menu'
+import type { Menu } from '@/types/menu'
 
 import { Icon } from '@/components/icon'
 
@@ -10,12 +10,12 @@ defineOptions({
 })
 
 const { item } = defineProps<{
-  item: MenuItem
+  item: Menu
 }>()
 
 const router = useRouter()
 
-function handleClick(item: MenuItem) {
+function handleClick(item: Menu) {
   if (item.path) {
     router.push(item.path)
   }

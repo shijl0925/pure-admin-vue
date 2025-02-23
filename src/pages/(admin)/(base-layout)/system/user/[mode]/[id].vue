@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { User } from '@/types/user'
-
 import { createUserApi, getUserApi, updateUserApi } from '@/apis/user'
 import { SaveButton } from '@/components/button'
 import { FormLayout } from '@/components/container'

@@ -1,27 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
+import type { Menu } from '@/types/menu'
+
+import { deleteMenuApi, getMenuTreeApi } from '@/apis/menu'
+import { Button, CreateButton, DeleteButton, EditButton } from '@/components/button'
+import { SearchContainer, SearchTableLayout } from '@/components/container'
+import { Icon } from '@/components/icon'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
-
-const columns = ref([
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: '年龄',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: '住址',
-    dataIndex: 'address',
-    key: 'address',
-  },
-])
 
 const {
   listContainerProps,
@@ -30,79 +17,30 @@ const {
 
 const {
   tableProps,
+  isDeleting,
+  handleCreate,
+  handleEdit,
+  handleDelete,
 } = useTable({
-  key: 'menus',
-  apiFn: () => {
-    return Promise.resolve([])
-  },
-  columns,
+  key: 'menu',
+  pagination: false,
+  listApiFn: getMenuTreeApi,
+  deleteApiFn: deleteMenuApi,
+  columns: [
+    { title: '名称', dataIndex: 'title' },
+    { title: '类型', dataIndex: 'type' },
+    { title: '图标', dataIndex: 'icon' },
+    { title: '路径', dataIndex: 'path' },
+    { title: '权限标识', dataIndex: 'code' },
+    { title: '排序', dataIndex: 'sort' },
+    { title: '操作', key: 'actions', fixed: 'right', width: 150 },
+  ],
   scrollY: tableScrollY,
 })
 
-const isVisible = ref(false)
-
-const dataSource = ref([
-  {
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '3',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '4',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '5',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '6',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '7',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '8',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '9',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-  {
-    key: '10',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-  },
-])
+function handleCreateChild(record: Menu) {
+  console.log(record)
+}
 </script>
 
 <template>
@@ -110,45 +48,24 @@ const dataSource = ref([
     <template #searchForm>
       <a-form :colon="false">
         <SearchContainer>
-          <SearchRow>
-            <SearchCol label="input1">
-              <a-input />
-            </SearchCol>
-            <SearchCol label="input2">
-              <a-input />
-            </SearchCol>
-            <SearchCol label="input3">
-              <a-input />
-            </SearchCol>
-            <SearchCol label="input4">
-              <a-input />
-            </SearchCol>
-          </SearchRow>
-          <template #extra>
-            <SearchRow>
-              <SearchCol label="input5">
-                <a-input />
-              </SearchCol>
-              <SearchCol label="input6">
-                <a-input />
-              </SearchCol>
-            </SearchRow>
-          </template>
           <template #actions>
-            <a-button type="primary" @click="isVisible = !isVisible">
-              搜索
-            </a-button>
-            <a-button type="primary" @click="isVisible = !isVisible">
-              搜索2
-            </a-button>
+            <CreateButton @click="handleCreate" />
           </template>
         </SearchContainer>
       </a-form>
     </template>
-    <a-table
-      :data-source="dataSource"
-      :pagination="false"
-      v-bind="tableProps"
-    />
+    <a-table v-bind="tableProps">
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'icon'">
+          <Icon :icon="record.icon" />
+        </template>
+        <template v-if="column.key === 'actions'">
+          <Button icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreateChild(record)" />
+          <EditButton type="text" size="small" no-text @click="handleEdit(record)" />
+          <DeleteButton v-if="!record.children || record.children.length === 0" type="text" size="small" no-text :loading="isDeleting" @confirm="handleDelete(record.id)" />
+          <template v-if="record.type === 'DIRECTORY'" />
+        </template>
+      </template>
+    </a-table>
   </SearchTableLayout>
 </template>
