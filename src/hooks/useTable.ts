@@ -9,8 +9,22 @@ import type { ApiResponse, BasePageList } from '@/types/base'
 
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
-interface UseTableOptions<TItem> {
-  listApiFn: (params: any) => Promise<ApiResponse<TItem>>
+// 提取 ApiResponse 中的数据类型
+type UnwrapApiResponse<T> = T extends ApiResponse<infer U>
+  ? U extends BasePageList<infer V>
+    ? V
+    : U extends Array<infer V>
+      ? V
+      : U
+  : T
+
+// 从 listApiFn 推断出 TItem 类型
+type InferredItem<T> = T extends (params: any) => Promise<infer U>
+  ? UnwrapApiResponse<U>
+  : never
+
+interface UseTableOptions<TApiFn extends (params: any) => Promise<ApiResponse<any>>> {
+  listApiFn: TApiFn
   deleteApiFn?: (id: number) => Promise<void>
   batchDeleteApiFn?: (ids: number[]) => Promise<void>
   key: string
@@ -28,12 +42,14 @@ interface UseTableOptions<TItem> {
   pageEditPath?: string
 }
 
-// 辅助函数：判断是否为分页响应
+// 判断是否为分页响应
 function isPageResponse<T>(data: ApiResponse<T>): data is BasePageList<T> {
   return !Array.isArray(data) && 'total' in data && 'list' in data
 }
 
-export function useTable<TItem>({
+export function useTable<
+  TApiFn extends (params: any) => Promise<ApiResponse<any>>,
+>({
   listApiFn,
   deleteApiFn,
   batchDeleteApiFn,
@@ -50,7 +66,7 @@ export function useTable<TItem>({
   scrollY = undefined,
   pageCreatePath,
   pageEditPath,
-}: UseTableOptions<TItem>) {
+}: UseTableOptions<TApiFn>) {
   type InferredParams = typeof form
 
   interface QueryState {
@@ -124,12 +140,12 @@ export function useTable<TItem>({
   }
 
   // -------------------- Query & Data Fetching --------------------
-  const { data, refetch, isFetching: isLoading } = useQuery<ApiResponse<TItem>, Error>({
+  const { data, refetch, isFetching: isLoading } = useQuery<ApiResponse<InferredItem<TApiFn>>, Error>({
     queryKey: [listQueryKey],
     queryFn: () => {
       // 如果没有查询参数，直接调用
       if (Object.keys(queryState.value).length === 0) {
-        return (listApiFn as () => Promise<ApiResponse<TItem>>)()
+        return listApiFn({})
       }
 
       // 有查询参数并且分页
@@ -139,11 +155,11 @@ export function useTable<TItem>({
           page: page.value,
           pageSize: pageSize.value,
         } as QueryState
-        return (listApiFn as (params: QueryState) => Promise<ApiResponse<TItem>>)(params)
+        return (listApiFn as (params: QueryState) => Promise<ApiResponse<InferredItem<TApiFn>>>)(params)
       }
 
       // 有查询参数但不分页
-      return (listApiFn as (params: QueryState) => Promise<ApiResponse<TItem>>)(
+      return (listApiFn as (params: QueryState) => Promise<ApiResponse<InferredItem<TApiFn>>>)(
         queryState.value as QueryState,
       )
     },
@@ -213,7 +229,7 @@ export function useTable<TItem>({
     }
   }
 
-  async function handleEdit(data: TItem, transferData = null, query = {}) {
+  async function handleEdit(data: InferredItem<TApiFn>, transferData = null, query = {}) {
     const { navigateWithData } = usePageTransfer()
     if (pageEditPath) {
       navigateWithData(

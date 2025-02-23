@@ -25,17 +25,25 @@ export const formWrapperCol = {
   xxl: { span: 12 },
 }
 
-interface UseFormOptions<TModel> {
+// 提取 Promise 返回值类型
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T
+
+interface UseFormOptions<TCreateFn extends (data: any) => Promise<any>> {
   key: string
-  getApiFn?: (id: number) => Promise<TModel>
-  createApiFn: (data: Omit<TModel, 'id'>) => Promise<TModel>
-  updateApiFn: (id: number, data: Partial<TModel>) => Promise<TModel>
+  getApiFn?: (id: number) => Promise<UnwrapPromise<ReturnType<TCreateFn>>>
+  createApiFn: TCreateFn
+  updateApiFn: (
+    id: number,
+    data: Partial<UnwrapPromise<ReturnType<TCreateFn>>>
+  ) => Promise<UnwrapPromise<ReturnType<TCreateFn>>>
   form: Record<string, any>
   rules?: FormProps['rules'] | Ref<FormProps['rules']>
   backAfterSuccess?: boolean
 }
 
-export function useForm<TModel>({
+export function useForm<
+  TCreateFn extends (data: any) => Promise<any>,
+>({
   key,
   getApiFn,
   createApiFn,
@@ -43,8 +51,9 @@ export function useForm<TModel>({
   form,
   rules = {},
   backAfterSuccess = true,
-}: UseFormOptions<TModel>) {
+}: UseFormOptions<TCreateFn>) {
   type InferredFormData = typeof form
+  type TModel = UnwrapPromise<ReturnType<TCreateFn>>
 
   const route = useRoute()
   const router = useRouter()

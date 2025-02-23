@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue'
 
-import type { User } from '@/types/user'
-
 import { batchDeleteUserApi, deleteUserApi, getUserListApi } from '@/apis/user'
 import { BatchDeleteButton, CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
@@ -29,7 +27,7 @@ const {
   isBatchDeleting,
   selectedCount,
   selectedIsEmpty,
-} = useTable<User>({
+} = useTable({
   key: 'user',
   listApiFn: getUserListApi,
   deleteApiFn: deleteUserApi,

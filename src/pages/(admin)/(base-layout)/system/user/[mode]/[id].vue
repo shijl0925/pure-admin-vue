@@ -13,7 +13,7 @@ const {
   formState,
   isLoading,
   handleSubmit,
-} = useForm<User>({
+} = useForm({
   key: 'user',
   getApiFn: getUserApi,
   createApiFn: createUserApi,
