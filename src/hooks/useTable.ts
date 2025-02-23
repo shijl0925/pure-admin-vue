@@ -124,7 +124,7 @@ export function useTable<TItem>({
   }
 
   // -------------------- Query & Data Fetching --------------------
-  const { data, refetch, isFetching } = useQuery<ApiResponse<TItem>, Error>({
+  const { data, refetch, isFetching: isLoading } = useQuery<ApiResponse<TItem>, Error>({
     queryKey: [listQueryKey],
     queryFn: () => {
       // 如果没有查询参数，直接调用
@@ -258,7 +258,7 @@ export function useTable<TItem>({
     rowKey: idKey,
     columns: isRef(columns) ? columns.value : columns,
     dataSource: list.value,
-    loading: isFetching.value,
+    loading: isLoading.value,
     sticky: true,
     ...(selectable
       ? {
@@ -299,7 +299,7 @@ export function useTable<TItem>({
     tableProps,
 
     // 状态
-    isLoading: isFetching,
+    isLoading,
     isDeleting,
     isBatchDeleting,
 
