@@ -1,5 +1,6 @@
 export default {
   common: {
+    projectName: 'PURE ADMIN',
     backHome: 'Back Home',
     yesOrNo: {
       yes: 'Yes',
@@ -8,6 +9,7 @@ export default {
     userCenter: 'User Center',
     logout: 'Logout',
     logoutConfirm: 'Are you sure you want to log out?',
+    loading: 'Loading resources...',
     networkError: 'Network error, please try again later',
     expand: 'Expand',
     collapse: 'Collapse',

@@ -4,6 +4,7 @@ import { handleHotUpdate, routes } from 'vue-router/auto-routes'
 
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
 import { useUserStore } from '@/stores'
+import { hideLoading } from '@/plugins'
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -44,6 +45,22 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 })
+
+router.isReady().then(() => {
+  hideLoading()
+})
+
+// let isFirstRoute = true
+// router.afterEach(() => {
+//   if (isFirstRoute) {
+//     const loading = document.getElementById('Loading')
+//     loading?.classList.add('is-hide')
+//     setTimeout(() => {
+//       loading?.remove()
+//     }, 300)
+//     isFirstRoute = false
+//   }
+// })
 
 function addRedirects() {
   // router.addRoute({

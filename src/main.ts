@@ -1,5 +1,3 @@
-import iconParkOutline from '@iconify-json/icon-park-outline/icons.json'
-import { addCollection } from '@iconify/vue'
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import Antd from 'ant-design-vue'
 import { createPinia } from 'pinia'
@@ -12,8 +10,11 @@ import { i18n } from '@/locales'
 
 import App from './App.vue'
 import { router } from './router'
+import { setupIconifyOffline, setupLoading } from '@/plugins'
 
-addCollection(iconParkOutline)
+setupLoading()
+setupIconifyOffline()
+
 const pinia = createPinia()
 
 createApp(App)

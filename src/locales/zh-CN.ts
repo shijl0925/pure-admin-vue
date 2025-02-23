@@ -1,5 +1,6 @@
 export default {
   common: {
+    projectName: 'PURE ADMIN',
     backHome: '返回首页',
     yesOrNo: {
       yes: '是',
@@ -8,6 +9,7 @@ export default {
     userCenter: '个人中心',
     logout: '退出登录',
     logoutConfirm: '确认退出登录吗？',
+    loading: '正在加载资源...',
     networkError: '网络异常，请稍后再试',
     expand: '展开',
     collapse: '收起',
