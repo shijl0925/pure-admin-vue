@@ -32,4 +32,6 @@ export const usePageDataStore = defineStore('pageData', () => {
     clearData,
     clearAllData,
   }
+}, {
+  persist: true,
 })

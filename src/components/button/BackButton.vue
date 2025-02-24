@@ -7,7 +7,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <Button icon="icon-park-outline:back">
+  <Button icon="icon-park-outline:left">
     {{ t('common.back') }}
   </Button>
 </template>

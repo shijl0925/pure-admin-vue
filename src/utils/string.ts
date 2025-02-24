@@ -7,6 +7,15 @@ export function projectSign(text: string, project?: string, version?: string) {
   return `${projectName}-${projectVersion}-${text}`
 }
 
+/**
+ * 判断是否为 HTTP URL
+ * @param url 要判断的 URL
+ * @returns 如果 URL 以 http:// 或 https:// 开头，则返回 true，否则返回 false
+ */
+export function isHttpUrl(url: string) {
+  return /^https?:\/\//.test(url)
+}
+
 // 加密
 export function enCode(str: string) {
   const key = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'

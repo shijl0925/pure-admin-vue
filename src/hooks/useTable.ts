@@ -207,7 +207,7 @@ export function useTable<
     resetSelectedState()
   }
 
-  async function handleCreate(transferData = null, query = {}) {
+  async function handleCreate(transferData: Record<string, any> | null = null, query: Record<string, any> = {}) {
     const { navigateWithData } = usePageTransfer()
     if (pageCreatePath) {
       navigateWithData(
@@ -229,7 +229,7 @@ export function useTable<
     }
   }
 
-  async function handleEdit(data: InferredItem<TApiFn>, transferData = null, query = {}) {
+  async function handleEdit(data: InferredItem<TApiFn>, transferData: Record<string, any> | null = null, query: Record<string, any> = {}) {
     const { navigateWithData } = usePageTransfer()
     if (pageEditPath) {
       navigateWithData(

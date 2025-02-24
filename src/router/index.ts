@@ -2,9 +2,9 @@ import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import { handleHotUpdate, routes } from 'vue-router/auto-routes'
 
+import { hideLoading } from '@/plugins'
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
 import { useUserStore } from '@/stores'
-import { hideLoading } from '@/plugins'
 
 export const router = createRouter({
   history: createWebHistory(),

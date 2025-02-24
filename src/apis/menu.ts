@@ -3,7 +3,11 @@ import type { Menu, MenuTree } from '@/types/menu'
 import { http } from '@/utils/http'
 
 export function getMenuTreeApi(): Promise<MenuTree> {
-  return http.get('/menu/tree')
+  return http.get('/menu')
+}
+
+export function getFlatMenuApi(): Promise<Omit<Menu, 'children'>[]> {
+  return http.get('/menu/flat')
 }
 
 export function getMenuApi(id: number): Promise<Omit<Menu, 'children'>> {

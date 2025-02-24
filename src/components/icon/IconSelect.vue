@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { listIcons } from '@iconify/vue'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 import { Icon } from '@/components/icon'
 
@@ -19,7 +19,6 @@ const options = computed(() => {
 </script>
 
 <template>
-  <!-- <a-select v-model:value="iconValue" :options="options" /> -->
   <a-select v-model:value="iconValue" allow-clear show-search>
     <a-select-option v-for="option in options" :key="option.value" :value="option.value">
       <a-space>

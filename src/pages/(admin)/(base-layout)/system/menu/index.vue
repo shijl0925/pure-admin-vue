@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-import type { Menu } from '@/types/menu'
-
 import { deleteMenuApi, getMenuTreeApi } from '@/apis/menu'
 import { Button, CreateButton, DeleteButton, EditButton } from '@/components/button'
 import { SearchContainer, SearchTableLayout } from '@/components/container'
@@ -37,10 +33,6 @@ const {
   ],
   scrollY: tableScrollY,
 })
-
-function handleCreateChild(record: Menu) {
-  console.log(record)
-}
 </script>
 
 <template>
@@ -49,7 +41,7 @@ function handleCreateChild(record: Menu) {
       <a-form :colon="false">
         <SearchContainer>
           <template #actions>
-            <CreateButton @click="handleCreate" />
+            <CreateButton @click="handleCreate({ id: null })" />
           </template>
         </SearchContainer>
       </a-form>
@@ -60,9 +52,16 @@ function handleCreateChild(record: Menu) {
           <Icon :icon="record.icon" />
         </template>
         <template v-if="column.key === 'actions'">
-          <Button icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreateChild(record)" />
-          <EditButton type="text" size="small" no-text @click="handleEdit(record)" />
-          <DeleteButton v-if="!record.children || record.children.length === 0" type="text" size="small" no-text :loading="isDeleting" @confirm="handleDelete(record.id)" />
+          <Button icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
+          <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />
+          <DeleteButton
+            v-if="!record.children || record.children.length === 0"
+            type="text"
+            size="small"
+            no-text
+            :loading="isDeleting"
+            @confirm="handleDelete(record.id)"
+          />
           <template v-if="record.type === 'DIRECTORY'" />
         </template>
       </template>

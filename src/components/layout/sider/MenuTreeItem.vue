@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import type { Menu } from '@/types/menu'
 
 import { Icon } from '@/components/icon'
+import { isHttpUrl } from '@/utils/string'
 
 defineOptions({
   name: 'MenuTreeItem',
@@ -17,7 +18,12 @@ const router = useRouter()
 
 function handleClick(item: Menu) {
   if (item.path) {
-    router.push(item.path)
+    if (isHttpUrl(item.path)) {
+      window.open(item.path, '_blank')
+    }
+    else {
+      router.push(item.path)
+    }
   }
 }
 </script>
@@ -40,7 +46,7 @@ function handleClick(item: Menu) {
   </template>
   <template v-else>
     <a-menu-item :key="item.id" @click="handleClick(item)">
-      <template #icon>
+      <template v-if="item.icon" #icon>
         <Icon class="!text-xl" :icon="item.icon" />
       </template>
       <template v-if="!item.parentId" #title>

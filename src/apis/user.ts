@@ -17,7 +17,7 @@ export function getUserMenuApi(): Promise<MenuTree> {
 }
 
 export function getUserListApi(params: UserListParams = { page: 1, pageSize: 10 }): Promise<BasePageList<User>> {
-  return http.get('/user/list', { params })
+  return http.get('/user', { params })
 }
 
 export function getUserApi(id: number): Promise<User> {
