@@ -37,11 +37,11 @@ const {
   selectable: true,
   form: {
     name: null,
-    description: null,
+    code: null,
   },
   columns: [
     { title: '角色名称', dataIndex: 'name' },
-    { title: '描述', dataIndex: 'description' },
+    { title: '角色编码', dataIndex: 'code' },
     { title: '操作', key: 'actions', fixed: 'right', width: 100 },
   ],
 })
@@ -59,17 +59,11 @@ const {
       >
         <SearchContainer>
           <SearchRow>
-            <SearchCol name="username" label="用户名">
-              <a-input v-model:value="formState.username" />
+            <SearchCol name="name" label="角色名称">
+              <a-input v-model:value="formState.name" />
             </SearchCol>
-            <SearchCol name="nickName" label="昵称">
-              <a-input v-model:value="formState.nickName" />
-            </SearchCol>
-            <SearchCol name="email" label="邮箱">
-              <a-input v-model:value="formState.email" />
-            </SearchCol>
-            <SearchCol name="phoneNumber" label="手机号">
-              <a-input v-model:value="formState.phoneNumber" />
+            <SearchCol name="code" label="角色编码">
+              <a-input v-model:value="formState.code" />
             </SearchCol>
           </SearchRow>
           <template #actions>
