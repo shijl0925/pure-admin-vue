@@ -4,9 +4,10 @@ import { SaveButton } from '@/components/button'
 import { FormLayout } from '@/components/container'
 import { useForm } from '@/hooks/useForm'
 
+import PermissionSelect from '../components/PermissionSelect.vue'
+
 const {
   title,
-  isCreateMode,
   formProps,
   formState,
   isLoading,
@@ -20,6 +21,8 @@ const {
     name: null,
     code: null,
     description: null,
+    menuPermissions: [],
+    buttonPermissions: [],
   },
   rules: {
     name: [{ required: true, message: '请输入角色名称' }],
@@ -34,11 +37,17 @@ const {
       <a-form-item label="角色名称" name="name" autocomplete="off">
         <a-input v-model:value="formState.name" />
       </a-form-item>
-      <a-form-item v-if="isCreateMode" label="角色编码" name="code">
+      <a-form-item label="角色编码" name="code">
         <a-input v-model:value="formState.code" />
       </a-form-item>
       <a-form-item label="描述" name="description">
         <a-input v-model:value="formState.description" />
+      </a-form-item>
+      <a-form-item label="菜单权限">
+        <PermissionSelect v-model:value="formState.menuPermissions" type="MENU" />
+      </a-form-item>
+      <a-form-item label="按钮权限">
+        <PermissionSelect v-model:value="formState.buttonPermissions" type="BUTTON" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
         <SaveButton type="primary" :loading="isLoading" @click="handleSubmit" />

@@ -4,9 +4,7 @@ import { computed } from 'vue'
 
 import { Icon } from '@/components/icon'
 
-const iconValue = defineModel<string | null>('value', {
-  default: null,
-})
+const value = defineModel<string | null>('value')
 
 const loadedIcons = listIcons()
 
@@ -19,7 +17,7 @@ const options = computed(() => {
 </script>
 
 <template>
-  <a-select v-model:value="iconValue" allow-clear show-search>
+  <a-select v-model:value="value" allow-clear show-search>
     <a-select-option v-for="option in options" :key="option.value" :value="option.value">
       <a-space>
         <Icon :icon="option.value" />

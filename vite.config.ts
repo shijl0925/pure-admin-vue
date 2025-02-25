@@ -12,7 +12,7 @@ export default defineConfig({
   plugins: [
     VueRouter({
       dts: fileURLToPath(new URL('./types/typed-router.d.ts', import.meta.url)),
-      exclude: ['**/components/**'],
+      exclude: ['**/component{,s}/**'],
       async extendRoute(route) {
         setPermissionMeta(route)
       },
