@@ -15,6 +15,7 @@ export default {
     collapse: '收起',
     search: '查询',
     reset: '重置',
+    refresh: '刷新',
     create: '新建',
     edit: '编辑',
     save: '保存',

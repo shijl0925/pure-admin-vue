@@ -14,6 +14,7 @@ export default {
     expand: 'Expand',
     collapse: 'Collapse',
     search: 'Search',
+    refresh: 'Refresh',
     reset: 'Reset',
     create: 'Create',
     edit: 'Edit',

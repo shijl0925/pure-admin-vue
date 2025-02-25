@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { deleteMenuApi, getMenuTreeApi } from '@/apis/menu'
-import { Button, CreateButton, DeleteButton, EditButton } from '@/components/button'
+import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
 import { SearchContainer, SearchTableLayout } from '@/components/container'
 import { Icon } from '@/components/icon'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
@@ -13,7 +13,9 @@ const {
 
 const {
   tableProps,
+  isLoading,
   isDeleting,
+  handleReset,
   handleCreate,
   handleEdit,
   handleDelete,
@@ -41,6 +43,8 @@ const {
       <a-form :colon="false">
         <SearchContainer>
           <template #actions>
+            <RefreshButton :loading="isLoading" @click="handleReset" />
+            <a-divider type="vertical" />
             <CreateButton @click="handleCreate({ id: null })" />
           </template>
         </SearchContainer>
