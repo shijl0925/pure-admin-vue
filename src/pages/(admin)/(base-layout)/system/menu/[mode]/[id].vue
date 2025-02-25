@@ -38,6 +38,7 @@ const {
     icon: null,
     path: null,
     code: null,
+    description: null,
     sort: 0,
   },
   rules: computed((): FormProps['rules'] => {
@@ -66,8 +67,29 @@ const parentId = computed(() => {
   return isCreateMode ? data?.id : formState.value.parentId
 })
 
+const menuTypeOptions = computed(() => {
+  if (isCreateMode) {
+    if (!data.id) {
+      return MENU_TYPE_OPTIONS.filter(option => option.value !== 'BUTTON')
+    }
+
+    if (data.type === 'DIRECTORY') {
+      return MENU_TYPE_OPTIONS.filter(option => option.value !== 'BUTTON')
+    }
+
+    if (data.type === 'MENU') {
+      return MENU_TYPE_OPTIONS.filter(option => option.value === 'BUTTON')
+    }
+
+    return MENU_TYPE_OPTIONS
+  }
+  else {
+    return MENU_TYPE_OPTIONS.filter(option => option.value === formState.value.type)
+  }
+})
+
 const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
-  console.log(e.target.value)
+  formState.value.icon = null
   formState.value.path = null
   formState.value.code = null
   await nextTick()
@@ -86,22 +108,25 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
       <a-form-item label="名称" name="title">
         <a-input v-model:value="formState.title" />
       </a-form-item>
+      <a-form-item label="描述" name="description">
+        <a-textarea v-model:value="formState.description" />
+      </a-form-item>
       <a-form-item label="类型" name="type">
         <a-radio-group
           v-model:value="formState.type"
           option-type="button"
-          :options="MENU_TYPE_OPTIONS"
+          :options="menuTypeOptions"
           :disabled="isEditMode"
           @change="handleChangeType"
         />
       </a-form-item>
-      <a-form-item label="图标" name="icon">
+      <a-form-item v-if="formState.type && formState.type !== 'BUTTON'" label="图标" name="icon">
         <IconSelect v-model:value="formState.icon" />
       </a-form-item>
-      <a-form-item v-if="formState.type === 'MENU'" label="路径" name="path">
+      <a-form-item v-if="formState.type && formState.type === 'MENU'" label="路径" name="path">
         <a-input v-model:value="formState.path" />
       </a-form-item>
-      <a-form-item v-if="formState.type === 'MENU' || formState.type === 'BUTTON'" label="权限标识" name="code">
+      <a-form-item v-if="formState.type && (formState.type === 'MENU' || formState.type === 'BUTTON')" label="权限标识" name="code">
         <a-input v-model:value="formState.code" />
       </a-form-item>
       <a-form-item label="排序" name="sort">

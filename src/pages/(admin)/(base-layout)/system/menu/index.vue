@@ -62,7 +62,6 @@ const {
             :loading="isDeleting"
             @confirm="handleDelete(record.id)"
           />
-          <template v-if="record.type === 'DIRECTORY'" />
         </template>
       </template>
     </a-table>

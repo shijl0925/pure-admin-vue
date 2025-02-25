@@ -22,6 +22,8 @@ declare module 'vue-router/auto-routes' {
     '/(admin)/(base-layout)/': RouteRecordInfo<'/(admin)/(base-layout)/', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/system/menu/': RouteRecordInfo<'/(admin)/(base-layout)/system/menu/', '/system/menu', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/system/menu/[mode]/[id]': RouteRecordInfo<'/(admin)/(base-layout)/system/menu/[mode]/[id]', '/system/menu/:mode/:id', { mode: ParamValue<true>, id: ParamValue<true> }, { mode: ParamValue<false>, id: ParamValue<false> }>,
+    '/(admin)/(base-layout)/system/role/': RouteRecordInfo<'/(admin)/(base-layout)/system/role/', '/system/role', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/system/role/[mode]/[id]': RouteRecordInfo<'/(admin)/(base-layout)/system/role/[mode]/[id]', '/system/role/:mode/:id', { mode: ParamValue<true>, id: ParamValue<true> }, { mode: ParamValue<false>, id: ParamValue<false> }>,
     '/(admin)/(base-layout)/system/user/': RouteRecordInfo<'/(admin)/(base-layout)/system/user/', '/system/user', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/system/user/[mode]/[id]': RouteRecordInfo<'/(admin)/(base-layout)/system/user/[mode]/[id]', '/system/user/:mode/:id', { mode: ParamValue<true>, id: ParamValue<true> }, { mode: ParamValue<false>, id: ParamValue<false> }>,
     '/(admin)/(empty-layout)': RouteRecordInfo<'/(admin)/(empty-layout)', '/', Record<never, never>, Record<never, never>>,
