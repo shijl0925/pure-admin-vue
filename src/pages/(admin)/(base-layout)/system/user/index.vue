@@ -39,13 +39,13 @@ const {
     username: null,
     nickName: null,
     email: null,
-    phoneNumber: null,
+    phone: null,
   },
   columns: [
     { title: '用户名', dataIndex: 'username' },
     { title: '昵称', dataIndex: 'nickName' },
     { title: '邮箱', dataIndex: 'email' },
-    { title: '手机号', dataIndex: 'phoneNumber' },
+    { title: '手机号', dataIndex: 'phone' },
     { title: '状态', dataIndex: 'isFrozen' },
     { title: '操作', key: 'actions', fixed: 'right', width: 100 },
   ],
@@ -73,8 +73,8 @@ const {
             <SearchCol name="email" label="邮箱">
               <a-input v-model:value="formState.email" />
             </SearchCol>
-            <SearchCol name="phoneNumber" label="手机号">
-              <a-input v-model:value="formState.phoneNumber" />
+            <SearchCol name="phone" label="手机号">
+              <a-input v-model:value="formState.phone" />
             </SearchCol>
           </SearchRow>
           <template #actions>

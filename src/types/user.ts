@@ -25,7 +25,7 @@ export interface User {
   password?: string | null
   nickName?: string | null
   email?: string | null
-  phoneNumber?: string | null
+  phone?: string | null
   headPic?: string | null
   isFrozen: boolean
   createTime?: string | null
@@ -36,7 +36,7 @@ export interface UserListParams extends BasePageParams {
   username?: string | null
   nickName?: string | null
   email?: string | null
-  phoneNumber?: string | null
+  phone?: string | null
 }
 
 export interface UserList {
