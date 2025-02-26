@@ -71,7 +71,13 @@ const style = computed(() => {
 })
 
 function handleBack() {
-  router.back()
+  const history = router.options.history
+  if (history.state.back === '/login') {
+    router.push('/')
+  }
+  else {
+    router.back()
+  }
 }
 </script>
 

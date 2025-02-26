@@ -2,23 +2,19 @@
 import { useQuery } from '@tanstack/vue-query'
 import { computed } from 'vue'
 
-import { getMenuPermissionApi } from '@/apis/menu'
-
-const { type } = defineProps<{
-  type: 'MENU' | 'BUTTON'
-}>()
+import { getAllRoleApi } from '@/apis/role'
 
 const value = defineModel<string[]>('value')
 
 const { data } = useQuery({
-  queryKey: ['menuPermission', type],
-  queryFn: () => getMenuPermissionApi(type),
+  queryKey: ['roleAll'],
+  queryFn: () => getAllRoleApi(),
 })
 
 const options = computed(() => {
   return data.value?.map(item => ({
-    label: item.title,
-    value: item.code,
+    label: item.name,
+    value: item.id,
   }))
 })
 </script>

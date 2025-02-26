@@ -30,6 +30,7 @@ export interface User {
   isFrozen: boolean
   createTime?: string | null
   updateTime?: string | null
+  roles?: string[]
 }
 
 export interface UserListParams extends BasePageParams {

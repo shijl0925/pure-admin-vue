@@ -108,7 +108,7 @@ export function useForm<
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [listQueryKey] })
       if (backAfterSuccess)
-        router.back()
+        handleBack()
     },
     onError: (error) => {
       console.log('error', error)
@@ -121,7 +121,7 @@ export function useForm<
       queryClient.invalidateQueries({ queryKey: [listQueryKey] })
       queryClient.invalidateQueries({ queryKey: [detailQueryKey, id] })
       if (backAfterSuccess)
-        router.back()
+        handleBack()
     },
     onError: (error) => {
       console.log('error', error)
@@ -138,6 +138,18 @@ export function useForm<
     }
   }
 
+  function handleBack() {
+    if (backAfterSuccess) {
+      const history = router.options.history
+      if (history.state.back === '/login') {
+        router.push('/')
+      }
+      else {
+        router.back()
+      }
+    }
+  }
+
   return {
     id,
     title,
@@ -150,5 +162,6 @@ export function useForm<
     detailData,
     isLoading: createMutation.isPending || updateMutation.isPending || isLoadingDetail,
     handleSubmit,
+    handleBack,
   }
 }

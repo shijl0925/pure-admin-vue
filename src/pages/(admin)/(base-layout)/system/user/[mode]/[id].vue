@@ -4,6 +4,8 @@ import { SaveButton } from '@/components/button'
 import { FormLayout } from '@/components/container'
 import { useForm } from '@/hooks/useForm'
 
+import RoleSelect from '../components/RoleSelect.vue'
+
 const {
   title,
   isCreateMode,
@@ -23,6 +25,7 @@ const {
     email: null,
     phone: null,
     isFrozen: false,
+    roles: [],
   },
   rules: {
     username: [{ required: true, message: '请输入用户名' }],
@@ -54,6 +57,9 @@ const {
       </a-form-item>
       <a-form-item label="是否冻结" name="isFrozen">
         <a-switch v-model:checked="formState.isFrozen" />
+      </a-form-item>
+      <a-form-item label="角色" name="roles">
+        <RoleSelect v-model:value="formState.roles" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
         <SaveButton type="primary" :loading="isLoading" @click="handleSubmit" />

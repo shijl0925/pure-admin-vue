@@ -52,12 +52,12 @@ const {
     </template>
     <a-table v-bind="tableProps">
       <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'icon'">
+        <template v-if="column.dataIndex === 'icon' && record.icon">
           <Icon :icon="record.icon" />
         </template>
         <template v-if="column.key === 'actions'">
-          <Button icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
-          <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />
+          <Button v-if="record.type !== 'BUTTON'" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
+          <EditButton v-else type="text" size="small" no-text @click="handleEdit(record, record)" />
           <DeleteButton
             v-if="!record.children || record.children.length === 0"
             type="text"

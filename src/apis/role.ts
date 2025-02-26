@@ -7,6 +7,10 @@ export function getRoleListApi(params: BasePageList<Role>): Promise<BasePageList
   return http.get('/role', { params })
 }
 
+export function getAllRoleApi(): Promise<Role[]> {
+  return http.get('/role/all')
+}
+
 export function getRoleApi(id: number): Promise<Role> {
   return http.get(`/role/${id}`)
 }
