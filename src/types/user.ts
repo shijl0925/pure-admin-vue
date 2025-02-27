@@ -17,6 +17,8 @@ export interface UserInfo {
   nickName: string
   headPic: string
   menus: MenuTree
+  menuPermissions: string[]
+  buttonPermissions: string[]
 }
 
 export interface User {

@@ -32,6 +32,14 @@ export const useUserStore = defineStore('user', () => {
     return userInfo.value?.menus ?? []
   })
 
+  const menuPermissions = computed(() => {
+    return userInfo.value?.menuPermissions ?? []
+  })
+
+  const buttonPermissions = computed(() => {
+    return userInfo.value?.buttonPermissions ?? []
+  })
+
   const flatUserMenus = computed(() => {
     return flattenTree(userMenus.value ?? [])
   })
@@ -102,6 +110,8 @@ export const useUserStore = defineStore('user', () => {
     userMenus,
     flatUserMenus,
     matchedMenuPath,
+    menuPermissions,
+    buttonPermissions,
     fetchUserInfo,
     clearUserInfo,
     login,

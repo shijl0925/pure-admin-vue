@@ -2,6 +2,7 @@ import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import { handleHotUpdate, routes } from 'vue-router/auto-routes'
 
+import { usePermission } from '@/hooks/usePermission'
 import { hideLoading } from '@/plugins'
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
 import { useUserStore } from '@/stores'
@@ -15,6 +16,8 @@ router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
   const { isLogin, userInfo } = storeToRefs(userStore)
   const { fetchUserInfo } = userStore
+
+  const { hasPermission } = usePermission()
 
   console.log('🔥 meta', to.meta)
 
@@ -30,8 +33,14 @@ router.beforeEach(async (to, from, next) => {
       }
 
       if (to.meta.permission) {
-        // TODO 检查权限
-        next()
+        if (!hasPermission(to.meta.permission as string | string[])) {
+          next({
+            path: '/403',
+          })
+        }
+        else {
+          next()
+        }
       }
       else {
         next()
