@@ -33,7 +33,10 @@ router.beforeEach(async (to, from, next) => {
       }
 
       if (to.meta.permission) {
-        if (!hasPermission(to.meta.permission as string | string[])) {
+        if (!hasPermission({
+          permission: to.meta.permission as string | string[],
+          permissionType: 'menu',
+        })) {
           next({
             path: '/403',
           })

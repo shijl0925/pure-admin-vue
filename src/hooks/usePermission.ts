@@ -2,33 +2,49 @@ import { storeToRefs } from 'pinia'
 
 import { useUserStore } from '@/stores'
 
+// 权限类型：菜单权限、UI权限
+export type PermissionType = 'menu' | 'ui'
+
 // 权限验证模式：全部满足(all)或满足其一(any)
-export type PermissionMode = 'all' | 'any'
+export type MatchMode = 'all' | 'any'
+
+// 权限检查选项接口
+export interface PermissionOptions {
+  // 要检查的权限
+  permission: string | string[]
+  // 权限类型：菜单权限或UI权限
+  permissionType: PermissionType
+  // 匹配模式，默认为'all'(全部满足)
+  matchMode?: MatchMode
+}
 
 export function usePermission() {
   const userStore = useUserStore()
-  const { uiPermissions } = storeToRefs(userStore)
+  const { menuPermissions, uiPermissions } = storeToRefs(userStore)
 
   /**
    * 检查是否拥有权限
-   * @param permission 单个权限字符串或权限字符串数组
-   * @param mode 权限检查模式，默认为'all'(全部满足)
+   * @param options 权限检查选项对象
    * @returns 是否拥有权限
    */
-  function hasPermission(permission: string | string[], mode: PermissionMode = 'all') {
+  function hasPermission(options: PermissionOptions): boolean {
+    const { permission, permissionType, matchMode = 'all' } = options
+
+    const userPermissions = permissionType === 'menu' ? menuPermissions.value : uiPermissions.value
+
     // 如果权限只有一个，并且是 *，则表示拥有所有权限
-    if (uiPermissions.value.length === 1 && uiPermissions.value[0] === '*') {
+    if (userPermissions.length === 1 && userPermissions[0] === '*') {
       return true
     }
 
     if (typeof permission === 'string') {
-      return uiPermissions.value.includes(permission)
+      return userPermissions.includes(permission)
     }
 
     // 如果是权限数组，则根据模式进行检查
-    const hasPermission = mode === 'all'
-      ? permission.every(p => uiPermissions.value.includes(p))
-      : permission.some(p => uiPermissions.value.includes(p))
+    const hasPermission = matchMode === 'all'
+      ? permission.every(p => userPermissions.includes(p))
+      : permission.some(p => userPermissions.includes(p))
 
     return hasPermission
   }

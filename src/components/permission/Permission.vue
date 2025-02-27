@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { PermissionMode } from '@/hooks/usePermission'
+import type { MatchMode } from '@/hooks/usePermission'
 
 import { usePermission } from '@/hooks/usePermission'
 
-const { permission, mode = 'all' } = defineProps<{
+const { permission, matchMode = 'all' } = defineProps<{
   permission: string | string[]
-  mode?: PermissionMode
+  matchMode?: MatchMode
 }>()
 
 const { hasPermission } = usePermission()
 
 const isAuthorized = computed(() => {
-  return hasPermission(permission, mode)
+  return hasPermission({
+    permission,
+    permissionType: 'ui',
+    matchMode,
+  })
 })
 </script>
 
