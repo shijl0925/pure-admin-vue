@@ -22,7 +22,7 @@ const {
     code: null,
     description: null,
     menuPermissions: [],
-    uiPermissions: [],
+    featurePermissions: [],
   },
   rules: {
     name: [{ required: true, message: '请输入角色名称' }],
@@ -47,7 +47,7 @@ const {
         <PermissionSelect v-model:value="formState.menuPermissions" type="MENU" />
       </a-form-item>
       <a-form-item label="功能权限">
-        <PermissionSelect v-model:value="formState.uiPermissions" type="UI" />
+        <PermissionSelect v-model:value="formState.featurePermissions" type="FEATURE" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
         <SaveButton type="primary" :loading="isLoading" @click="handleSubmit" />

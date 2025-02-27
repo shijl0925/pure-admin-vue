@@ -5,7 +5,7 @@ import { computed } from 'vue'
 import { getMenuPermissionApi } from '@/apis/menu'
 
 const { type } = defineProps<{
-  type: 'MENU' | 'UI'
+  type: 'MENU' | 'FEATURE'
 }>()
 
 const value = defineModel<string[]>('value')

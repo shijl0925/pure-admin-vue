@@ -2,8 +2,8 @@ import { storeToRefs } from 'pinia'
 
 import { useUserStore } from '@/stores'
 
-// 权限类型：菜单权限、UI权限
-export type PermissionType = 'menu' | 'ui'
+// 权限类型：菜单权限、功能权限
+export type PermissionType = 'menu' | 'feature'
 
 // 权限验证模式：全部满足(all)或满足其一(any)
 export type MatchMode = 'all' | 'any'
@@ -12,7 +12,7 @@ export type MatchMode = 'all' | 'any'
 export interface PermissionOptions {
   // 要检查的权限
   permission: string | string[]
-  // 权限类型：菜单权限或UI权限
+  // 权限类型：菜单权限或功能权限
   permissionType: PermissionType
   // 匹配模式，默认为'all'(全部满足)
   matchMode?: MatchMode
@@ -20,7 +20,7 @@ export interface PermissionOptions {
 
 export function usePermission() {
   const userStore = useUserStore()
-  const { menuPermissions, uiPermissions } = storeToRefs(userStore)
+  const { menuPermissions, featurePermissions } = storeToRefs(userStore)
 
   /**
    * 检查是否拥有权限
@@ -30,7 +30,7 @@ export function usePermission() {
   function hasPermission(options: PermissionOptions): boolean {
     const { permission, permissionType, matchMode = 'all' } = options
 
-    const userPermissions = permissionType === 'menu' ? menuPermissions.value : uiPermissions.value
+    const userPermissions = permissionType === 'menu' ? menuPermissions.value : featurePermissions.value
 
     // 如果权限只有一个，并且是 *，则表示拥有所有权限
     if (userPermissions.length === 1 && userPermissions[0] === '*') {

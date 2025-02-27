@@ -14,7 +14,7 @@ export function getMenuApi(id: number): Promise<Omit<Menu, 'children'>> {
   return http.get(`/menu/${id}`)
 }
 
-export function getMenuPermissionApi(type: 'MENU' | 'UI'): Promise<Omit<Menu, 'children'>[]> {
+export function getMenuPermissionApi(type: 'MENU' | 'FEATURE'): Promise<Omit<Menu, 'children'>[]> {
   return http.get(`/menu/permission?type=${type}`)
 }
 

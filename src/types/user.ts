@@ -18,7 +18,7 @@ export interface UserInfo {
   headPic: string
   menus: MenuTree
   menuPermissions: string[]
-  uiPermissions: string[]
+  featurePermissions: string[]
 }
 
 export interface User {
