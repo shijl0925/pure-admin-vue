@@ -8,6 +8,10 @@ export function loginApi(data: LoginInfo): Promise<AuthTokens> {
   return http.post('/user/login', data)
 }
 
+export function refreshTokenApi(refreshToken: string): Promise<AuthTokens> {
+  return http.get('/user/refresh', { params: { refreshToken } })
+}
+
 export function getUserInfoApi(): Promise<UserInfo> {
   return http.get('/user/info')
 }

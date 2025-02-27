@@ -7,7 +7,7 @@ export interface LoginInfo {
 }
 
 export interface AuthTokens {
-  token: string
+  accessToken: string
   refreshToken: string
 }
 

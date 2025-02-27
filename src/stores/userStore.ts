@@ -12,17 +12,17 @@ import { projectSign } from '@/utils/string'
 export const useUserStore = defineStore('user', () => {
   const router = useRouter()
   const route = useRoute()
-  const token = useLocalStorage<string>(projectSign('token'), null)
+  const accessToken = useLocalStorage<string>(projectSign('accessToken'), null)
   const refreshToken = useLocalStorage<string>(projectSign('refreshToken'), null)
-  const isLogin = computed(() => !!token.value)
+  const isLogin = computed(() => !!accessToken.value)
 
-  const setAllToken = (newToken: string, newRefreshToken: string) => {
-    token.value = newToken
+  const setAllToken = (newAccessToken: string, newRefreshToken: string) => {
+    accessToken.value = newAccessToken
     refreshToken.value = newRefreshToken
   }
 
   const clearAllToken = () => {
-    token.value = null
+    accessToken.value = null
     refreshToken.value = null
   }
 
@@ -81,7 +81,7 @@ export const useUserStore = defineStore('user', () => {
   const login = async (data: LoginInfo) => {
     const loginRes = await loginApi(data)
 
-    token.value = loginRes.token
+    accessToken.value = loginRes.accessToken
     refreshToken.value = loginRes.refreshToken
 
     await fetchUserInfo()
@@ -101,7 +101,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return {
-    token,
+    accessToken,
     refreshToken,
     isLogin,
     setAllToken,
