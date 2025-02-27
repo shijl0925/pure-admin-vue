@@ -56,8 +56,8 @@ const {
           <Icon :icon="record.icon" />
         </template>
         <template v-if="column.key === 'actions'">
-          <Button v-if="record.type !== 'BUTTON'" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
-          <EditButton v-else type="text" size="small" no-text @click="handleEdit(record, record)" />
+          <Button v-if="record.type !== 'UI'" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
+          <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />
           <DeleteButton
             v-if="!record.children || record.children.length === 0"
             type="text"

@@ -7,7 +7,7 @@ export type PermissionMode = 'all' | 'any'
 
 export function usePermission() {
   const userStore = useUserStore()
-  const { buttonPermissions } = storeToRefs(userStore)
+  const { uiPermissions } = storeToRefs(userStore)
 
   /**
    * 检查是否拥有权限
@@ -16,19 +16,19 @@ export function usePermission() {
    * @returns 是否拥有权限
    */
   function hasPermission(permission: string | string[], mode: PermissionMode = 'all') {
-    // 如果按钮权限只有一个，并且是 *，则表示拥有所有权限
-    if (buttonPermissions.value.length === 1 && buttonPermissions.value[0] === '*') {
+    // 如果权限只有一个，并且是 *，则表示拥有所有权限
+    if (uiPermissions.value.length === 1 && uiPermissions.value[0] === '*') {
       return true
     }
 
     if (typeof permission === 'string') {
-      return buttonPermissions.value.includes(permission)
+      return uiPermissions.value.includes(permission)
     }
 
     // 如果是权限数组，则根据模式进行检查
     const hasPermission = mode === 'all'
-      ? permission.every(p => buttonPermissions.value.includes(p))
-      : permission.some(p => buttonPermissions.value.includes(p))
+      ? permission.every(p => uiPermissions.value.includes(p))
+      : permission.some(p => uiPermissions.value.includes(p))
 
     return hasPermission
   }

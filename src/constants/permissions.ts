@@ -1,3 +1,7 @@
+export enum HOME {
+  READ = 'home:read',
+}
+
 /**
  * 用户管理
  */

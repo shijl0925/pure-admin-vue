@@ -70,15 +70,15 @@ const parentId = computed(() => {
 const menuTypeOptions = computed(() => {
   if (isCreateMode) {
     if (!data.id) {
-      return MENU_TYPE_OPTIONS.filter(option => option.value !== 'BUTTON')
+      return MENU_TYPE_OPTIONS.filter(option => option.value !== 'UI')
     }
 
     if (data.type === 'DIRECTORY') {
-      return MENU_TYPE_OPTIONS.filter(option => option.value !== 'BUTTON')
+      return MENU_TYPE_OPTIONS.filter(option => option.value !== 'UI')
     }
 
     if (data.type === 'MENU') {
-      return MENU_TYPE_OPTIONS.filter(option => option.value === 'BUTTON')
+      return MENU_TYPE_OPTIONS.filter(option => option.value === 'UI')
     }
 
     return MENU_TYPE_OPTIONS
@@ -93,7 +93,7 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
   formState.value.path = null
   formState.value.code = null
   await nextTick()
-  if (e.target.value === 'DIRECTORY' || e.target.value === 'BUTTON') {
+  if (e.target.value === 'DIRECTORY' || e.target.value === 'UI') {
     formRef.value?.clearValidate('path')
   }
 }
@@ -120,13 +120,13 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
           @change="handleChangeType"
         />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type !== 'BUTTON'" label="图标" name="icon">
+      <a-form-item v-if="formState.type && formState.type !== 'UI'" label="图标" name="icon">
         <IconSelect v-model:value="formState.icon" />
       </a-form-item>
       <a-form-item v-if="formState.type && formState.type === 'MENU'" label="路径" name="path">
         <a-input v-model:value="formState.path" />
       </a-form-item>
-      <a-form-item v-if="formState.type && (formState.type === 'MENU' || formState.type === 'BUTTON')" label="权限标识" name="code">
+      <a-form-item v-if="formState.type && (formState.type === 'MENU' || formState.type === 'UI')" label="权限标识" name="code">
         <a-input v-model:value="formState.code" />
       </a-form-item>
       <a-form-item label="排序" name="sort">
