@@ -15,7 +15,7 @@ const { hasPermission } = usePermission()
 const isAuthorized = computed(() => {
   return hasPermission({
     permission,
-    permissionType: 'ui',
+    permissionType: 'feature',
     matchMode,
   })
 })
