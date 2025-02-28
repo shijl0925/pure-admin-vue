@@ -13,6 +13,16 @@ export enum USER {
 }
 
 /**
+ * 角色管理
+ */
+export enum ROLE {
+  CREATE = 'system:role:create',
+  READ = 'system:role:read',
+  UPDATE = 'system:role:update',
+  DELETE = 'system:role:delete',
+}
+
+/**
  * 菜单管理
  */
 export enum MENU {
