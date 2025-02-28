@@ -10,6 +10,12 @@ interface QuillEditorProps {
   readOnly?: boolean
 }
 
+export interface ChangeEvent {
+  html: string
+  text: string
+  quill: Quill
+}
+
 const {
   options = {},
   placeholder = '请输入内容...',
@@ -17,7 +23,7 @@ const {
 } = defineProps<QuillEditorProps>()
 
 const emit = defineEmits<{
-  (e: 'change', value: { html: string, text: string, quill: Quill }): void
+  (e: 'change', value: ChangeEvent): void
   (e: 'blur', value: Quill): void
   (e: 'focus', value: Quill): void
   (e: 'ready', value: Quill): void

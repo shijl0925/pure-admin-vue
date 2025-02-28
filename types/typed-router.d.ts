@@ -20,6 +20,9 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/(admin)/(base-layout)': RouteRecordInfo<'/(admin)/(base-layout)', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/': RouteRecordInfo<'/(admin)/(base-layout)/', '/', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/about/': RouteRecordInfo<'/(admin)/(base-layout)/about/', '/about', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/example/icon/': RouteRecordInfo<'/(admin)/(base-layout)/example/icon/', '/example/icon', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/example/rich-text/': RouteRecordInfo<'/(admin)/(base-layout)/example/rich-text/', '/example/rich-text', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/multi-menu/first-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/first-child/', '/multi-menu/first-child', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/multi-menu/second-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/second-child/', '/multi-menu/second-child', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/multi-menu/third-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/third-child/', '/multi-menu/third-child', Record<never, never>, Record<never, never>>,
