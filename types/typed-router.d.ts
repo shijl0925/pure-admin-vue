@@ -20,6 +20,9 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/(admin)/(base-layout)': RouteRecordInfo<'/(admin)/(base-layout)', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/': RouteRecordInfo<'/(admin)/(base-layout)/', '/', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/multi-menu/first-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/first-child/', '/multi-menu/first-child', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/multi-menu/second-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/second-child/', '/multi-menu/second-child', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/multi-menu/third-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/third-child/', '/multi-menu/third-child', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/system/menu/': RouteRecordInfo<'/(admin)/(base-layout)/system/menu/', '/system/menu', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/system/menu/[mode]/[id]': RouteRecordInfo<'/(admin)/(base-layout)/system/menu/[mode]/[id]', '/system/menu/:mode/:id', { mode: ParamValue<true>, id: ParamValue<true> }, { mode: ParamValue<false>, id: ParamValue<false> }>,
     '/(admin)/(base-layout)/system/role/': RouteRecordInfo<'/(admin)/(base-layout)/system/role/', '/system/role', Record<never, never>, Record<never, never>>,

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { createRoleApi, getRoleApi, updateRoleApi } from '@/apis/role'
 import { SaveButton } from '@/components/button'
-import { FormLayout } from '@/components/container'
+import { FormContainer } from '@/components/container'
+import { MENU_TYPE } from '@/constants/menu'
 import { useForm } from '@/hooks/useForm'
 
 import PermissionSelect from '../components/PermissionSelect.vue'
@@ -32,7 +33,7 @@ const {
 </script>
 
 <template>
-  <FormLayout :title="title">
+  <FormContainer :title="title">
     <a-form v-bind="formProps">
       <a-form-item label="角色名称" name="name" autocomplete="off">
         <a-input v-model:value="formState.name" />
@@ -44,14 +45,14 @@ const {
         <a-input v-model:value="formState.description" />
       </a-form-item>
       <a-form-item label="菜单权限">
-        <PermissionSelect v-model:value="formState.menuPermissions" type="MENU" />
+        <PermissionSelect v-model:value="formState.menuPermissions" :type="MENU_TYPE.MENU" />
       </a-form-item>
       <a-form-item label="功能权限">
-        <PermissionSelect v-model:value="formState.featurePermissions" type="FEATURE" />
+        <PermissionSelect v-model:value="formState.featurePermissions" :type="MENU_TYPE.FEATURE" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
         <SaveButton type="primary" :loading="isLoading" @click="handleSubmit" />
       </a-form-item>
     </a-form>
-  </FormLayout>
+  </FormContainer>
 </template>

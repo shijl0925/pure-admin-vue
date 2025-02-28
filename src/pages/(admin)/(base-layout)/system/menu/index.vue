@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { deleteMenuApi, getMenuTreeApi } from '@/apis/menu'
 import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
-import { SearchContainer, SearchTableLayout } from '@/components/container'
+import { SearchContainer, SearchTableContainer } from '@/components/container'
 import { Icon } from '@/components/icon'
 import { MENU_TYPE } from '@/constants/menu'
-import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
+import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
 
 const {
   listContainerProps,
   tableScrollY,
-} = useSearchTableLayout()
+} = useSearchTableContainer()
 
 const {
   tableProps,
@@ -39,7 +39,7 @@ const {
 </script>
 
 <template>
-  <SearchTableLayout v-bind="listContainerProps">
+  <SearchTableContainer v-bind="listContainerProps">
     <template #searchForm>
       <a-form :colon="false">
         <SearchContainer>
@@ -70,5 +70,5 @@ const {
         </template>
       </template>
     </a-table>
-  </SearchTableLayout>
+  </SearchTableContainer>
 </template>

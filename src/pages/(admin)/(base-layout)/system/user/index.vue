@@ -3,14 +3,14 @@ import type { FormInstance } from 'ant-design-vue'
 
 import { batchDeleteUserApi, deleteUserApi, getUserListApi } from '@/apis/user'
 import { BatchDeleteButton, CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
-import { SearchCol, SearchContainer, SearchRow, SearchTableLayout } from '@/components/container'
-import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
+import { SearchCol, SearchContainer, SearchRow, SearchTableContainer } from '@/components/container'
+import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
 
 const {
   listContainerProps,
   tableScrollY,
-} = useSearchTableLayout()
+} = useSearchTableContainer()
 
 const {
   formRef,
@@ -53,7 +53,7 @@ const {
 </script>
 
 <template>
-  <SearchTableLayout v-bind="listContainerProps">
+  <SearchTableContainer v-bind="listContainerProps">
     <template #searchForm>
       <a-form
         :ref="(el: FormInstance) => formRef = el"
@@ -98,5 +98,5 @@ const {
         </template>
       </template>
     </a-table>
-  </SearchTableLayout>
+  </SearchTableContainer>
 </template>

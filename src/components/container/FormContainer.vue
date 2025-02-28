@@ -12,9 +12,11 @@ import { scrollbarOptions } from '@/utils/overlayscrollbars'
 const {
   margin = 20,
   title = '',
+  showBack = true,
 } = defineProps<{
   margin?: number
   title?: string
+  showBack?: boolean
 }>()
 
 const router = useRouter()
@@ -84,7 +86,7 @@ function handleBack() {
 <template>
   <div class="m-2 overflow-hidden">
     <a-card :title="title" :bordered="false" :style="{ height: `${cardHeight}px` }" :body-style="{ paddingLeft: 0, paddingRight: 0 }">
-      <template #extra>
+      <template v-if="showBack" #extra>
         <BackButton @click="handleBack" />
       </template>
       <OverlayScrollbarsComponent :options="scrollbarOptions" defer :style="{ height: `${overlayScrollbarsHeight}px` }">

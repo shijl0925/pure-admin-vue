@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { createUserApi, getUserApi, updateUserApi } from '@/apis/user'
 import { SaveButton } from '@/components/button'
-import { FormLayout } from '@/components/container'
+import { FormContainer } from '@/components/container'
 import { useForm } from '@/hooks/useForm'
 
 import RoleSelect from '../components/RoleSelect.vue'
@@ -38,7 +38,7 @@ const {
 </script>
 
 <template>
-  <FormLayout :title="title">
+  <FormContainer :title="title">
     <a-form v-bind="formProps">
       <a-form-item label="用户名" name="username" autocomplete="off">
         <a-input v-model:value="formState.username" />
@@ -65,5 +65,5 @@ const {
         <SaveButton type="primary" :loading="isLoading" @click="handleSubmit" />
       </a-form-item>
     </a-form>
-  </FormLayout>
+  </FormContainer>
 </template>

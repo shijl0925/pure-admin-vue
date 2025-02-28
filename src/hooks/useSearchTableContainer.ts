@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 
 import { useAppStore } from '@/stores'
 
-export function useSearchTableLayout() {
+export function useSearchTableContainer() {
   const { token } = theme.useToken()
   const { height: windowHeight } = useWindowSize()
 

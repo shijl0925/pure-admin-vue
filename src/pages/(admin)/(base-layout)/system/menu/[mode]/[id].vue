@@ -5,7 +5,7 @@ import { computed, nextTick } from 'vue'
 
 import { createMenuApi, getMenuApi, updateMenuApi } from '@/apis/menu'
 import { SaveButton } from '@/components/button'
-import { FormLayout } from '@/components/container'
+import { FormContainer } from '@/components/container'
 import { IconSelect } from '@/components/icon'
 import { MENU_TYPE } from '@/constants/menu'
 import { useForm } from '@/hooks/useForm'
@@ -106,7 +106,7 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
 </script>
 
 <template>
-  <FormLayout :title="title">
+  <FormContainer :title="title">
     <a-form :ref="(el: FormInstance) => formRef = el" v-bind="formProps" @finish="handleSubmit">
       <a-form-item label="上级菜单">
         <ParentName :value="parentId" />
@@ -142,5 +142,5 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
         <SaveButton type="primary" :loading="isLoading" />
       </a-form-item>
     </a-form>
-  </FormLayout>
+  </FormContainer>
 </template>
