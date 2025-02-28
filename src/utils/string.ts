@@ -62,3 +62,38 @@ export function deCode(str: string) {
   b = String.fromCharCode(...s)
   return b
 }
+
+/**
+ * 复制文本到剪贴板
+ * @param text 要复制的文本
+ * @returns Promise<boolean> 是否复制成功
+ */
+export async function copyToClipboard(text: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text)
+      return true
+    }
+
+    // 兼容旧浏览器
+    const textarea = document.createElement('textarea')
+    textarea.value = text
+
+    textarea.style.position = 'fixed'
+    textarea.style.opacity = '0'
+    textarea.style.left = '-999999px'
+    textarea.style.top = '-999999px'
+
+    document.body.appendChild(textarea)
+    textarea.focus()
+    textarea.select()
+
+    const success = document.execCommand('copy')
+    document.body.removeChild(textarea)
+    return success
+  }
+  catch (error) {
+    console.error('复制到剪贴板失败:', error)
+    return false
+  }
+}

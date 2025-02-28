@@ -28,14 +28,22 @@ const cardHeight = computed(() => {
 })
 
 const overlayScrollbarsHeight = computed(() => {
-  return cardHeight.value - 100
+  return cardHeight.value - 50
 })
 </script>
 
 <template>
   <div class="m-2 overflow-hidden">
-    <a-card :title="title" :bordered="false" :style="{ height: `${cardHeight}px` }">
-      <OverlayScrollbarsComponent :options="scrollbarOptions" defer :style="{ height: `${overlayScrollbarsHeight}px` }">
+    <a-card :title="title" :bordered="false" :style="{ height: `${cardHeight}px` }" :body-style="{ paddingLeft: 0, paddingRight: 0 }">
+      <OverlayScrollbarsComponent
+        :options="scrollbarOptions"
+        defer
+        :style="{
+          height: `${overlayScrollbarsHeight}px`,
+          paddingLeft: '20px',
+          paddingRight: '20px',
+        }"
+      >
         <div class="mx-auto">
           <slot />
         </div>
