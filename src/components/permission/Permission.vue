@@ -3,6 +3,7 @@ import { computed } from 'vue'
 
 import type { MatchMode } from '@/hooks/usePermission'
 
+import { MENU_TYPE } from '@/constants/menu'
 import { usePermission } from '@/hooks/usePermission'
 
 const { permission, matchMode = 'all' } = defineProps<{
@@ -15,7 +16,7 @@ const { hasPermission } = usePermission()
 const isAuthorized = computed(() => {
   return hasPermission({
     permission,
-    permissionType: 'feature',
+    permissionType: MENU_TYPE.FEATURE,
     matchMode,
   })
 })

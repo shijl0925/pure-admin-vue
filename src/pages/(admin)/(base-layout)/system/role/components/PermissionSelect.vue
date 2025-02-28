@@ -2,10 +2,12 @@
 import { useQuery } from '@tanstack/vue-query'
 import { computed } from 'vue'
 
+import type { MENU_TYPE } from '@/constants/menu'
+
 import { getMenuPermissionApi } from '@/apis/menu'
 
 const { type } = defineProps<{
-  type: 'MENU' | 'FEATURE'
+  type: MENU_TYPE.MENU | MENU_TYPE.FEATURE
 }>()
 
 const value = defineModel<string[]>('value')

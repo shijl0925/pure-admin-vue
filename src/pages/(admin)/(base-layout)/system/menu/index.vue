@@ -3,6 +3,7 @@ import { deleteMenuApi, getMenuTreeApi } from '@/apis/menu'
 import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
 import { SearchContainer, SearchTableLayout } from '@/components/container'
 import { Icon } from '@/components/icon'
+import { MENU_TYPE } from '@/constants/menu'
 import { useSearchTableLayout } from '@/hooks/useSearchTableLayout'
 import { useTable } from '@/hooks/useTable'
 
@@ -56,7 +57,7 @@ const {
           <Icon :icon="record.icon" />
         </template>
         <template v-if="column.key === 'actions'">
-          <Button v-if="record.type !== 'FEATURE'" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
+          <Button v-if="record.type !== MENU_TYPE.FEATURE" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
           <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />
           <DeleteButton
             v-if="!record.children || record.children.length === 0"

@@ -7,11 +7,11 @@ import { createMenuApi, getMenuApi, updateMenuApi } from '@/apis/menu'
 import { SaveButton } from '@/components/button'
 import { FormLayout } from '@/components/container'
 import { IconSelect } from '@/components/icon'
+import { MENU_TYPE } from '@/constants/menu'
 import { useForm } from '@/hooks/useForm'
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
 import ParentName from '../components/ParentName.vue'
-import { MENU_TYPE_OPTIONS } from '../constant'
 
 const { getTransferredData } = usePageTransfer()
 
@@ -51,7 +51,7 @@ const {
         required: true,
         message: '请选择类型',
       },
-      ...(formState.value.type === 'MENU'
+      ...(formState.value.type === MENU_TYPE.MENU
         ? {
             path: {
               required: true,
@@ -68,23 +68,29 @@ const parentId = computed(() => {
 })
 
 const menuTypeOptions = computed(() => {
+  const allOptions = [
+    { label: '目录', value: MENU_TYPE.DIRECTORY },
+    { label: '菜单', value: MENU_TYPE.MENU },
+    { label: '功能', value: MENU_TYPE.FEATURE },
+  ]
+
   if (isCreateMode) {
     if (!data.id) {
-      return MENU_TYPE_OPTIONS.filter(option => option.value !== 'FEATURE')
+      return allOptions.filter(option => option.value !== 'FEATURE')
     }
 
-    if (data.type === 'DIRECTORY') {
-      return MENU_TYPE_OPTIONS.filter(option => option.value !== 'FEATURE')
+    if (data.type === MENU_TYPE.DIRECTORY) {
+      return allOptions.filter(option => option.value !== MENU_TYPE.FEATURE)
     }
 
-    if (data.type === 'MENU') {
-      return MENU_TYPE_OPTIONS.filter(option => option.value === 'FEATURE')
+    if (data.type === MENU_TYPE.MENU) {
+      return allOptions.filter(option => option.value === MENU_TYPE.FEATURE)
     }
 
-    return MENU_TYPE_OPTIONS
+    return allOptions
   }
   else {
-    return MENU_TYPE_OPTIONS.filter(option => option.value === formState.value.type)
+    return allOptions.filter(option => option.value === formState.value.type)
   }
 })
 
@@ -120,13 +126,13 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
           @change="handleChangeType"
         />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type !== 'FEATURE'" label="图标" name="icon">
+      <a-form-item v-if="formState.type && formState.type !== MENU_TYPE.FEATURE" label="图标" name="icon">
         <IconSelect v-model:value="formState.icon" />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type === 'MENU'" label="路径" name="path">
+      <a-form-item v-if="formState.type && formState.type === MENU_TYPE.MENU" label="路径" name="path">
         <a-input v-model:value="formState.path" />
       </a-form-item>
-      <a-form-item v-if="formState.type && (formState.type === 'MENU' || formState.type === 'FEATURE')" label="权限标识" name="code">
+      <a-form-item v-if="formState.type && (formState.type === MENU_TYPE.MENU || formState.type === MENU_TYPE.FEATURE)" label="权限标识" name="code">
         <a-input v-model:value="formState.code" />
       </a-form-item>
       <a-form-item label="排序" name="sort">

@@ -2,6 +2,7 @@ import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import { handleHotUpdate, routes } from 'vue-router/auto-routes'
 
+import { MENU_TYPE } from '@/constants/menu'
 import { usePermission } from '@/hooks/usePermission'
 import { hideLoading } from '@/plugins'
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
@@ -35,7 +36,7 @@ router.beforeEach(async (to, from, next) => {
       if (to.meta.permission) {
         if (!hasPermission({
           permission: to.meta.permission as string | string[],
-          permissionType: 'menu',
+          permissionType: MENU_TYPE.MENU,
         })) {
           next({
             path: '/403',
