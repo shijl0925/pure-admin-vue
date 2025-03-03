@@ -7,7 +7,7 @@ import { useI18n } from 'vue-i18n'
 
 import { Icon } from '@/components/icon'
 import { LOCALES } from '@/constants/app'
-import { useAppStore } from '@/stores/appStore'
+import { useAppStore } from '@/stores'
 
 const { locale } = useI18n()
 
