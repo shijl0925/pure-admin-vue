@@ -35,6 +35,7 @@ export function enCode(str: string) {
     b3 = b % l // 求最大倍数的余数
     s += a[b3] + a[b2] + a[b1] // 根据余数值映射到密钥中对应下标位置的字符
   }
+
   return s
 }
 
@@ -58,8 +59,8 @@ export function deCode(str: string) {
     d++
     s[i] = b1 * l * l + b2 * l + b3 // 利用下标值，反推被加密字符的Unicode编码值
   }
-  // b = eval(`String.fromCharCode(${s.join(',')})`)
   b = String.fromCharCode(...s)
+
   return b
 }
 
@@ -72,6 +73,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       await navigator.clipboard.writeText(text)
+
       return true
     }
 
@@ -90,10 +92,12 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 
     const success = document.execCommand('copy')
     document.body.removeChild(textarea)
+
     return success
   }
   catch (error) {
     console.error('复制到剪贴板失败:', error)
+
     return false
   }
 }
