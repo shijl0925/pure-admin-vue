@@ -21,6 +21,7 @@ declare module 'vue-router/auto-routes' {
     '/(admin)/(base-layout)': RouteRecordInfo<'/(admin)/(base-layout)', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/': RouteRecordInfo<'/(admin)/(base-layout)/', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/about/': RouteRecordInfo<'/(admin)/(base-layout)/about/', '/about', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/example/copy/': RouteRecordInfo<'/(admin)/(base-layout)/example/copy/', '/example/copy', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/data-table/': RouteRecordInfo<'/(admin)/(base-layout)/example/data-table/', '/example/data-table', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/icon/': RouteRecordInfo<'/(admin)/(base-layout)/example/icon/', '/example/icon', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/rich-text/': RouteRecordInfo<'/(admin)/(base-layout)/example/rich-text/', '/example/rich-text', Record<never, never>, Record<never, never>>,
