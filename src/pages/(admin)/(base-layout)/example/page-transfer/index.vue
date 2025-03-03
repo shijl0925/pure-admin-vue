@@ -11,11 +11,23 @@ const form = ref({
   name: '',
   age: '',
   gender: '',
+  hobby: [],
 })
 
 const genderOptions = ref([
   { label: '男', value: 'male' },
   { label: '女', value: 'female' },
+])
+
+const hobbyOptions = ref([
+  { label: '篮球', value: 'basketball' },
+  { label: '足球', value: 'football' },
+  { label: '羽毛球', value: 'badminton' },
+  { label: '乒乓球', value: 'pingpong' },
+  { label: '游泳', value: 'swimming' },
+  { label: '跑步', value: 'running' },
+  { label: '健身', value: 'gym' },
+  { label: '读书', value: 'reading' },
 ])
 
 function handleClick() {
@@ -34,6 +46,9 @@ function handleClick() {
       </a-form-item>
       <a-form-item label="性别">
         <a-select v-model:value="form.gender" :options="genderOptions" />
+      </a-form-item>
+      <a-form-item label="爱好">
+        <a-select v-model:value="form.hobby" :options="hobbyOptions" mode="multiple" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
         <a-button type="primary" @click="handleClick">
