@@ -1,0 +1,6 @@
+export { default as BarChart } from './BarChart.vue'
+export { default as KLineChart } from './KLineChart.vue'
+export { default as LineChart } from './LineChart.vue'
+export { default as RadarChart } from './RadarChart.vue'
+export { default as RingChart } from './RingChart.vue'
+export { default as ScatterChart } from './ScatterChart.vue'
