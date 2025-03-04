@@ -6,7 +6,7 @@ import { BaseContainer } from '@/components/container'
 <template>
   <BaseContainer title="图表">
     <a-row :gutter="[20, 20]">
-      <a-col :xs="24" :md="12" :lg="8">
+      <a-col :xs="24" :lg="12">
         <a-card title="柱状图">
           <BarChart
             :data="[125, 186, 154, 210, 243, 278]"
@@ -14,7 +14,7 @@ import { BaseContainer } from '@/components/container'
           />
         </a-card>
       </a-col>
-      <a-col :xs="24" :md="12" :lg="8">
+      <a-col :xs="24" :lg="12">
         <a-card title="折线图">
           <LineChart
             :data="[65, 87, 92, 108, 136, 152]"
@@ -23,7 +23,7 @@ import { BaseContainer } from '@/components/container'
           />
         </a-card>
       </a-col>
-      <a-col :xs="24" :md="12" :lg="8">
+      <a-col :xs="24" :lg="12">
         <a-card title="饼图">
           <RingChart
             :data="[
@@ -36,7 +36,7 @@ import { BaseContainer } from '@/components/container'
           />
         </a-card>
       </a-col>
-      <a-col :xs="24" :md="12" :lg="8">
+      <a-col :xs="24" :lg="12">
         <a-card title="雷达图">
           <RadarChart
             :indicator="[
@@ -60,7 +60,7 @@ import { BaseContainer } from '@/components/container'
           />
         </a-card>
       </a-col>
-      <a-col :xs="24" :md="12" :lg="8">
+      <a-col :xs="24" :lg="12">
         <a-card title="散点图">
           <ScatterChart
             :data="[
@@ -80,7 +80,7 @@ import { BaseContainer } from '@/components/container'
           />
         </a-card>
       </a-col>
-      <a-col :xs="24" :md="12" :lg="8">
+      <a-col :xs="24" :lg="12">
         <a-card title="k线图">
           <KLineChart
             :data="[
