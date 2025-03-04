@@ -1,10 +1,13 @@
+import type { MENU_TYPE } from '@/constants/menu'
+
 export interface Menu {
   id: number
   parentId: number | null
-  icon: string
   title: string
-  path?: string
   code?: string
+  icon: string
+  type: MENU_TYPE
+  path?: string
   children?: Menu[]
 }
 

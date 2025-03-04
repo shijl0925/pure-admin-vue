@@ -5,7 +5,8 @@ import { FormContainer } from '@/components/container'
 import { MENU_TYPE } from '@/constants/menu'
 import { useForm } from '@/hooks/useForm'
 
-import PermissionSelect from '../components/PermissionSelect.vue'
+import ApiPermissionSelect from '../components/ApiPermissionSelect.vue'
+import MenuPermissionSelect from '../components/MenuPermissionSelect.vue'
 
 const {
   title,
@@ -24,6 +25,7 @@ const {
     description: null,
     menuPermissions: [],
     featurePermissions: [],
+    apiPermissions: [],
   },
   rules: {
     name: [{ required: true, message: '请输入角色名称' }],
@@ -45,10 +47,13 @@ const {
         <a-input v-model:value="formState.description" />
       </a-form-item>
       <a-form-item label="菜单权限">
-        <PermissionSelect v-model:value="formState.menuPermissions" :type="MENU_TYPE.MENU" />
+        <MenuPermissionSelect v-model:value="formState.menuPermissions" :type="MENU_TYPE.MENU" />
       </a-form-item>
       <a-form-item label="功能权限">
-        <PermissionSelect v-model:value="formState.featurePermissions" :type="MENU_TYPE.FEATURE" />
+        <MenuPermissionSelect v-model:value="formState.featurePermissions" :type="MENU_TYPE.FEATURE" />
+      </a-form-item>
+      <a-form-item label="API权限">
+        <ApiPermissionSelect v-model:value="formState.apiPermissions" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
         <SaveButton type="primary" :loading="isLoading" @click="handleSubmit" />

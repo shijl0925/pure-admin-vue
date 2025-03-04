@@ -3,11 +3,10 @@ import type { FormInstance, FormProps, RadioGroupProps } from 'ant-design-vue'
 
 import { computed, nextTick } from 'vue'
 
-import { createMenuApi, getMenuApi, updateMenuApi } from '@/apis/menu'
+import { createApiApi, getApiApi, updateApiApi } from '@/apis/api'
 import { SaveButton } from '@/components/button'
 import { FormContainer } from '@/components/container'
-import { IconSelect } from '@/components/icon'
-import { MENU_TYPE } from '@/constants/menu'
+import { API_TYPE, API_METHOD } from '@/constants/api'
 import { useForm } from '@/hooks/useForm'
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
@@ -27,16 +26,16 @@ const {
   isLoading,
   handleSubmit,
 } = useForm({
-  key: 'menu',
-  getApiFn: getMenuApi,
-  createApiFn: createMenuApi,
-  updateApiFn: updateMenuApi,
+  key: 'api',
+  getApiFn: getApiApi,
+  createApiFn: createApiApi,
+  updateApiFn: updateApiApi,
   form: {
     parentId: data?.id,
     title: null,
     type: null,
-    icon: null,
     path: null,
+    method: null,
     code: null,
     description: null,
     sort: 0,
@@ -51,7 +50,7 @@ const {
         required: true,
         message: '请选择类型',
       },
-      ...(formState.value.type === MENU_TYPE.MENU
+      ...(formState.value.type === API_TYPE.API
         ? {
             path: {
               required: true,
@@ -67,41 +66,31 @@ const parentId = computed(() => {
   return isCreateMode ? data?.id : formState.value.parentId
 })
 
-const menuTypeOptions = computed(() => {
+const apiTypeOptions = computed(() => {
   const allOptions = [
-    { label: '目录', value: MENU_TYPE.DIRECTORY },
-    { label: '菜单', value: MENU_TYPE.MENU },
-    { label: '功能', value: MENU_TYPE.FEATURE },
+    { label: '目录', value: API_TYPE.DIRECTORY },
+    { label: 'API', value: API_TYPE.API },
   ]
 
-  if (isCreateMode) {
-    if (!data.id) {
-      return allOptions.filter(option => option.value !== MENU_TYPE.FEATURE)
-    }
-
-    if (data.type === MENU_TYPE.DIRECTORY) {
-      return allOptions.filter(option => option.value !== MENU_TYPE.FEATURE)
-    }
-
-    if (data.type === MENU_TYPE.MENU) {
-      return allOptions.filter(option => option.value === MENU_TYPE.FEATURE)
-    }
-
-    return allOptions
-  }
-  else {
-    return allOptions.filter(option => option.value === formState.value.type)
-  }
+  return allOptions
 })
 
-const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
-  formState.value.icon = null
+const methodOptions = computed(() => {
+  return [
+    { label: 'GET', value: API_METHOD.GET },
+    { label: 'POST', value: API_METHOD.POST },
+    { label: 'PUT', value: API_METHOD.PUT },
+    { label: 'PATCH', value: API_METHOD.PATCH },
+    { label: 'DELETE', value: API_METHOD.DELETE },
+  ]
+})
+
+const handleChangeType: RadioGroupProps['onChange'] = async () => {
+  formState.value.method = null
   formState.value.path = null
   formState.value.code = null
   await nextTick()
-  if (e.target.value === MENU_TYPE.DIRECTORY || e.target.value === MENU_TYPE.FEATURE) {
-    formRef.value?.clearValidate('path')
-  }
+  formRef.value?.clearValidate('path')
 }
 </script>
 
@@ -121,18 +110,18 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
         <a-radio-group
           v-model:value="formState.type"
           option-type="button"
-          :options="menuTypeOptions"
+          :options="apiTypeOptions"
           :disabled="isEditMode"
           @change="handleChangeType"
         />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type !== MENU_TYPE.FEATURE" label="图标" name="icon">
-        <IconSelect v-model:value="formState.icon" />
-      </a-form-item>
-      <a-form-item v-if="formState.type && formState.type === MENU_TYPE.MENU" label="路径" name="path">
+      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" label="路径" name="path">
         <a-input v-model:value="formState.path" />
       </a-form-item>
-      <a-form-item v-if="formState.type && (formState.type === MENU_TYPE.MENU || formState.type === MENU_TYPE.FEATURE)" label="权限标识" name="code">
+      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" label="请求方法" name="method">
+        <a-select v-model:value="formState.method" :options="methodOptions" allow-clear />
+      </a-form-item>
+      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" label="权限标识" name="code">
         <a-input v-model:value="formState.code" />
       </a-form-item>
       <a-form-item label="排序" name="sort">
