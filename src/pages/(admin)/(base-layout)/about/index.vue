@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { BaseContainer } from '@/components/container'
-
 import pkg from '../../../../../package.json'
 
 interface PkgJson {
