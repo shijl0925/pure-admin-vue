@@ -1,28 +1,11 @@
 import type { EChartsOption } from 'echarts'
 
 import { useDebounceFn, useElementSize } from '@vueuse/core'
-import * as echarts from 'echarts'
+import * as echarts from 'echarts/core'
 import { storeToRefs } from 'pinia'
 import { onUnmounted, ref, watch } from 'vue'
 
 import { useAppStore } from '@/stores'
-
-interface ChartThemeConfig {
-  chartHeight: string
-  fontSize: number
-  fontColor: string
-  themeColor: string
-}
-
-// 图表主题配置
-export function useChartOps(): ChartThemeConfig {
-  return {
-    chartHeight: '16rem',
-    fontSize: 13,
-    fontColor: '#999',
-    themeColor: '#0094FF',
-  }
-}
 
 export function useEcharts(initOptions?: EChartsOption) {
   const appStore = useAppStore()
@@ -32,15 +15,15 @@ export function useEcharts(initOptions?: EChartsOption) {
   let chart: echarts.ECharts | null = null
 
   // 使用 useElementSize 监听容器尺寸变化
-  const { width, height } = useElementSize(chartRef)
+  const { width } = useElementSize(chartRef)
 
   // 使用 useDebounceFn 为 resize 添加防抖处理
   const handleResize = useDebounceFn(() => {
     chart?.resize()
-  }, 100) // 100ms 防抖延迟
+  }, 100)
 
   // 监听容器尺寸变化
-  watch([width, height], () => {
+  watch(width, () => {
     handleResize()
   })
 
@@ -66,8 +49,8 @@ export function useEcharts(initOptions?: EChartsOption) {
   // 坐标轴标签样式
   const getAxisLabelStyle = () => ({
     show: true,
-    color: useChartOps().fontColor,
-    fontSize: useChartOps().fontSize,
+    color: '#999',
+    fontSize: 13,
   })
 
   // 坐标轴刻度样式
@@ -113,6 +96,5 @@ export function useEcharts(initOptions?: EChartsOption) {
     getSplitLineStyle,
     getAxisLabelStyle,
     getAxisTickStyle,
-    useChartOps,
   }
 }

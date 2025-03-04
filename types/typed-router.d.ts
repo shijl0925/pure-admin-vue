@@ -24,7 +24,7 @@ declare module 'vue-router/auto-routes' {
     '/(admin)/(base-layout)/example/chart/': RouteRecordInfo<'/(admin)/(base-layout)/example/chart/', '/example/chart', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/copy/': RouteRecordInfo<'/(admin)/(base-layout)/example/copy/', '/example/copy', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/data-table/': RouteRecordInfo<'/(admin)/(base-layout)/example/data-table/', '/example/data-table', Record<never, never>, Record<never, never>>,
-    '/(admin)/(base-layout)/example/data-table/icon/': RouteRecordInfo<'/(admin)/(base-layout)/example/data-table/icon/', '/example/data-table/icon', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/example/icon/': RouteRecordInfo<'/(admin)/(base-layout)/example/icon/', '/example/icon', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/page-transfer/': RouteRecordInfo<'/(admin)/(base-layout)/example/page-transfer/', '/example/page-transfer', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/page-transfer/transferred': RouteRecordInfo<'/(admin)/(base-layout)/example/page-transfer/transferred', '/example/page-transfer/transferred', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/rich-text/': RouteRecordInfo<'/(admin)/(base-layout)/example/rich-text/', '/example/rich-text', Record<never, never>, Record<never, never>>,

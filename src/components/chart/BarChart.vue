@@ -36,7 +36,6 @@ const {
   getSplitLineStyle,
 } = useEcharts()
 
-// 使用计算属性来处理渐变色
 const computedColor = computed(() => {
   if (color)
     return color
@@ -54,7 +53,6 @@ const computedColor = computed(() => {
   ])
 })
 
-// 抽离为单独的计算属性，确保响应式更新
 const chartOptions = computed<EChartsOption>(() => {
   return {
     grid: {
