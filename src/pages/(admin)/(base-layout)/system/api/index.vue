@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { deleteApiApi, getApiTreeApi } from '@/apis/api'
-import { API_TYPE } from '@/constants/api'
-
 import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
 import { SearchContainer, SearchTableContainer } from '@/components/container'
 import { Icon } from '@/components/icon'
+import { API_TYPE } from '@/constants/api'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
 
@@ -54,8 +53,18 @@ const {
     </template>
     <a-table v-bind="tableProps">
       <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'icon' && record.icon">
-          <Icon :icon="record.icon" />
+        <template v-if="column.dataIndex === 'type'">
+          <a-tag v-if="record.type === API_TYPE.DIRECTORY">
+            目录
+          </a-tag>
+          <a-tag v-else color="blue">
+            API
+          </a-tag>
+        </template>
+        <template v-if="column.dataIndex === 'method'">
+          <a-tag v-if="record.method" color="green">
+            {{ record.method }}
+          </a-tag>
         </template>
         <template v-if="column.key === 'actions'">
           <Button v-if="record.type === API_TYPE.DIRECTORY" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
