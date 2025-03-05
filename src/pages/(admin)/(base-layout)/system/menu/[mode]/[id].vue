@@ -40,6 +40,7 @@ const {
     code: null,
     description: null,
     sort: 0,
+    isShow: true,
   },
   rules: computed((): FormProps['rules'] => {
     return {
@@ -137,6 +138,9 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
       </a-form-item>
       <a-form-item label="排序" name="sort">
         <a-input-number v-model:value="formState.sort" :min="0" :precision="0" />
+      </a-form-item>
+      <a-form-item v-if="formState.type === MENU_TYPE.MENU" label="是否显示" name="isShow">
+        <a-switch v-model:checked="formState.isShow" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
         <SaveButton type="primary" :loading="isLoading" />

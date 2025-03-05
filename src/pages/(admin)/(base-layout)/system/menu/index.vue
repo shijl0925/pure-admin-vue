@@ -32,6 +32,7 @@ const {
     { title: '路径', dataIndex: 'path' },
     { title: '权限标识', dataIndex: 'code' },
     { title: '排序', dataIndex: 'sort' },
+    { title: '是否显示', dataIndex: 'isShow' },
     { title: '操作', key: 'actions', fixed: 'right', width: 150 },
   ],
   scrollY: tableScrollY,
@@ -53,8 +54,27 @@ const {
     </template>
     <a-table v-bind="tableProps">
       <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'type'">
+          <a-tag v-if="record.type === MENU_TYPE.MENU" color="blue">
+            菜单
+          </a-tag>
+          <a-tag v-else-if="record.type === MENU_TYPE.DIRECTORY">
+            功能
+          </a-tag>
+          <a-tag v-else color="cyan">
+            按钮
+          </a-tag>
+        </template>
         <template v-if="column.dataIndex === 'icon' && record.icon">
           <Icon :icon="record.icon" />
+        </template>
+        <template v-if="column.dataIndex === 'isShow'">
+          <a-tag v-if="record.isShow" color="success">
+            显示
+          </a-tag>
+          <a-tag v-else color="danger">
+            隐藏
+          </a-tag>
         </template>
         <template v-if="column.key === 'actions'">
           <Button v-if="record.type !== MENU_TYPE.FEATURE" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
