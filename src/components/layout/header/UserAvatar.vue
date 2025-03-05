@@ -4,10 +4,12 @@ import type { MenuProps } from 'ant-design-vue'
 import { Modal } from 'ant-design-vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 import { Icon } from '@/components/icon'
 import { useUserStore } from '@/stores/userStore'
 
+const router = useRouter()
 const { t } = useI18n()
 const userStore = useUserStore()
 const { userInfo } = storeToRefs(userStore)
@@ -16,7 +18,7 @@ const { logout } = userStore
 const handleClick: MenuProps['onClick'] = (e) => {
   switch (e.key) {
     case 'userCenter':
-      // router.push('/userCenter')
+      router.push('/user-center')
       break
     case 'logout':
       Modal.confirm({

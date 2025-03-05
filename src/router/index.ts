@@ -20,8 +20,6 @@ router.beforeEach(async (to, from, next) => {
 
   const { hasPermission } = usePermission()
 
-  console.log('🔥 meta', to.meta)
-
   if (to.meta.public) {
     next()
   }

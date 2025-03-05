@@ -116,40 +116,42 @@ http.interceptors.response.use(
 
     // originalRequest._retry 是一个自定义属性，用于标记请求是否已经重试过。
     // 1、判断是不是 token 过期
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true // 显式标记请求为重试
-      // 2、并且不是重新获取 token 的 401，则进行 token 刷新
-      if (!isRefreshing) {
-        // 重新请求accessToken
-        try {
-          const newAccessToken = await refreshToken()
-          // 配置请求头
-          originalRequest.headers.authorization = `Bearer ${newAccessToken}`
-          // 处理队列中的其他请求
-          processQueue(null, newAccessToken)
-          // 重新发起失败的请求
-          return http(originalRequest)
-        }
-        catch (err) {
-          // 处理队列中的请求
-          processQueue(err, null)
-          logout()
-          return Promise.reject(err)
-        }
-        finally {
-          isRefreshing = false
+    if (error.response.status === 401) {
+      if (!originalRequest._retry) {
+        originalRequest._retry = true // 显式标记请求为重试
+        // 2、并且不是重新获取 token 的 401，则进行 token 刷新
+        if (!isRefreshing) {
+          // 重新请求accessToken
+          try {
+            const newAccessToken = await refreshToken()
+            // 配置请求头
+            originalRequest.headers.authorization = `Bearer ${newAccessToken}`
+            // 处理队列中的其他请求
+            processQueue(null, newAccessToken)
+            // 重新发起失败的请求
+            return http(originalRequest)
+          }
+          catch (err) {
+            // 处理队列中的请求
+            processQueue(err, null)
+            logout()
+            return Promise.reject(err)
+          }
+          finally {
+            isRefreshing = false
+          }
         }
       }
-    }
-    else {
-      // 如果正在刷新token,则将请求加入队列
-      return new Promise((resolve, reject) => {
-        failedQueue.push({
-          resolve,
-          reject,
-          config: error.config, // 存储原始请求配置
+      else {
+        // 如果正在刷新token,则将请求加入队列
+        return new Promise((resolve, reject) => {
+          failedQueue.push({
+            resolve,
+            reject,
+            config: error.config, // 存储原始请求配置
+          })
         })
-      })
+      }
     }
 
     const errMsg = error.response?.data?.data?.message || error.message

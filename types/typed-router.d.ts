@@ -41,6 +41,7 @@ declare module 'vue-router/auto-routes' {
     '/(admin)/(base-layout)/system/role/[mode]/[id]': RouteRecordInfo<'/(admin)/(base-layout)/system/role/[mode]/[id]', '/system/role/:mode/:id', { mode: ParamValue<true>, id: ParamValue<true> }, { mode: ParamValue<false>, id: ParamValue<false> }>,
     '/(admin)/(base-layout)/system/user/': RouteRecordInfo<'/(admin)/(base-layout)/system/user/', '/system/user', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/system/user/[mode]/[id]': RouteRecordInfo<'/(admin)/(base-layout)/system/user/[mode]/[id]', '/system/user/:mode/:id', { mode: ParamValue<true>, id: ParamValue<true> }, { mode: ParamValue<false>, id: ParamValue<false> }>,
+    '/(admin)/(base-layout)/user-center/': RouteRecordInfo<'/(admin)/(base-layout)/user-center/', '/user-center', Record<never, never>, Record<never, never>>,
     '/(admin)/(empty-layout)': RouteRecordInfo<'/(admin)/(empty-layout)', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(empty-layout)/[...path]': RouteRecordInfo<'/(admin)/(empty-layout)/[...path]', '/:path(.*)', { path: ParamValue<true> }, { path: ParamValue<false> }>,
     '/(admin)/(empty-layout)/403/': RouteRecordInfo<'/(admin)/(empty-layout)/403/', '/403', Record<never, never>, Record<never, never>>,

@@ -45,18 +45,9 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const matchedMenuPath = computed(() => {
+    console.log(route)
     // 获取当前路由的所有可能父路径
     const possiblePaths = route.matched.map(item => item.path)
-    // const possiblePaths = route.path.split('/').reduce((paths: string[], segment) => {
-    //   const previousPath = paths[paths.length - 1] || ''
-    //   const currentPath = `${previousPath}/${segment}`
-
-    //   if (segment) {
-    //     paths.push(currentPath)
-    //   }
-
-    //   return paths
-    // }, [])
 
     // 找到最匹配的菜单路径
     const matchedPath = possiblePaths
@@ -65,6 +56,10 @@ export const useUserStore = defineStore('user', () => {
 
     if (!matchedPath)
       return []
+
+    if (matchedPath === '/' && route.path !== '/') {
+      return []
+    }
 
     return matchedPath
   })

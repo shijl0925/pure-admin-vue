@@ -36,6 +36,10 @@ export function updateUserApi(id: number, data: Partial<User>): Promise<User> {
   return http.put(`/user/${id}`, data)
 }
 
+export function updateUserPasswordApi(data: { oldPassword: string, newPassword: string }): Promise<void> {
+  return http.post('/user/password', data)
+}
+
 export function deleteUserApi(id: number): Promise<void> {
   return http.delete(`/user/${id}`)
 }
