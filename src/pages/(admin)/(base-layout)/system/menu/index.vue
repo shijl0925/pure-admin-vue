@@ -55,14 +55,14 @@ const {
     <a-table v-bind="tableProps">
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'type'">
-          <a-tag v-if="record.type === MENU_TYPE.MENU" color="blue">
+          <a-tag v-if="record.type === MENU_TYPE.DIRECTORY">
+            目录
+          </a-tag>
+          <a-tag v-else-if="record.type === MENU_TYPE.MENU" color="blue">
             菜单
           </a-tag>
-          <a-tag v-else-if="record.type === MENU_TYPE.DIRECTORY">
-            功能
-          </a-tag>
           <a-tag v-else color="cyan">
-            按钮
+            功能
           </a-tag>
         </template>
         <template v-if="column.dataIndex === 'icon' && record.icon">
