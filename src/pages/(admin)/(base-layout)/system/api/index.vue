@@ -2,7 +2,6 @@
 import { deleteApiApi, getApiTreeApi } from '@/apis/api'
 import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
 import { SearchContainer, SearchTableContainer } from '@/components/container'
-import { Icon } from '@/components/icon'
 import { API_TYPE } from '@/constants/api'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
