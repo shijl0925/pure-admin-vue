@@ -2,20 +2,6 @@
 import { TransitionPresets, useTransition } from '@vueuse/core'
 import { computed, nextTick, ref, watch } from 'vue'
 
-const {
-  startValue = 0,
-  endValue = 2021,
-  duration = 1500,
-  autoplay = true,
-  decimals = 0,
-  prefix = '',
-  suffix = '',
-  separator = ',',
-  decimal = '.',
-  useEasing = true,
-  transition = 'linear',
-} = defineProps<Props>()
-
 interface Props {
   startValue?: number
   endValue?: number
@@ -29,6 +15,20 @@ interface Props {
   useEasing?: boolean
   transition?: keyof typeof TransitionPresets
 }
+
+const {
+  startValue = 0,
+  endValue = 1000,
+  duration = 1500,
+  autoplay = true,
+  decimals = 0,
+  prefix = '',
+  suffix = '',
+  separator = ',',
+  decimal = '.',
+  useEasing = true,
+  transition = 'linear',
+} = defineProps<Props>()
 
 const source = ref(startValue)
 
