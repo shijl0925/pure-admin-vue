@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 
 import { refreshTokenApi } from '@/apis/user'
 import { i18n } from '@/locales'
-import { useUserStore } from '@/stores'
+import { useAppStore, useUserStore } from '@/stores'
 
 export const http = Axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -67,6 +67,11 @@ http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const userStore = useUserStore()
   const { accessToken, refreshToken } = storeToRefs(userStore)
 
+  const appStore = useAppStore()
+  const { currentLocale } = storeToRefs(appStore)
+
+  config.headers['x-lang'] = currentLocale.value
+
   if (config.url !== '/user/login') {
     config.headers.authorization = `Bearer ${accessToken.value}`
   }
@@ -98,6 +103,8 @@ http.interceptors.response.use(
   async (error) => {
     const userStore = useUserStore()
     const { logout } = userStore
+    const appStore = useAppStore()
+    const { currentLocale } = storeToRefs(appStore)
 
     if (!error.response) {
       message.error(i18n.global.t('common.networkError'))
@@ -125,6 +132,7 @@ http.interceptors.response.use(
           try {
             const newAccessToken = await refreshToken()
             // 配置请求头
+            originalRequest.headers['x-lang'] = currentLocale.value
             originalRequest.headers.authorization = `Bearer ${newAccessToken}`
             // 处理队列中的其他请求
             processQueue(null, newAccessToken)
