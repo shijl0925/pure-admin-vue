@@ -6,7 +6,7 @@ import { computed, nextTick } from 'vue'
 import { createApiApi, getApiApi, updateApiApi } from '@/apis/api'
 import { SaveButton } from '@/components/button'
 import { FormContainer } from '@/components/container'
-import { API_TYPE, API_METHOD } from '@/constants/api'
+import { API_METHOD, API_TYPE } from '@/constants/api'
 import { useForm } from '@/hooks/useForm'
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
@@ -55,6 +55,10 @@ const {
             path: {
               required: true,
               message: '请输入路径',
+            },
+            method: {
+              required: true,
+              message: '请选择请求方法',
             },
           }
         : {}),

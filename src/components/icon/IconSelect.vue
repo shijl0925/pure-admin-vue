@@ -14,10 +14,16 @@ const options = computed(() => {
     value: icon,
   }))
 })
+
+function handleChange(icon: string) {
+  if (icon === undefined) {
+    value.value = null
+  }
+}
 </script>
 
 <template>
-  <a-select v-model:value="value" allow-clear show-search>
+  <a-select v-model:value="value" allow-clear show-search @change="handleChange">
     <a-select-option v-for="option in options" :key="option.value" :value="option.value">
       <a-space>
         <Icon :icon="option.value" />
