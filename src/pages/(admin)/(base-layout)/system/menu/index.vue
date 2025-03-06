@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { deleteMenuApi, getMenuTreeApi } from '@/apis/menu'
 import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
 import { SearchContainer, SearchTableContainer } from '@/components/container'
@@ -6,6 +9,8 @@ import { Icon } from '@/components/icon'
 import { MENU_TYPE } from '@/constants/menu'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
+
+const { t } = useI18n()
 
 const {
   listContainerProps,
@@ -25,16 +30,16 @@ const {
   pagination: false,
   listApiFn: getMenuTreeApi,
   deleteApiFn: deleteMenuApi,
-  columns: [
-    { title: '名称', dataIndex: 'title' },
-    { title: '类型', dataIndex: 'type' },
-    { title: '图标', dataIndex: 'icon' },
-    { title: '路径', dataIndex: 'path' },
-    { title: '权限标识', dataIndex: 'code' },
-    { title: '排序', dataIndex: 'sort' },
-    { title: '是否显示', dataIndex: 'isShow' },
-    { title: '操作', key: 'actions', fixed: 'right', width: 150 },
-  ],
+  columns: computed(() => [
+    { title: t('page.systemMenu.title'), dataIndex: 'title' },
+    { title: t('page.systemMenu.type'), dataIndex: 'type' },
+    { title: t('page.systemMenu.icon'), dataIndex: 'icon' },
+    { title: t('page.systemMenu.path'), dataIndex: 'path' },
+    { title: t('page.systemMenu.code'), dataIndex: 'code' },
+    { title: t('page.systemMenu.sort'), dataIndex: 'sort' },
+    { title: t('page.systemMenu.isShow'), dataIndex: 'isShow' },
+    { title: t('common.actions'), key: 'actions', fixed: 'right', width: 150 },
+  ]),
   scrollY: tableScrollY,
 })
 </script>
@@ -56,13 +61,13 @@ const {
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'type'">
           <a-tag v-if="record.type === MENU_TYPE.DIRECTORY">
-            目录
+            {{ t('page.systemMenu.directory') }}
           </a-tag>
           <a-tag v-else-if="record.type === MENU_TYPE.MENU" color="blue">
-            菜单
+            {{ t('page.systemMenu.menu') }}
           </a-tag>
           <a-tag v-else color="cyan">
-            功能
+            {{ t('page.systemMenu.feature') }}
           </a-tag>
         </template>
         <template v-if="column.dataIndex === 'icon' && record.icon">
@@ -70,10 +75,10 @@ const {
         </template>
         <template v-if="column.dataIndex === 'isShow'">
           <a-tag v-if="record.isShow" color="success">
-            显示
+            {{ t('page.systemMenu.show') }}
           </a-tag>
           <a-tag v-else color="danger">
-            隐藏
+            {{ t('page.systemMenu.hidden') }}
           </a-tag>
         </template>
         <template v-if="column.key === 'actions'">

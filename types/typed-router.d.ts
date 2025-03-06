@@ -22,7 +22,7 @@ declare module 'vue-router/auto-routes' {
     '/(admin)/(base-layout)/': RouteRecordInfo<'/(admin)/(base-layout)/', '/', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/about/': RouteRecordInfo<'/(admin)/(base-layout)/about/', '/about', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/chart/': RouteRecordInfo<'/(admin)/(base-layout)/example/chart/', '/example/chart', Record<never, never>, Record<never, never>>,
-    '/(admin)/(base-layout)/example/copy/': RouteRecordInfo<'/(admin)/(base-layout)/example/copy/', '/example/copy', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/example/clipboard/': RouteRecordInfo<'/(admin)/(base-layout)/example/clipboard/', '/example/clipboard', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/count-to/': RouteRecordInfo<'/(admin)/(base-layout)/example/count-to/', '/example/count-to', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/data-table/': RouteRecordInfo<'/(admin)/(base-layout)/example/data-table/', '/example/data-table', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/icon/': RouteRecordInfo<'/(admin)/(base-layout)/example/icon/', '/example/icon', Record<never, never>, Record<never, never>>,

@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { FormContainer } from '@/components/container'
 import { formLabelCol, formWrapperCol } from '@/hooks/useForm'
 import { usePageTransfer } from '@/hooks/usePageTransfer'
+
+const { t } = useI18n()
 
 const { navigateWithData } = usePageTransfer()
 
@@ -15,19 +18,19 @@ const form = ref({
 })
 
 const genderOptions = ref([
-  { label: '男', value: 'male' },
-  { label: '女', value: 'female' },
+  { label: t('common.gender.male'), value: 'male' },
+  { label: t('common.gender.female'), value: 'female' },
 ])
 
 const hobbyOptions = ref([
-  { label: '篮球', value: 'basketball' },
-  { label: '足球', value: 'football' },
-  { label: '羽毛球', value: 'badminton' },
-  { label: '乒乓球', value: 'pingpong' },
-  { label: '游泳', value: 'swimming' },
-  { label: '跑步', value: 'running' },
-  { label: '健身', value: 'gym' },
-  { label: '读书', value: 'reading' },
+  { label: t('page.pageTransferExample.hobbyOptions.basketball'), value: 'basketball' },
+  { label: t('page.pageTransferExample.hobbyOptions.football'), value: 'football' },
+  { label: t('page.pageTransferExample.hobbyOptions.badminton'), value: 'badminton' },
+  { label: t('page.pageTransferExample.hobbyOptions.pingpong'), value: 'pingpong' },
+  { label: t('page.pageTransferExample.hobbyOptions.swimming'), value: 'swimming' },
+  { label: t('page.pageTransferExample.hobbyOptions.running'), value: 'running' },
+  { label: t('page.pageTransferExample.hobbyOptions.gym'), value: 'gym' },
+  { label: t('page.pageTransferExample.hobbyOptions.reading'), value: 'reading' },
 ])
 
 function handleClick() {
@@ -36,23 +39,23 @@ function handleClick() {
 </script>
 
 <template>
-  <FormContainer title="传输数据" :show-back="false">
+  <FormContainer :title="t('page.pageTransferExample.transfer')" :show-back="false">
     <a-form :model="form" :label-col="formLabelCol" :wrapper-col="formWrapperCol">
-      <a-form-item label="姓名">
+      <a-form-item :label="t('page.pageTransferExample.form.name')">
         <a-input v-model:value="form.name" />
       </a-form-item>
-      <a-form-item label="年龄">
+      <a-form-item :label="t('page.pageTransferExample.form.age')">
         <a-input-number v-model:value="form.age" :min="0" :max="100" :precision="0" style="width: 100%" />
       </a-form-item>
-      <a-form-item label="性别">
+      <a-form-item :label="t('page.pageTransferExample.form.gender')">
         <a-select v-model:value="form.gender" :options="genderOptions" />
       </a-form-item>
-      <a-form-item label="爱好">
+      <a-form-item :label="t('page.pageTransferExample.form.hobby')">
         <a-select v-model:value="form.hobby" :options="hobbyOptions" mode="multiple" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
         <a-button type="primary" @click="handleClick">
-          传参
+          {{ t('page.pageTransferExample.form.button') }}
         </a-button>
       </a-form-item>
     </a-form>

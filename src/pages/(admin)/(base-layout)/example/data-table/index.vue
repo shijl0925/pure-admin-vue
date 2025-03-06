@@ -2,6 +2,8 @@
 import type { FormInstance } from 'ant-design-vue'
 
 import { Modal } from 'ant-design-vue'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import type { BasePageParams } from '@/types/base'
 
@@ -11,6 +13,8 @@ import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
 
 import { userList } from '../mockData'
+
+const { t } = useI18n()
 
 function getListApi({ page, pageSize }: BasePageParams) {
   return Promise.resolve({
@@ -46,20 +50,20 @@ const {
     param5: null,
     param6: null,
   },
-  columns: [
-    { title: '姓名', dataIndex: 'name' },
-    { title: '年龄', dataIndex: 'age' },
+  columns: computed(() => [
+    { title: t('page.dataTableExample.name'), dataIndex: 'name' },
+    { title: t('page.dataTableExample.age'), dataIndex: 'age' },
     { title: 'Column 1', dataIndex: 'address' },
     { title: 'Column 2', dataIndex: 'address' },
     { title: 'Column 3', dataIndex: 'address' },
-    { title: '操作', key: 'actions', fixed: 'right', width: 100 },
-  ],
+    { title: t('page.dataTableExample.action'), key: 'actions', fixed: 'right', width: 100 },
+  ]),
 })
 
 function handleNotice() {
   Modal.info({
-    title: '提示',
-    content: '此页面为展示，具体增删改查逻辑实现请参考文档或 【系统设置】 模块中相关页面及代码',
+    title: t('page.dataTableExample.noticeTitle'),
+    content: t('page.dataTableExample.noticeContent'),
   })
 }
 </script>
@@ -76,25 +80,25 @@ function handleNotice() {
       >
         <SearchContainer>
           <SearchRow>
-            <SearchCol name="param1" label="参数1">
+            <SearchCol name="param1" :label="t('page.dataTableExample.param', { count: 1 })">
               <a-input v-model:value="formState.param1" />
             </SearchCol>
-            <SearchCol name="param2" label="参数2">
+            <SearchCol name="param2" :label="t('page.dataTableExample.param', { count: 2 })">
               <a-input v-model:value="formState.param2" />
             </SearchCol>
-            <SearchCol name="param3" label="参数3">
+            <SearchCol name="param3" :label="t('page.dataTableExample.param', { count: 3 })">
               <a-input v-model:value="formState.param3" />
             </SearchCol>
-            <SearchCol name="param4" label="参数4">
+            <SearchCol name="param4" :label="t('page.dataTableExample.param', { count: 4 })">
               <a-input v-model:value="formState.param4" />
             </SearchCol>
           </SearchRow>
           <template #extra>
             <SearchRow>
-              <SearchCol name="param5" label="参数5">
+              <SearchCol name="param5" :label="t('page.dataTableExample.param', { count: 5 })">
                 <a-input v-model:value="formState.param5" />
               </SearchCol>
-              <SearchCol name="param6" label="参数6">
+              <SearchCol name="param6" :label="t('page.dataTableExample.param', { count: 6 })">
                 <a-input v-model:value="formState.param6" />
               </SearchCol>
             </SearchRow>

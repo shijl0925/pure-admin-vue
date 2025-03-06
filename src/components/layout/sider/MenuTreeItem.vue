@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 import type { Menu } from '@/types/menu'
@@ -13,6 +14,8 @@ defineOptions({
 const { item } = defineProps<{
   item: Menu
 }>()
+
+const { t } = useI18n()
 
 const router = useRouter()
 
@@ -35,7 +38,7 @@ function handleClick(item: Menu) {
         <Icon class="!text-xl" :icon="item.icon" />
       </template>
       <template #title>
-        <span class="text-sm">{{ item.title }}</span>
+        <span class="text-sm">{{ item.i18nKey ? t(item.i18nKey) : item.title }}</span>
       </template>
       <MenuTreeItem
         v-for="child in item.children"
@@ -50,9 +53,9 @@ function handleClick(item: Menu) {
         <Icon class="!text-xl" :icon="item.icon" />
       </template>
       <template v-if="!item.parentId" #title>
-        {{ item.title }}
+        {{ item.i18nKey ? t(item.i18nKey) : item.title }}
       </template>
-      <span class="text-sm">{{ item.title }}</span>
+      <span class="text-sm">{{ item.i18nKey ? t(item.i18nKey) : item.title }}</span>
     </a-menu-item>
   </template>
 </template>

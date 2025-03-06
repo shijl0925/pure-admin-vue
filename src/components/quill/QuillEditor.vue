@@ -4,6 +4,19 @@ import { nextTick, onMounted, ref, watch } from 'vue'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 
+const {
+  options = {},
+  placeholder = '',
+  readOnly = false,
+} = defineProps<QuillEditorProps>()
+
+const emit = defineEmits<{
+  (e: 'change', value: ChangeEvent): void
+  (e: 'blur', value: Quill): void
+  (e: 'focus', value: Quill): void
+  (e: 'ready', value: Quill): void
+}>()
+
 interface QuillEditorProps {
   options?: Record<string, any>
   placeholder?: string
@@ -15,19 +28,6 @@ export interface ChangeEvent {
   text: string
   quill: Quill
 }
-
-const {
-  options = {},
-  placeholder = '请输入内容...',
-  readOnly = false,
-} = defineProps<QuillEditorProps>()
-
-const emit = defineEmits<{
-  (e: 'change', value: ChangeEvent): void
-  (e: 'blur', value: Quill): void
-  (e: 'focus', value: Quill): void
-  (e: 'ready', value: Quill): void
-}>()
 
 const value = defineModel<string | null>('value')
 

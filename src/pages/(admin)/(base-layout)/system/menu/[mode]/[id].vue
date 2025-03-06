@@ -2,6 +2,7 @@
 import type { FormInstance, FormProps, RadioGroupProps } from 'ant-design-vue'
 
 import { computed, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { createMenuApi, getMenuApi, updateMenuApi } from '@/apis/menu'
 import { SaveButton } from '@/components/button'
@@ -12,6 +13,8 @@ import { useForm } from '@/hooks/useForm'
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
 import ParentName from '../components/ParentName.vue'
+
+const { t } = useI18n()
 
 const { getTransferredData } = usePageTransfer()
 
@@ -39,6 +42,7 @@ const {
     path: null,
     code: null,
     description: null,
+    i18nKey: null,
     sort: 0,
     isShow: true,
   },
@@ -46,17 +50,17 @@ const {
     return {
       title: {
         required: true,
-        message: '请输入名称',
+        message: t('page.systemMenu.rules.title'),
       },
       type: {
         required: true,
-        message: '请选择类型',
+        message: t('page.systemMenu.rules.type'),
       },
       ...(formState.value.type === MENU_TYPE.MENU
         ? {
             path: {
               required: true,
-              message: '请输入路径',
+              message: t('page.systemMenu.rules.path'),
             },
           }
         : {}),
@@ -70,9 +74,9 @@ const parentId = computed(() => {
 
 const menuTypeOptions = computed(() => {
   const allOptions = [
-    { label: '目录', value: MENU_TYPE.DIRECTORY },
-    { label: '菜单', value: MENU_TYPE.MENU },
-    { label: '功能', value: MENU_TYPE.FEATURE },
+    { label: t('page.systemMenu.directory'), value: MENU_TYPE.DIRECTORY },
+    { label: t('page.systemMenu.menu'), value: MENU_TYPE.MENU },
+    { label: t('page.systemMenu.feature'), value: MENU_TYPE.FEATURE },
   ]
 
   if (isCreateMode) {
@@ -109,16 +113,16 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
 <template>
   <FormContainer :title="title">
     <a-form :ref="(el: FormInstance) => formRef = el" v-bind="formProps" @finish="handleSubmit">
-      <a-form-item label="上级菜单">
+      <a-form-item :label="t('page.systemMenu.parentMenu')">
         <ParentName :value="parentId" />
       </a-form-item>
-      <a-form-item label="名称" name="title">
+      <a-form-item :label="t('page.systemMenu.title')" name="title">
         <a-input v-model:value="formState.title" />
       </a-form-item>
-      <a-form-item label="描述" name="description">
+      <a-form-item :label="t('page.systemMenu.description')" name="description">
         <a-textarea v-model:value="formState.description" />
       </a-form-item>
-      <a-form-item label="类型" name="type">
+      <a-form-item :label="t('page.systemMenu.type')" name="type">
         <a-radio-group
           v-model:value="formState.type"
           option-type="button"
@@ -127,19 +131,22 @@ const handleChangeType: RadioGroupProps['onChange'] = async (e) => {
           @change="handleChangeType"
         />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type !== MENU_TYPE.FEATURE" label="图标" name="icon">
+      <a-form-item v-if="formState.type && formState.type !== MENU_TYPE.FEATURE" :label="t('page.systemMenu.icon')" name="icon">
         <IconSelect v-model:value="formState.icon" />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type === MENU_TYPE.MENU" label="路径" name="path">
+      <a-form-item v-if="formState.type && formState.type === MENU_TYPE.MENU" :label="t('page.systemMenu.path')" name="path">
         <a-input v-model:value="formState.path" />
       </a-form-item>
-      <a-form-item v-if="formState.type && (formState.type === MENU_TYPE.MENU || formState.type === MENU_TYPE.FEATURE)" label="权限标识" name="code">
+      <a-form-item v-if="formState.type && (formState.type === MENU_TYPE.MENU || formState.type === MENU_TYPE.FEATURE)" :label="t('page.systemMenu.code')" name="code">
         <a-input v-model:value="formState.code" />
       </a-form-item>
-      <a-form-item label="排序" name="sort">
+      <a-form-item v-if="formState.type && (formState.type === MENU_TYPE.DIRECTORY || formState.type === MENU_TYPE.MENU)" :label="t('page.systemMenu.i18nKey')" name="i18nKey">
+        <a-input v-model:value="formState.i18nKey" />
+      </a-form-item>
+      <a-form-item :label="t('page.systemMenu.sort')" name="sort">
         <a-input-number v-model:value="formState.sort" :min="0" :precision="0" />
       </a-form-item>
-      <a-form-item v-if="formState.type === MENU_TYPE.MENU" label="是否显示" name="isShow">
+      <a-form-item v-if="formState.type === MENU_TYPE.MENU" :label="t('page.systemMenu.isShow')" name="isShow">
         <a-switch v-model:checked="formState.isShow" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">

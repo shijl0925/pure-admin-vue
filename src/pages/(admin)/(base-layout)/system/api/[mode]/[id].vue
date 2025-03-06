@@ -2,6 +2,7 @@
 import type { FormInstance, FormProps, RadioGroupProps } from 'ant-design-vue'
 
 import { computed, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { createApiApi, getApiApi, updateApiApi } from '@/apis/api'
 import { SaveButton } from '@/components/button'
@@ -11,6 +12,8 @@ import { useForm } from '@/hooks/useForm'
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
 import ParentName from '../components/ParentName.vue'
+
+const { t } = useI18n()
 
 const { getTransferredData } = usePageTransfer()
 
@@ -44,21 +47,21 @@ const {
     return {
       title: {
         required: true,
-        message: '请输入名称',
+        message: t('page.systemApi.rules.title'),
       },
       type: {
         required: true,
-        message: '请选择类型',
+        message: t('page.systemApi.rules.type'),
       },
       ...(formState.value.type === API_TYPE.API
         ? {
             path: {
               required: true,
-              message: '请输入路径',
+              message: t('page.systemApi.rules.path'),
             },
             method: {
               required: true,
-              message: '请选择请求方法',
+              message: t('page.systemApi.rules.method'),
             },
           }
         : {}),
@@ -72,8 +75,8 @@ const parentId = computed(() => {
 
 const apiTypeOptions = computed(() => {
   const allOptions = [
-    { label: '目录', value: API_TYPE.DIRECTORY },
-    { label: 'API', value: API_TYPE.API },
+    { label: t('page.systemApi.directory'), value: API_TYPE.DIRECTORY },
+    { label: t('page.systemApi.api'), value: API_TYPE.API },
   ]
 
   return allOptions
@@ -101,16 +104,16 @@ const handleChangeType: RadioGroupProps['onChange'] = async () => {
 <template>
   <FormContainer :title="title">
     <a-form :ref="(el: FormInstance) => formRef = el" v-bind="formProps" @finish="handleSubmit">
-      <a-form-item label="上级菜单">
+      <a-form-item :label="t('page.systemApi.parentApi')">
         <ParentName :value="parentId" />
       </a-form-item>
-      <a-form-item label="名称" name="title">
+      <a-form-item :label="t('page.systemApi.title')" name="title">
         <a-input v-model:value="formState.title" />
       </a-form-item>
-      <a-form-item label="描述" name="description">
+      <a-form-item :label="t('page.systemApi.description')" name="description">
         <a-textarea v-model:value="formState.description" />
       </a-form-item>
-      <a-form-item label="类型" name="type">
+      <a-form-item :label="t('page.systemApi.type')" name="type">
         <a-radio-group
           v-model:value="formState.type"
           option-type="button"
@@ -119,16 +122,16 @@ const handleChangeType: RadioGroupProps['onChange'] = async () => {
           @change="handleChangeType"
         />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" label="路径" name="path">
+      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" :label="t('page.systemApi.path')" name="path">
         <a-input v-model:value="formState.path" />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" label="请求方法" name="method">
+      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" :label="t('page.systemApi.method')" name="method">
         <a-select v-model:value="formState.method" :options="methodOptions" allow-clear />
       </a-form-item>
-      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" label="权限标识" name="code">
+      <a-form-item v-if="formState.type && formState.type === API_TYPE.API" :label="t('page.systemApi.code')" name="code">
         <a-input v-model:value="formState.code" />
       </a-form-item>
-      <a-form-item label="排序" name="sort">
+      <a-form-item :label="t('page.systemApi.sort')" name="sort">
         <a-input-number v-model:value="formState.sort" :min="0" :precision="0" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">

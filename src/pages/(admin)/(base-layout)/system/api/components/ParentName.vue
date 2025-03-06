@@ -2,12 +2,15 @@
 import { useQuery } from '@tanstack/vue-query'
 import { isNil } from 'es-toolkit'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { getFlatApiApi } from '@/apis/api'
 
 const { value } = defineProps<{
   value: number | null
 }>()
+
+const { t } = useI18n()
 
 const { data: flatApi } = useQuery({
   queryKey: ['flatApi'],
@@ -16,7 +19,7 @@ const { data: flatApi } = useQuery({
 
 const parentName = computed(() => {
   if (isNil(value)) {
-    return '顶层'
+    return t('page.systemApi.topApi')
   }
   return flatApi.value?.find(api => api.id === value)?.title
 })

@@ -2,12 +2,15 @@
 import { useQuery } from '@tanstack/vue-query'
 import { isNil } from 'es-toolkit'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { getFlatMenuApi } from '@/apis/menu'
 
 const { value } = defineProps<{
   value: number | null
 }>()
+
+const { t } = useI18n()
 
 const { data: flatMenu } = useQuery({
   queryKey: ['flatMenu'],
@@ -16,7 +19,7 @@ const { data: flatMenu } = useQuery({
 
 const parentName = computed(() => {
   if (isNil(value)) {
-    return '顶层菜单'
+    return t('page.systemMenu.topMenu')
   }
   return flatMenu.value?.find(menu => menu.id === value)?.title
 })

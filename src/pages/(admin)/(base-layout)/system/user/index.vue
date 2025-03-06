@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue'
 
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { batchDeleteUserApi, deleteUserApi, getUserListApi } from '@/apis/user'
 import { BatchDeleteButton, CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableContainer } from '@/components/container'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
+
+const { t } = useI18n()
 
 const {
   listContainerProps,
@@ -41,14 +46,14 @@ const {
     email: null,
     phone: null,
   },
-  columns: [
-    { title: '用户名', dataIndex: 'username' },
-    { title: '昵称', dataIndex: 'nickName' },
-    { title: '邮箱', dataIndex: 'email' },
-    { title: '手机号', dataIndex: 'phone' },
-    { title: '状态', dataIndex: 'isFrozen' },
-    { title: '操作', key: 'actions', fixed: 'right', width: 100 },
-  ],
+  columns: computed(() => [
+    { title: t('page.systemUser.username'), dataIndex: 'username' },
+    { title: t('page.systemUser.nickName'), dataIndex: 'nickName' },
+    { title: t('page.systemUser.email'), dataIndex: 'email' },
+    { title: t('page.systemUser.phone'), dataIndex: 'phone' },
+    { title: t('page.systemUser.isFrozen'), dataIndex: 'isFrozen' },
+    { title: t('common.actions'), key: 'actions', fixed: 'right', width: 100 },
+  ]),
 })
 </script>
 
@@ -64,16 +69,16 @@ const {
       >
         <SearchContainer>
           <SearchRow>
-            <SearchCol name="username" label="用户名">
+            <SearchCol name="username" :label="t('page.systemUser.username')">
               <a-input v-model:value="formState.username" />
             </SearchCol>
-            <SearchCol name="nickName" label="昵称">
+            <SearchCol name="nickName" :label="t('page.systemUser.nickName')">
               <a-input v-model:value="formState.nickName" />
             </SearchCol>
-            <SearchCol name="email" label="邮箱">
+            <SearchCol name="email" :label="t('page.systemUser.email')">
               <a-input v-model:value="formState.email" />
             </SearchCol>
-            <SearchCol name="phone" label="手机号">
+            <SearchCol name="phone" :label="t('page.systemUser.phone')">
               <a-input v-model:value="formState.phone" />
             </SearchCol>
           </SearchRow>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 import { createRoleApi, getRoleApi, updateRoleApi } from '@/apis/role'
 import { SaveButton } from '@/components/button'
 import { FormContainer } from '@/components/container'
@@ -7,6 +9,8 @@ import { useForm } from '@/hooks/useForm'
 
 import ApiPermissionSelect from '../components/ApiPermissionSelect.vue'
 import MenuPermissionSelect from '../components/MenuPermissionSelect.vue'
+
+const { t } = useI18n()
 
 const {
   title,
@@ -28,8 +32,8 @@ const {
     apiPermissions: [],
   },
   rules: {
-    name: [{ required: true, message: '请输入角色名称' }],
-    code: [{ required: true, message: '请输入角色编码' }],
+    name: [{ required: true, message: t('page.systemRole.rules.name') }],
+    code: [{ required: true, message: t('page.systemRole.rules.code') }],
   },
 })
 </script>
@@ -37,22 +41,22 @@ const {
 <template>
   <FormContainer :title="title">
     <a-form v-bind="formProps">
-      <a-form-item label="角色名称" name="name" autocomplete="off">
+      <a-form-item :label="t('page.systemRole.name')" name="name" autocomplete="off">
         <a-input v-model:value="formState.name" />
       </a-form-item>
-      <a-form-item label="角色编码" name="code">
+      <a-form-item :label="t('page.systemRole.code')" name="code">
         <a-input v-model:value="formState.code" />
       </a-form-item>
-      <a-form-item label="描述" name="description">
+      <a-form-item :label="t('page.systemRole.description')" name="description">
         <a-input v-model:value="formState.description" />
       </a-form-item>
-      <a-form-item label="菜单权限">
+      <a-form-item :label="t('page.systemRole.menuPermissions')">
         <MenuPermissionSelect v-model:value="formState.menuPermissions" :type="MENU_TYPE.MENU" />
       </a-form-item>
-      <a-form-item label="功能权限">
+      <a-form-item :label="t('page.systemRole.featurePermissions')">
         <MenuPermissionSelect v-model:value="formState.featurePermissions" :type="MENU_TYPE.FEATURE" />
       </a-form-item>
-      <a-form-item label="API权限">
+      <a-form-item :label="t('page.systemRole.apiPermissions')">
         <ApiPermissionSelect v-model:value="formState.apiPermissions" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">

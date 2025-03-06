@@ -2,8 +2,16 @@
 import type { EChartsOption } from 'echarts'
 
 import { computed, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useEcharts } from '@/hooks/useEcharts'
+
+const {
+  data = [],
+  height = '16rem',
+} = defineProps<Props>()
+
+const { t } = useI18n()
 
 interface KLineDataItem {
   time: string
@@ -17,11 +25,6 @@ interface Props {
   data?: KLineDataItem[]
   height?: string
 }
-
-const {
-  data = [],
-  height = '16rem',
-} = defineProps<Props>()
 
 const {
   chartRef,
@@ -51,11 +54,11 @@ const chartOptions = computed<EChartsOption>(() => {
         const item = params[0]
         const data = item.data
         return `
-            时间：${data[0]}<br/>
-            开盘：${data[1]}<br/>
-            收盘：${data[2]}<br/>
-            最低：${data[3]}<br/>
-            最高：${data[4]}<br/>
+            ${t('component.chart.kline.time')}: ${data[0]}<br/>
+            ${t('component.chart.kline.open')}: ${data[1]}<br/>
+            ${t('component.chart.kline.close')}: ${data[2]}<br/>
+            ${t('component.chart.kline.low')}: ${data[3]}<br/>
+            ${t('component.chart.kline.high')}: ${data[4]}<br/>
           `
       },
     },

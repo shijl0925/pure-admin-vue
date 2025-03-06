@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { deleteApiApi, getApiTreeApi } from '@/apis/api'
 import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
 import { SearchContainer, SearchTableContainer } from '@/components/container'
 import { API_TYPE } from '@/constants/api'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
+
+const { t } = useI18n()
 
 const {
   listContainerProps,
@@ -24,15 +29,15 @@ const {
   pagination: false,
   listApiFn: getApiTreeApi,
   deleteApiFn: deleteApiApi,
-  columns: [
-    { title: '名称', dataIndex: 'title' },
-    { title: '类型', dataIndex: 'type' },
-    { title: '请求方法', dataIndex: 'method' },
-    { title: '路径', dataIndex: 'path' },
-    { title: '权限标识', dataIndex: 'code' },
-    { title: '排序', dataIndex: 'sort' },
-    { title: '操作', key: 'actions', fixed: 'right', width: 150 },
-  ],
+  columns: computed(() => [
+    { title: t('page.systemApi.title'), dataIndex: 'title' },
+    { title: t('page.systemApi.type'), dataIndex: 'type' },
+    { title: t('page.systemApi.method'), dataIndex: 'method' },
+    { title: t('page.systemApi.path'), dataIndex: 'path' },
+    { title: t('page.systemApi.code'), dataIndex: 'code' },
+    { title: t('page.systemApi.sort'), dataIndex: 'sort' },
+    { title: t('common.actions'), key: 'actions', fixed: 'right', width: 150 },
+  ]),
   scrollY: tableScrollY,
 })
 </script>
@@ -54,10 +59,10 @@ const {
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'type'">
           <a-tag v-if="record.type === API_TYPE.DIRECTORY">
-            目录
+            {{ t('page.systemApi.directory') }}
           </a-tag>
           <a-tag v-else color="blue">
-            API
+            {{ t('page.systemApi.api') }}
           </a-tag>
         </template>
         <template v-if="column.dataIndex === 'method'">

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { listIcons } from '@iconify/vue'
 import { message } from 'ant-design-vue'
+import { useI18n } from 'vue-i18n'
 
 import { BaseContainer } from '@/components/container'
 import { Icon } from '@/components/icon'
 import { copyToClipboard } from '@/utils/string'
+
+const { t } = useI18n()
 
 const loadedIcons = listIcons()
 
@@ -20,7 +23,7 @@ async function handleClickIcon(icon: string) {
 </script>
 
 <template>
-  <BaseContainer title="图标列表">
+  <BaseContainer :title="t('page.iconExample.title')">
     <div class="grid grid-cols-2 gap-4 2xl:grid-cols-18 lg:grid-cols-10 md:grid-cols-6 sm:grid-cols-4 xl:grid-cols-14">
       <div
         v-for="icon in loadedIcons"

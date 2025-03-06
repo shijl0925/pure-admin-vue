@@ -8,6 +8,7 @@ export interface Menu {
   icon: string
   type: MENU_TYPE
   path?: string
+  i18nKey?: string
   children?: Menu[]
 }
 

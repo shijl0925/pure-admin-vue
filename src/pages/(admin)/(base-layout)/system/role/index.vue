@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue'
 
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { batchDeleteRoleApi, deleteRoleApi, getRoleListApi } from '@/apis/role'
 import { BatchDeleteButton, CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableContainer } from '@/components/container'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
+
+const { t } = useI18n()
 
 const {
   listContainerProps,
@@ -39,11 +44,11 @@ const {
     name: null,
     code: null,
   },
-  columns: [
-    { title: '角色名称', dataIndex: 'name' },
-    { title: '角色编码', dataIndex: 'code' },
-    { title: '操作', key: 'actions', fixed: 'right', width: 100 },
-  ],
+  columns: computed(() => [
+    { title: t('page.systemRole.name'), dataIndex: 'name' },
+    { title: t('page.systemRole.code'), dataIndex: 'code' },
+    { title: t('common.actions'), key: 'actions', fixed: 'right', width: 100 },
+  ]),
 })
 </script>
 
@@ -59,10 +64,10 @@ const {
       >
         <SearchContainer>
           <SearchRow>
-            <SearchCol name="name" label="角色名称">
+            <SearchCol name="name" :label="t('page.systemRole.name')">
               <a-input v-model:value="formState.name" />
             </SearchCol>
-            <SearchCol name="code" label="角色编码">
+            <SearchCol name="code" :label="t('page.systemRole.code')">
               <a-input v-model:value="formState.code" />
             </SearchCol>
           </SearchRow>

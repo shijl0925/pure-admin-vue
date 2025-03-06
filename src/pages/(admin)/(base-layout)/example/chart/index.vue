@@ -1,21 +1,25 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 import { BarChart, KLineChart, LineChart, RadarChart, RingChart, ScatterChart } from '@/components/chart'
 import { BaseContainer } from '@/components/container'
+
+const { t } = useI18n()
 </script>
 
 <template>
-  <BaseContainer title="图表">
+  <BaseContainer :title="t('page.chartExample.title')">
     <a-row :gutter="[20, 20]">
       <a-col :xs="24" :lg="12">
-        <a-card title="柱状图">
+        <a-card :title="t('page.chartExample.barChart')">
           <BarChart
             :data="[125, 186, 154, 210, 243, 278]"
-            :x-axis-data="['2018年', '2019年', '2020年', '2021年', '2022年', '2023年']"
+            :x-axis-data="['2018', '2019', '2020', '2021', '2022', '2023']"
           />
         </a-card>
       </a-col>
       <a-col :xs="24" :lg="12">
-        <a-card title="折线图">
+        <a-card :title="t('page.chartExample.lineChart')">
           <LineChart
             :data="[65, 87, 92, 108, 136, 152]"
             :x-axis-data="['2023 Q1', 'Q2', 'Q3', 'Q4', '2024 Q1', 'Q2']"
@@ -24,12 +28,12 @@ import { BaseContainer } from '@/components/container'
         </a-card>
       </a-col>
       <a-col :xs="24" :lg="12">
-        <a-card title="饼图">
+        <a-card :title="t('page.chartExample.ringChart')">
           <RingChart
             :data="[
-              { value: 42, name: '国内市场' },
-              { value: 28, name: '亚太市场' },
-              { value: 30, name: '欧美市场' },
+              { value: 42, name: t('page.chartExample.domesticMarket') },
+              { value: 28, name: t('page.chartExample.asiaPacificMarket') },
+              { value: 30, name: t('page.chartExample.europeanMarket') },
             ]"
             :color="['#4C87F3', '#93F1B4', '#8BD8FC']"
             :radius="['0%', '80%']"
@@ -37,22 +41,22 @@ import { BaseContainer } from '@/components/container'
         </a-card>
       </a-col>
       <a-col :xs="24" :lg="12">
-        <a-card title="雷达图">
+        <a-card :title="t('page.chartExample.radarChart')">
           <RadarChart
             :indicator="[
-              { name: '性能', max: 100 },
-              { name: '价格', max: 100 },
-              { name: '质量', max: 100 },
-              { name: '服务', max: 100 },
-              { name: '创新', max: 100 },
+              { name: t('page.chartExample.performance'), max: 100 },
+              { name: t('page.chartExample.price'), max: 100 },
+              { name: t('page.chartExample.quality'), max: 100 },
+              { name: t('page.chartExample.service'), max: 100 },
+              { name: t('page.chartExample.innovation'), max: 100 },
             ]"
             :data="[
               {
-                name: '产品A',
+                name: t('page.chartExample.productA'),
                 value: [85, 65, 90, 82, 78],
               },
               {
-                name: '产品B',
+                name: t('page.chartExample.productB'),
                 value: [75, 85, 82, 90, 88],
               },
             ]"
@@ -61,7 +65,7 @@ import { BaseContainer } from '@/components/container'
         </a-card>
       </a-col>
       <a-col :xs="24" :lg="12">
-        <a-card title="散点图">
+        <a-card :title="t('page.chartExample.scatterChart')">
           <ScatterChart
             :data="[
               { value: [2.5, 7.8] },
@@ -81,7 +85,7 @@ import { BaseContainer } from '@/components/container'
         </a-card>
       </a-col>
       <a-col :xs="24" :lg="12">
-        <a-card title="k线图">
+        <a-card :title="t('page.chartExample.kLineChart')">
           <KLineChart
             :data="[
               { time: '2024-03-01', open: 145, close: 152, high: 155, low: 143 },
