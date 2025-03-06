@@ -30,6 +30,7 @@ declare module 'vue-router/auto-routes' {
     '/(admin)/(base-layout)/example/page-transfer/transferred': RouteRecordInfo<'/(admin)/(base-layout)/example/page-transfer/transferred', '/example/page-transfer/transferred', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/rich-text/': RouteRecordInfo<'/(admin)/(base-layout)/example/rich-text/', '/example/rich-text', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/example/table-auto-height/': RouteRecordInfo<'/(admin)/(base-layout)/example/table-auto-height/', '/example/table-auto-height', Record<never, never>, Record<never, never>>,
+    '/(admin)/(base-layout)/example/theme-switch/': RouteRecordInfo<'/(admin)/(base-layout)/example/theme-switch/', '/example/theme-switch', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/multi-menu/first-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/first-child/', '/multi-menu/first-child', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/multi-menu/second-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/second-child/', '/multi-menu/second-child', Record<never, never>, Record<never, never>>,
     '/(admin)/(base-layout)/multi-menu/third-child/': RouteRecordInfo<'/(admin)/(base-layout)/multi-menu/third-child/', '/multi-menu/third-child', Record<never, never>, Record<never, never>>,

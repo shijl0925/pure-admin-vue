@@ -53,6 +53,7 @@ export default {
     pageTransferExample: '跨页面数据传输',
     chartExample: '图表',
     countToExample: '数字滚动',
+    themeSwitchExample: '主题切换动画',
     system: '系统设置',
     systemUser: '用户管理',
     systemRole: '角色管理',
@@ -181,6 +182,11 @@ export default {
       copyToClipboard: '复制到剪切板',
       copied: '复制成功',
       copyFailed: '复制失败',
+    },
+    themeSwitchExample: {
+      title: '主题切换',
+      animate: '是否展示动画',
+      switch: '切换',
     },
     systemUser: {
       username: '用户名',

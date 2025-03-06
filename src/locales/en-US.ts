@@ -53,6 +53,7 @@ export default {
     pageTransferExample: 'Data Transfer',
     chartExample: 'Chart',
     countToExample: 'Count To',
+    themeSwitchExample: 'Theme Switch Animation',
     system: 'System',
     systemUser: 'User',
     systemRole: 'Role',
@@ -181,6 +182,11 @@ export default {
       copyToClipboard: 'Copy to Clipboard',
       copied: 'Copied',
       copyFailed: 'Copy Failed',
+    },
+    themeSwitchExample: {
+      title: 'Theme Switch',
+      animate: 'Animate',
+      switch: 'Switch',
     },
     systemUser: {
       username: 'Username',
