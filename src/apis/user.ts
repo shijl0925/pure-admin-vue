@@ -1,49 +1,44 @@
 import type { BasePageList } from '@/types/base'
-import type { MenuTree } from '@/types/menu'
 import type { AuthTokens, LoginInfo, User, UserInfo, UserListParams } from '@/types/user'
 
-import { http } from '@/utils/http'
+import { request } from '@/utils/request'
 
 export function loginApi(data: LoginInfo): Promise<AuthTokens> {
-  return http.post('/user/login', data)
+  return request.post('/user/login', data)
 }
 
 export function refreshTokenApi(refreshToken: string): Promise<AuthTokens> {
-  return http.get('/user/refresh', { params: { refreshToken } })
+  return request.get('/user/refresh', { params: { refreshToken } })
 }
 
 export function getUserInfoApi(): Promise<UserInfo> {
-  return http.get('/user/info')
-}
-
-export function getUserMenuApi(): Promise<MenuTree> {
-  return http.get('/menu/tree')
+  return request.get('/user/info')
 }
 
 export function getUserListApi(params: UserListParams = { page: 1, pageSize: 10 }): Promise<BasePageList<User>> {
-  return http.get('/user', { params })
+  return request.get('/user', { params })
 }
 
 export function getUserApi(id: number): Promise<User> {
-  return http.get(`/user/${id}`)
+  return request.get(`/user/${id}`)
 }
 
 export function createUserApi(data: Omit<User, 'id'>): Promise<User> {
-  return http.post('/user', data)
+  return request.post('/user', data)
 }
 
 export function updateUserApi(id: number, data: Partial<User>): Promise<User> {
-  return http.put(`/user/${id}`, data)
+  return request.put(`/user/${id}`, data)
 }
 
 export function updateUserPasswordApi(data: { oldPassword: string, newPassword: string }): Promise<void> {
-  return http.post('/user/password', data)
+  return request.post('/user/password', data)
 }
 
 export function deleteUserApi(id: number): Promise<void> {
-  return http.delete(`/user/${id}`)
+  return request.delete(`/user/${id}`)
 }
 
 export function batchDeleteUserApi(ids: number[]): Promise<void> {
-  return http.delete('/user', { data: { ids } })
+  return request.delete('/user', { data: { ids } })
 }

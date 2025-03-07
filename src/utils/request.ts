@@ -8,8 +8,8 @@ import { refreshTokenApi } from '@/apis/user'
 import { i18n } from '@/locales'
 import { useAppStore, useUserStore } from '@/stores'
 
-export const http = Axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+export const request = Axios.create({
+  baseURL: import.meta.env.VITE_API_BASEURL,
   timeout: 1000 * 30,
 })
 
@@ -34,7 +34,7 @@ function processQueue(error: any, token: string | null = null) {
       // 用新 token 更新请求头
       config.headers.authorization = `Bearer ${token}`
       // 重新发送请求并 resolve 结果
-      http(config)
+      request(config)
         .then(response => resolve(response.data))
         .catch(err => reject(err))
     }
@@ -63,7 +63,7 @@ async function refreshToken() {
   }
 }
 
-http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const userStore = useUserStore()
   const { accessToken, refreshToken } = storeToRefs(userStore)
 
@@ -83,7 +83,7 @@ http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config
 }, error => Promise.reject(error))
 
-http.interceptors.response.use(
+request.interceptors.response.use(
   (config: AxiosResponse) => {
     const userStore = useUserStore()
     const { logout } = userStore
@@ -137,7 +137,7 @@ http.interceptors.response.use(
             // 处理队列中的其他请求
             processQueue(null, newAccessToken)
             // 重新发起失败的请求
-            return http(originalRequest)
+            return request(originalRequest)
           }
           catch (err) {
             // 处理队列中的请求

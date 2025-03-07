@@ -1,32 +1,32 @@
 import type { BasePageList } from '@/types/base'
 import type { Role } from '@/types/role'
 
-import { http } from '@/utils/http'
+import { request } from '@/utils/request'
 
 export function getRoleListApi(params: BasePageList<Role>): Promise<BasePageList<Role>> {
-  return http.get('/role', { params })
+  return request.get('/role', { params })
 }
 
 export function getAllRoleApi(): Promise<Role[]> {
-  return http.get('/role/all')
+  return request.get('/role/all')
 }
 
 export function getRoleApi(id: number): Promise<Role> {
-  return http.get(`/role/${id}`)
+  return request.get(`/role/${id}`)
 }
 
 export function createRoleApi(data: Omit<Role, 'id'>): Promise<Role> {
-  return http.post('/role', data)
+  return request.post('/role', data)
 }
 
 export function updateRoleApi(id: number, data: Partial<Role>): Promise<Role> {
-  return http.put(`/role/${id}`, data)
+  return request.put(`/role/${id}`, data)
 }
 
 export function deleteRoleApi(id: number): Promise<void> {
-  return http.delete(`/role/${id}`)
+  return request.delete(`/role/${id}`)
 }
 
 export function batchDeleteRoleApi(ids: number[]): Promise<void> {
-  return http.delete('/role', { data: { ids } })
+  return request.delete('/role', { data: { ids } })
 }
