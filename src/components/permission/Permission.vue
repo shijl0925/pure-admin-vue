@@ -23,7 +23,7 @@ const isAuthorized = computed(() => {
 </script>
 
 <template>
-  <div v-if="isAuthorized">
+  <span v-if="isAuthorized">
     <slot />
-  </div>
+  </span>
 </template>

@@ -5,7 +5,9 @@ import { useI18n } from 'vue-i18n'
 import { deleteApiApi, getApiTreeApi } from '@/apis/api'
 import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
 import { SearchContainer, SearchTableContainer } from '@/components/container'
+import { Permission } from '@/components/permission'
 import { API_TYPE } from '@/constants/api'
+import { API } from '@/constants/permissions'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
 
@@ -50,7 +52,9 @@ const {
           <template #actions>
             <RefreshButton :loading="isLoading" @click="handleReset" />
             <a-divider type="vertical" />
-            <CreateButton @click="handleCreate({ id: null })" />
+            <Permission :permission="API.CREATE">
+              <CreateButton @click="handleCreate({ id: null })" />
+            </Permission>
           </template>
         </SearchContainer>
       </a-form>
@@ -71,16 +75,22 @@ const {
           </a-tag>
         </template>
         <template v-if="column.key === 'actions'">
-          <Button v-if="record.type === API_TYPE.DIRECTORY" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
-          <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />
-          <DeleteButton
-            v-if="!record.children || record.children.length === 0"
-            type="text"
-            size="small"
-            no-text
-            :loading="isDeleting"
-            @confirm="handleDelete(record.id)"
-          />
+          <Permission :permission="API.CREATE">
+            <Button v-if="record.type === API_TYPE.DIRECTORY" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
+          </Permission>
+          <Permission :permission="API.UPDATE">
+            <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />
+          </Permission>
+          <Permission :permission="API.DELETE">
+            <DeleteButton
+              v-if="!record.children || record.children.length === 0"
+              type="text"
+              size="small"
+              no-text
+              :loading="isDeleting"
+              @confirm="handleDelete(record.id)"
+            />
+          </Permission>
         </template>
       </template>
     </a-table>

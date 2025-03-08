@@ -1,11 +1,13 @@
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import vue from '@vitejs/plugin-vue'
+import { dirname, resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import UnoCSS from 'unocss/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig, loadEnv } from 'vite'
 
 import { setPermissionMeta } from './src/router/routeMeta'
-import { i18nTypeGenerator, svgToIconify } from './vite-plugins'
+import { svgToIconify } from './vite-plugins'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -32,9 +34,9 @@ export default defineConfig(({ mode }) => {
         prefix: 'icon-local',
         dts: fileURLToPath(new URL('./types/virtual-local-icons.d.ts', import.meta.url)),
       }),
-      i18nTypeGenerator({
-        localeFile: fileURLToPath(new URL('./src/locales/en-US.ts', import.meta.url)),
-        dts: fileURLToPath(new URL('./types/i18n.d.ts', import.meta.url)),
+      VueI18nPlugin({
+        include: resolve(dirname(fileURLToPath(import.meta.url)), './src/locales/langs/**'),
+        // include: resolve(__dirname, './src/locales/langs/**'),
       }),
     ],
     resolve: {

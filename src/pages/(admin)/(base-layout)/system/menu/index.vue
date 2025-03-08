@@ -6,7 +6,9 @@ import { deleteMenuApi, getMenuTreeApi } from '@/apis/menu'
 import { Button, CreateButton, DeleteButton, EditButton, RefreshButton } from '@/components/button'
 import { SearchContainer, SearchTableContainer } from '@/components/container'
 import { Icon } from '@/components/icon'
+import { Permission } from '@/components/permission'
 import { MENU_TYPE } from '@/constants/menu'
+import { MENU } from '@/constants/permissions'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
 
@@ -52,7 +54,9 @@ const {
           <template #actions>
             <RefreshButton :loading="isLoading" @click="handleReset" />
             <a-divider type="vertical" />
-            <CreateButton @click="handleCreate({ id: null })" />
+            <Permission :permission="MENU.CREATE">
+              <CreateButton @click="handleCreate({ id: null })" />
+            </Permission>
           </template>
         </SearchContainer>
       </a-form>
@@ -82,16 +86,22 @@ const {
           </a-tag>
         </template>
         <template v-if="column.key === 'actions'">
-          <Button v-if="record.type !== MENU_TYPE.FEATURE" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
-          <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />
-          <DeleteButton
-            v-if="!record.children || record.children.length === 0"
-            type="text"
-            size="small"
-            no-text
-            :loading="isDeleting"
-            @confirm="handleDelete(record.id)"
-          />
+          <Permission :permission="MENU.CREATE">
+            <Button v-if="record.type !== MENU_TYPE.FEATURE" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
+          </Permission>
+          <Permission :permission="MENU.UPDATE">
+            <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />
+          </Permission>
+          <Permission :permission="MENU.DELETE">
+            <DeleteButton
+              v-if="!record.children || record.children.length === 0"
+              type="text"
+              size="small"
+              no-text
+              :loading="isDeleting"
+              @confirm="handleDelete(record.id)"
+            />
+          </Permission>
         </template>
       </template>
     </a-table>

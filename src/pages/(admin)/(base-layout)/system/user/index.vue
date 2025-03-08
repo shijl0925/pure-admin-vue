@@ -7,6 +7,8 @@ import { useI18n } from 'vue-i18n'
 import { batchDeleteUserApi, deleteUserApi, getUserListApi } from '@/apis/user'
 import { BatchDeleteButton, CreateButton, DeleteButton, EditButton, ResetButton, SearchButton } from '@/components/button'
 import { SearchCol, SearchContainer, SearchRow, SearchTableContainer } from '@/components/container'
+import { Permission } from '@/components/permission'
+import { USER } from '@/constants/permissions'
 import { useSearchTableContainer } from '@/hooks/useSearchTableContainer'
 import { useTable } from '@/hooks/useTable'
 
@@ -88,9 +90,13 @@ const {
               <ResetButton @click="handleReset" />
             </a-space>
             <a-divider type="vertical" />
-            <BatchDeleteButton :loading="isBatchDeleting" :disabled="selectedIsEmpty" :count="selectedCount" @confirm="handleBatchDelete" />
+            <Permission :permission="USER.DELETE">
+              <BatchDeleteButton :loading="isBatchDeleting" :disabled="selectedIsEmpty" :count="selectedCount" @confirm="handleBatchDelete" />
+            </Permission>
             <a-divider type="vertical" />
-            <CreateButton @click="handleCreate" />
+            <Permission :permission="USER.CREATE">
+              <CreateButton @click="handleCreate" />
+            </Permission>
           </template>
         </SearchContainer>
       </a-form>
@@ -98,8 +104,12 @@ const {
     <a-table v-bind="tableProps">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'actions'">
-          <EditButton type="text" size="small" no-text @click="handleEdit(record)" />
-          <DeleteButton type="text" size="small" no-text :loading="isDeleting" @confirm="handleDelete(record.id)" />
+          <Permission :permission="USER.UPDATE">
+            <EditButton type="text" size="small" no-text @click="handleEdit(record)" />
+          </Permission>
+          <Permission :permission="USER.DELETE">
+            <DeleteButton type="text" size="small" no-text :loading="isDeleting" @confirm="handleDelete(record.id)" />
+          </Permission>
         </template>
       </template>
     </a-table>

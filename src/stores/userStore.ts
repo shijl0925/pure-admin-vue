@@ -45,7 +45,6 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const matchedMenuPath = computed(() => {
-    console.log(route)
     // 获取当前路由的所有可能父路径
     const possiblePaths = route.matched.map(item => item.path)
 
