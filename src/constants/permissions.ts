@@ -31,3 +31,13 @@ export enum MENU {
   UPDATE = 'system:menu:update',
   DELETE = 'system:menu:delete',
 }
+
+/**
+ * API管理
+ */
+export enum API {
+  CREATE = 'system:api:create',
+  READ = 'system:api:read',
+  UPDATE = 'system:api:update',
+  DELETE = 'system:api:delete',
+}

@@ -18,6 +18,8 @@ const logoStyle = computed(() => ({
 function handleClick() {
   router.push('/')
 }
+
+const title = computed(() => import.meta.env.VITE_APP_TITLE)
 </script>
 
 <template>
@@ -31,7 +33,7 @@ function handleClick() {
       v-show="!sidebarCollapsed"
       class="mb-0 block overflow-hidden whitespace-nowrap text-xl font-bold"
     >
-      Pure Admin
+      {{ title }}
     </h2>
   </div>
 </template>
