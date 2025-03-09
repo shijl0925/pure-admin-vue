@@ -19,7 +19,7 @@ export function getUserListApi(params: UserListParams = { page: 1, pageSize: 10 
   return request.get('/user', { params })
 }
 
-export function getUserApi(id: number): Promise<User> {
+export function getUserDetailApi(id: number): Promise<User> {
   return request.get(`/user/${id}`)
 }
 

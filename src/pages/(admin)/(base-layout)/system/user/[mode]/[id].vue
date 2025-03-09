@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 
-import { createUserApi, getUserApi, updateUserApi } from '@/apis/user'
+import { createUserApi, getUserDetailApi, updateUserApi } from '@/apis/user'
 import { SaveButton } from '@/components/button'
 import { FormContainer } from '@/components/container'
 import { useForm } from '@/hooks/useForm'
@@ -18,10 +18,10 @@ const {
   isLoading,
   handleSubmit,
 } = useForm({
-  key: 'user',
-  getApiFn: getUserApi,
-  createApiFn: createUserApi,
-  updateApiFn: updateUserApi,
+  key: 'user', // 与列表页的 key 保持一致，用来提交数据后，使列表页数据刷新
+  getApiFn: getUserDetailApi, // 获取数据接口
+  createApiFn: createUserApi, // 创建数据接口
+  updateApiFn: updateUserApi, // 更新数据接口
   form: {
     username: null,
     password: null,

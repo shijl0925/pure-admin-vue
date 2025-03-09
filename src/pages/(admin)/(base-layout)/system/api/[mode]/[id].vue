@@ -4,7 +4,7 @@ import type { FormInstance, FormProps, RadioGroupProps } from 'ant-design-vue'
 import { computed, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { createApiApi, getApiApi, updateApiApi } from '@/apis/api'
+import { createApiApi, getApiDetailApi, updateApiApi } from '@/apis/api'
 import { SaveButton } from '@/components/button'
 import { FormContainer } from '@/components/container'
 import { API_METHOD, API_TYPE } from '@/constants/api'
@@ -29,10 +29,10 @@ const {
   isLoading,
   handleSubmit,
 } = useForm({
-  key: 'api',
-  getApiFn: getApiApi,
-  createApiFn: createApiApi,
-  updateApiFn: updateApiApi,
+  key: 'api', // 与列表页的 key 保持一致，用来提交数据后，使列表页数据刷新
+  getApiFn: getApiDetailApi, // 获取数据接口
+  createApiFn: createApiApi, // 创建数据接口
+  updateApiFn: updateApiApi, // 更新数据接口
   form: {
     parentId: data?.id,
     title: null,

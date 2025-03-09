@@ -28,10 +28,13 @@ const {
   handleEdit,
   handleDelete,
 } = useTable({
-  key: 'menu',
-  pagination: false,
-  listApiFn: getMenuTreeApi,
-  deleteApiFn: deleteMenuApi,
+  key: 'menu', // 表格唯一标识，不要与其他模块重名
+  cacheEnabled: true, // 是否启用缓存
+  dataStaleTime: 1000 * 60 * 10, // 数据缓存时间，10 分钟
+  pagination: false, // 是否开启分页
+  listApiFn: getMenuTreeApi, // 获取列表数据接口
+  deleteApiFn: deleteMenuApi, // 删除数据接口
+  scrollY: tableScrollY, // 表格高度，从 useSearchTableContainer 获取
   columns: computed(() => [
     { title: t('page.systemMenu.title'), dataIndex: 'title' },
     { title: t('page.systemMenu.type'), dataIndex: 'type' },
@@ -42,7 +45,6 @@ const {
     { title: t('page.systemMenu.isShow'), dataIndex: 'isShow' },
     { title: t('common.actions'), key: 'actions', fixed: 'right', width: 150 },
   ]),
-  scrollY: tableScrollY,
 })
 </script>
 

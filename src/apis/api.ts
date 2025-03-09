@@ -10,7 +10,7 @@ export function getFlatApiApi(): Promise<Omit<Api, 'children'>[]> {
   return request.get('/api/flat')
 }
 
-export function getApiApi(id: number): Promise<Omit<Api, 'children'>> {
+export function getApiDetailApi(id: number): Promise<Omit<Api, 'children'>> {
   return request.get(`/api/${id}`)
 }
 

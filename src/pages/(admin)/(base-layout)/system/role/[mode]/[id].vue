@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 
-import { createRoleApi, getRoleApi, updateRoleApi } from '@/apis/role'
+import { createRoleApi, getRoleDetailApi, updateRoleApi } from '@/apis/role'
 import { SaveButton } from '@/components/button'
 import { FormContainer } from '@/components/container'
 import { MENU_TYPE } from '@/constants/menu'
@@ -19,10 +19,10 @@ const {
   isLoading,
   handleSubmit,
 } = useForm({
-  key: 'role',
-  getApiFn: getRoleApi,
-  createApiFn: createRoleApi,
-  updateApiFn: updateRoleApi,
+  key: 'role', // 与列表页的 key 保持一致，用来提交数据后，使列表页数据刷新
+  getApiFn: getRoleDetailApi, // 获取数据接口
+  createApiFn: createRoleApi, // 创建数据接口
+  updateApiFn: updateRoleApi, // 更新数据接口
   form: {
     name: null,
     code: null,

@@ -27,10 +27,13 @@ const {
   handleEdit,
   handleDelete,
 } = useTable({
-  key: 'api',
-  pagination: false,
-  listApiFn: getApiTreeApi,
-  deleteApiFn: deleteApiApi,
+  key: 'api', // 表格唯一标识，不要与其他模块重名
+  cacheEnabled: true, // 是否启用缓存
+  dataStaleTime: 1000 * 60 * 10, // 数据缓存时间，10 分钟
+  pagination: false, // 是否开启分页
+  scrollY: tableScrollY, // 表格高度，从 useSearchTableContainer 获取
+  listApiFn: getApiTreeApi, // 获取列表数据接口
+  deleteApiFn: deleteApiApi, // 删除数据接口
   columns: computed(() => [
     { title: t('page.systemApi.title'), dataIndex: 'title' },
     { title: t('page.systemApi.type'), dataIndex: 'type' },
@@ -40,7 +43,6 @@ const {
     { title: t('page.systemApi.sort'), dataIndex: 'sort' },
     { title: t('common.actions'), key: 'actions', fixed: 'right', width: 150 },
   ]),
-  scrollY: tableScrollY,
 })
 </script>
 

@@ -10,7 +10,7 @@ export function getFlatMenuApi(): Promise<Omit<Menu, 'children'>[]> {
   return request.get('/menu/flat')
 }
 
-export function getMenuApi(id: number): Promise<Omit<Menu, 'children'>> {
+export function getMenuDetailApi(id: number): Promise<Omit<Menu, 'children'>> {
   return request.get(`/menu/${id}`)
 }
 

@@ -11,7 +11,7 @@ export function getAllRoleApi(): Promise<Role[]> {
   return request.get('/role/all')
 }
 
-export function getRoleApi(id: number): Promise<Role> {
+export function getRoleDetailApi(id: number): Promise<Role> {
   return request.get(`/role/${id}`)
 }
 

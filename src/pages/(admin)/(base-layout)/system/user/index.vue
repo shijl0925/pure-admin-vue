@@ -35,13 +35,15 @@ const {
   selectedCount,
   selectedIsEmpty,
 } = useTable({
-  key: 'user',
-  pagination: true,
-  listApiFn: getUserListApi,
-  deleteApiFn: deleteUserApi,
-  batchDeleteApiFn: batchDeleteUserApi,
-  scrollY: tableScrollY,
-  selectable: true,
+  key: 'user', // 表格唯一标识，不要与其他模块重名
+  cacheEnabled: true, // 是否启用缓存
+  dataStaleTime: 1000 * 60 * 10, // 数据缓存时间，10 分钟
+  pagination: true, // 是否开启分页
+  selectable: true, // 是否开启选择
+  listApiFn: getUserListApi, // 获取列表数据接口
+  deleteApiFn: deleteUserApi, // 删除数据接口
+  batchDeleteApiFn: batchDeleteUserApi, // 批量删除数据接口
+  scrollY: tableScrollY, // 表格高度，从 useSearchTableContainer 获取
   form: {
     username: null,
     nickName: null,

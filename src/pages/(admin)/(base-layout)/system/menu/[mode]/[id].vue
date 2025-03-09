@@ -4,7 +4,7 @@ import type { FormInstance, FormProps, RadioGroupProps } from 'ant-design-vue'
 import { computed, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { createMenuApi, getMenuApi, updateMenuApi } from '@/apis/menu'
+import { createMenuApi, getMenuDetailApi, updateMenuApi } from '@/apis/menu'
 import { SaveButton } from '@/components/button'
 import { FormContainer } from '@/components/container'
 import { IconSelect } from '@/components/icon'
@@ -30,10 +30,10 @@ const {
   isLoading,
   handleSubmit,
 } = useForm({
-  key: 'menu',
-  getApiFn: getMenuApi,
-  createApiFn: createMenuApi,
-  updateApiFn: updateMenuApi,
+  key: 'menu', // 与列表页的 key 保持一致，用来提交数据后，使列表页数据刷新
+  getApiFn: getMenuDetailApi, // 获取数据接口
+  createApiFn: createMenuApi, // 创建数据接口
+  updateApiFn: updateMenuApi, // 更新数据接口
   form: {
     parentId: data?.id,
     title: null,
