@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import type { IconProps } from '@iconify/vue'
+
 import { Icon as Iconify } from '@iconify/vue'
 import { nextTick, ref, watch } from 'vue'
 
-const { icon = '' } = defineProps<{
-  icon: string
-}>()
+const { icon = '', ...restProps } = defineProps<IconProps>()
 
 const loading = ref(false)
 
@@ -18,6 +18,6 @@ watch(() => icon, async () => {
 <template>
   <span v-if="loading" class="icon-wrapper" />
   <span v-else class="icon-wrapper">
-    <Iconify :icon="icon" />
+    <Iconify :icon="icon" v-bind="restProps" />
   </span>
 </template>
