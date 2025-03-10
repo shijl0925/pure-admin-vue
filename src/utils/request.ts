@@ -85,17 +85,12 @@ request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 request.interceptors.response.use(
   (config: AxiosResponse) => {
-    const userStore = useUserStore()
-    const { logout } = userStore
     const { data } = config
     if (data.code >= 200 && data.code < 300) {
       return data.data
     }
     else {
       message.error(data.message)
-      if (data.code === 401) {
-        logout()
-      }
 
       return Promise.reject(data)
     }
