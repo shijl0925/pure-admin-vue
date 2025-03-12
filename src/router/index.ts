@@ -4,15 +4,30 @@ import { handleHotUpdate, routes } from 'vue-router/auto-routes'
 
 import { MENU_TYPE } from '@/constants/menu'
 import { usePermission } from '@/hooks/usePermission'
+import { Layout } from '@/layouts'
 import { hideLoading } from '@/plugins'
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
 import { useUserStore } from '@/stores'
 
-console.log(routes)
+const rootRoutes = [
+  {
+    name: 'Root',
+    path: '/',
+    component: Layout,
+    children: [
+      ...routes,
+      {
+        name: '404',
+        path: '/:pathMatch(.*)*',
+        redirect: 'exception/404',
+      },
+    ],
+  },
+]
 
 export const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: rootRoutes,
 })
 
 router.beforeEach(async (to, _from, next) => {
@@ -50,7 +65,7 @@ router.beforeEach(async (to, _from, next) => {
     permissionType: MENU_TYPE.MENU,
   })) {
     next({
-      path: '/403',
+      path: '/exception/403',
     })
 
     return

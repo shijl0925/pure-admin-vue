@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { DefaultLayout } from '@/layouts'
+import { useRoute } from 'vue-router'
+
+import BlankLayout from './BlankLayout.vue'
+import DefaultLayout from './DefaultLayout.vue'
+
+const route = useRoute()
 </script>
 
 <template>
-  <DefaultLayout>
+  <DefaultLayout v-if="!route?.meta?.layout || route?.meta?.layout === 'default'">
     <RouterView v-slot="{ Component }">
       <Transition
         enter-active-class="transition-all duration-300"
@@ -16,4 +21,7 @@ import { DefaultLayout } from '@/layouts'
       </Transition>
     </RouterView>
   </DefaultLayout>
+  <BlankLayout v-else>
+    <RouterView />
+  </BlankLayout>
 </template>

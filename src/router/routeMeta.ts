@@ -4,8 +4,29 @@ import type { EditableTreeNode } from 'unplugin-vue-router'
 import { API, MENU, ROLE, USER } from '../constants/permissions'
 import { flattenTree } from '../utils/array'
 
-const routeMetaConfig = [
-  { name: '登录', path: '/login', meta: { public: true } },
+interface RouteMeta {
+  layout?: 'blank' | 'default'
+  public?: boolean
+  [key: string | symbol]: unknown
+}
+
+interface Route {
+  name: string
+  path?: string
+  meta?: RouteMeta
+  children?: Route[]
+}
+
+const routeMetaConfig: Route[] = [
+  { name: '登录', path: '/login', meta: { public: true, layout: 'blank' } },
+  {
+    name: '异常',
+    children: [
+      { name: '403', path: '/exception/403', meta: { layout: 'blank' } },
+      { name: '404', path: '/exception/404', meta: { layout: 'blank' } },
+      { name: '500', path: '/exception/500', meta: { layout: 'blank' } },
+    ],
+  },
   {
     name: '系统设置',
     children: [
