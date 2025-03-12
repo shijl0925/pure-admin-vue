@@ -8,53 +8,55 @@ import { hideLoading } from '@/plugins'
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
 import { useUserStore } from '@/stores'
 
+console.log(routes)
+
 export const router = createRouter({
   history: createWebHistory(),
   routes,
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   const userStore = useUserStore()
   const { isLogin, userInfo } = storeToRefs(userStore)
   const { fetchUserInfo } = userStore
 
   const { hasPermission } = usePermission()
 
+  // 如果是公共路由，则直接放行
   if (to.meta.public) {
     next()
+    return
   }
-  else {
-    if (isLogin.value) {
-      if (from.path !== '/login' && userInfo.value === null) {
-        await Promise.all([
-          fetchUserInfo(),
-        ])
-      }
 
-      if (to.meta.permission) {
-        if (!hasPermission({
-          permission: to.meta.permission as string | string[],
-          permissionType: MENU_TYPE.MENU,
-        })) {
-          next({
-            path: '/403',
-          })
-        }
-        else {
-          next()
-        }
-      }
-      else {
-        next()
-      }
-    }
-    else {
-      next({
-        path: '/login',
-        query: to.fullPath !== '/' && to.fullPath !== '/login' ? { redirect: to.fullPath } : undefined,
-      })
-    }
+  // 未登录时重定向到登录页
+  if (!isLogin.value) {
+    next({
+      path: '/login',
+      query: to.fullPath !== '/' && to.fullPath !== '/login' ? { redirect: to.fullPath } : undefined,
+    })
+    return
   }
+
+  // 如果没有用户信息，获取用户信息
+  if (userInfo.value === null) {
+    await Promise.all([
+      fetchUserInfo(),
+    ])
+  }
+
+  // 权限检查
+  if (to.meta.permission && !hasPermission({
+    permission: to.meta.permission as string | string[],
+    permissionType: MENU_TYPE.MENU,
+  })) {
+    next({
+      path: '/403',
+    })
+
+    return
+  }
+
+  next()
 })
 
 router.isReady().then(() => {

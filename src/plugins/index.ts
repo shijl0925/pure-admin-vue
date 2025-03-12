@@ -1,2 +1,2 @@
 export { setupIconifyOffline } from './iconify'
-export { setupLoading, hideLoading } from './loading'
+export { hideLoading, setupLoading } from './loading'

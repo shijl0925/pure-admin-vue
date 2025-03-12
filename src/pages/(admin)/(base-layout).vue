@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { BaseLayout } from '@/layouts'
+import { DefaultLayout } from '@/layouts'
 </script>
 
 <template>
-  <BaseLayout>
+  <DefaultLayout>
     <RouterView v-slot="{ Component }">
       <Transition
         enter-active-class="transition-all duration-300"
@@ -15,5 +15,5 @@ import { BaseLayout } from '@/layouts'
         <component :is="Component" />
       </Transition>
     </RouterView>
-  </BaseLayout>
+  </DefaultLayout>
 </template>

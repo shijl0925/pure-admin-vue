@@ -75,9 +75,6 @@ importers:
       '@iconify/tools':
         specifier: ^4.1.1
         version: 4.1.1
-      '@iconify/utils':
-        specifier: ^2.3.0
-        version: 2.3.0
       '@intlify/unplugin-vue-i18n':
         specifier: ^6.0.3
         version: 6.0.3(@vue/compiler-dom@3.5.13)(eslint@9.21.0(jiti@2.4.2))(rollup@4.34.2)(typescript@5.8.2)(vue-i18n@11.1.1(vue@3.5.13(typescript@5.8.2)))(vue@3.5.13(typescript@5.8.2))

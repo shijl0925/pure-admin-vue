@@ -1,4 +1,4 @@
-import type { API_TYPE, API_METHOD } from '@/constants/api'
+import type { API_METHOD, API_TYPE } from '@/constants/api'
 
 export interface Api {
   id: number

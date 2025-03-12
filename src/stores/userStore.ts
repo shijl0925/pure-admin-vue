@@ -46,18 +46,19 @@ export const useUserStore = defineStore('user', () => {
 
   const matchedMenuPath = computed(() => {
     // 获取当前路由的所有可能父路径
-    const possiblePaths = route.matched.map(item => item.path)
+    const possiblePaths = [...route.matched].map(item => item.path).reverse()
+
+    const menuPathMap = new Set(flatUserMenus.value.map(menu => menu.path))
 
     // 找到最匹配的菜单路径
     const matchedPath = possiblePaths
-      .reverse()
-      .find(path => flatUserMenus.value.some(menu => menu.path === path))
+      .find(path => menuPathMap.has(path))
 
     if (!matchedPath)
-      return []
+      return ''
 
     if (matchedPath === '/' && route.path !== '/') {
-      return []
+      return ''
     }
 
     return matchedPath
@@ -91,7 +92,7 @@ export const useUserStore = defineStore('user', () => {
   const logout = () => {
     clearAllToken()
     clearUserInfo()
-    router.push(route.fullPath !== '/' && route.fullPath !== '/login' ? `/login?redirect=${route.fullPath}` : '/login')
+    router.push(route.fullPath !== '/' && route.fullPath !== '/login' ? `/login?redirect=${encodeURIComponent(route.fullPath)}` : '/login')
   }
 
   return {

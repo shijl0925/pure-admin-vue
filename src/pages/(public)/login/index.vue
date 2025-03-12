@@ -18,6 +18,8 @@ const { t } = useI18n()
 const { login } = useUserStore()
 const { loading, loadingFnWrapper } = useLoading()
 
+const title = computed(() => import.meta.env.VITE_APP_TITLE)
+
 const form = reactive<LoginInfo>({
   username: 'pure-admin',
   password: '123456',
@@ -26,7 +28,6 @@ const rules = computed(() => ({
   username: [{ required: true, message: t('page.login.userNamePlaceholder') }],
   password: [
     { required: true, message: t('page.login.passwordPlaceholder') },
-    { min: 6, message: t('page.login.passwordPlaceholder') },
   ],
 }))
 
@@ -90,7 +91,7 @@ function clearRemember() {
         <div class="flex items-center justify-center gap-4 text-center text-white/88 dark:text-black/85">
           <Icon icon="icon-local:logo" class="block text-5xl" />
           <div class="text-3xl font-bold">
-            Pure Admin
+            {{ title }}
           </div>
         </div>
         <div class="w-80 border rounded-xl bg-white/80 p-4 shadow transition-all dark:bg-black/80 hover:shadow-2xl">
