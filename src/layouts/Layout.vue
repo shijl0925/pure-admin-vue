@@ -8,7 +8,7 @@ const route = useRoute()
 </script>
 
 <template>
-  <DefaultLayout v-if="!route?.meta?.layout || route?.meta?.layout === 'default'">
+  <DefaultLayout v-if="!route.meta?.layout || route.meta.layout === 'default'">
     <RouterView v-slot="{ Component }">
       <Transition
         enter-active-class="transition-all duration-300"
