@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 
-import pkg from '../../../../../package.json'
+import pkg from '../../../package.json'
 
 const { t } = useI18n()
 
