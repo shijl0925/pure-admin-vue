@@ -14,6 +14,7 @@ import * as echarts from 'echarts/core'
 // 导入组件需要的渲染器
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useEcharts } from '@/hooks/useEcharts'
 
@@ -52,6 +53,8 @@ echarts.use([
   LegendComponent,
   GraphicComponent,
 ])
+
+const { t } = useI18n()
 
 const {
   chartRef,
@@ -157,7 +160,7 @@ const generateSeries = computed(() => {
   }
   else {
     return [{
-      name: legendData && legendData.length > 0 ? legendData[0] : '数据',
+      name: legendData && legendData.length > 0 ? legendData[0] : t('component.chart.common.data'),
       type: 'bar' as const,
       data,
       itemStyle: {

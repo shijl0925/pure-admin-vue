@@ -10,9 +10,26 @@ import {
 import * as echarts from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useEcharts } from '@/hooks/useEcharts'
 import { hexToRgba } from '@/utils/color'
+
+interface SeriesItem {
+  name: string
+  data: number[]
+  color?: string
+}
+
+interface Props {
+  data: number[] | SeriesItem[]
+  xAxisData: string[]
+  height?: string
+  color?: string | string[]
+  lineWidth?: number
+  showAreaColor?: boolean
+  showLegend?: boolean
+}
 
 const {
   height = '16rem',
@@ -32,21 +49,7 @@ echarts.use([
   CanvasRenderer,
 ])
 
-interface SeriesItem {
-  name: string
-  data: number[]
-  color?: string
-}
-
-interface Props {
-  data: number[] | SeriesItem[]
-  xAxisData: string[]
-  height?: string
-  color?: string | string[]
-  lineWidth?: number
-  showAreaColor?: boolean
-  showLegend?: boolean
-}
+const { t } = useI18n()
 
 const {
   chartRef,
@@ -135,7 +138,7 @@ const generateSeries = computed(() => {
     const seriesColor = getColor(0)
 
     return [{
-      name: '数据',
+      name: t('component.chart.common.data'),
       type: 'line' as const,
       smooth: true,
       symbol: 'none',

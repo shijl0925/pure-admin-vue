@@ -2,7 +2,6 @@
 import type { EChartsOption } from 'echarts'
 
 import { CandlestickChart } from 'echarts/charts'
-// 导入需要的组件
 import {
   AxisPointerComponent,
   GridComponent,

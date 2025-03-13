@@ -5,6 +5,7 @@ import { PieChart } from 'echarts/charts'
 import * as echarts from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { useEcharts } from '@/hooks/useEcharts'
 
@@ -27,6 +28,8 @@ echarts.use([
   CanvasRenderer,
 ])
 
+const { t } = useI18n()
+
 const {
   chartRef,
   isDark,
@@ -38,7 +41,7 @@ const chartOptions = computed<EChartsOption>(() => {
   return {
     series: [
       {
-        name: '数据占比',
+        name: t('component.chart.common.dataRatio'),
         type: 'pie',
         radius,
         avoidLabelOverlap: false,

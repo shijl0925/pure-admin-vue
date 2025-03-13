@@ -18,7 +18,7 @@ const { t } = useI18n()
           <Icon icon="icon-park-outline:trend" class="text-30px" />
           <CountTo
             :start-value="1"
-            :end-value="12459"
+            :end-value="124596"
             class="text-30px"
           />
         </div>
@@ -64,7 +64,7 @@ const { t } = useI18n()
           <Icon icon="icon-park-outline:analysis" class="text-30px" />
           <CountTo
             :start-value="1"
-            :end-value="30.29"
+            :end-value="3.04"
             :decimals="2"
             suffix="%"
             class="text-30px"
