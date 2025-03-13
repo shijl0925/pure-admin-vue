@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import type { EChartsOption } from 'echarts'
 
+import { RadarChart } from 'echarts/charts'
+import {
+  LegendComponent,
+  RadarComponent,
+  TooltipComponent,
+} from 'echarts/components'
+import * as echarts from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
 
 import { useEcharts } from '@/hooks/useEcharts'
@@ -23,6 +31,14 @@ const {
   height = '16rem',
   colors = [],
 } = defineProps<Props>()
+
+echarts.use([
+  RadarChart,
+  TooltipComponent,
+  LegendComponent,
+  RadarComponent,
+  CanvasRenderer,
+])
 
 const {
   chartRef,

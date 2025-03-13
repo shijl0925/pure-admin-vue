@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { EChartsOption } from 'echarts'
 
+import { PieChart } from 'echarts/charts'
+import * as echarts from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
 
 import { useEcharts } from '@/hooks/useEcharts'
@@ -18,6 +21,11 @@ const {
   color = [],
   radius = ['50%', '80%'],
 } = defineProps<Props>()
+
+echarts.use([
+  PieChart,
+  CanvasRenderer,
+])
 
 const {
   chartRef,

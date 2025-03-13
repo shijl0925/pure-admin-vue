@@ -1,7 +1,18 @@
 <script setup lang="ts">
 import type { EChartsOption } from 'echarts'
 
-import * as echarts from 'echarts'
+// 导入图表组件
+import { BarChart } from 'echarts/charts'
+// 导入所需组件
+import {
+  GraphicComponent,
+  GridComponent,
+  LegendComponent,
+  TooltipComponent,
+} from 'echarts/components'
+import * as echarts from 'echarts/core'
+// 导入组件需要的渲染器
+import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
 
 import { useEcharts } from '@/hooks/useEcharts'
@@ -31,6 +42,16 @@ const {
   height = '16rem',
   barWidth = '40%',
 } = defineProps<Props>()
+
+// 注册必要的组件
+echarts.use([
+  BarChart,
+  CanvasRenderer,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  GraphicComponent,
+])
 
 const {
   chartRef,

@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import type { EChartsOption } from 'echarts'
 
+import { CandlestickChart } from 'echarts/charts'
+// 导入需要的组件
+import {
+  AxisPointerComponent,
+  GridComponent,
+  TooltipComponent,
+} from 'echarts/components'
+import * as echarts from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -10,6 +19,14 @@ const {
   data = [],
   height = '16rem',
 } = defineProps<Props>()
+
+echarts.use([
+  CandlestickChart,
+  GridComponent,
+  TooltipComponent,
+  AxisPointerComponent,
+  CanvasRenderer,
+])
 
 const { t } = useI18n()
 

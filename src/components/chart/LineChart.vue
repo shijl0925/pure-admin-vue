@@ -1,11 +1,36 @@
 <script setup lang="ts">
 import type { EChartsOption } from 'echarts'
 
-import * as echarts from 'echarts'
+import { LineChart } from 'echarts/charts'
+import {
+  GridComponent,
+  LegendComponent,
+  TooltipComponent,
+} from 'echarts/components'
+import * as echarts from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
 
 import { useEcharts } from '@/hooks/useEcharts'
 import { hexToRgba } from '@/utils/color'
+
+const {
+  height = '16rem',
+  data = [],
+  xAxisData = [],
+  color = '',
+  lineWidth = 3,
+  showAreaColor = false,
+  showLegend = false,
+} = defineProps<Props>()
+
+echarts.use([
+  LineChart,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent,
+  CanvasRenderer,
+])
 
 interface SeriesItem {
   name: string
@@ -22,16 +47,6 @@ interface Props {
   showAreaColor?: boolean
   showLegend?: boolean
 }
-
-const {
-  height = '16rem',
-  data = [],
-  xAxisData = [],
-  color = '',
-  lineWidth = 3,
-  showAreaColor = false,
-  showLegend = false,
-} = defineProps<Props>()
 
 const {
   chartRef,

@@ -2,6 +2,14 @@
 import type { EChartsOption } from 'echarts'
 
 import { theme } from 'ant-design-vue'
+import { ScatterChart } from 'echarts/charts'
+import {
+  AxisPointerComponent,
+  GridComponent,
+  TooltipComponent,
+} from 'echarts/components'
+import * as echarts from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
 import { computed, onMounted, watch } from 'vue'
 
 import { useEcharts } from '@/hooks/useEcharts'
@@ -19,6 +27,14 @@ const {
   height = '16rem',
   symbolSize = 14,
 } = defineProps<Props>()
+
+echarts.use([
+  ScatterChart,
+  GridComponent,
+  TooltipComponent,
+  AxisPointerComponent,
+  CanvasRenderer,
+])
 
 const {
   chartRef,
