@@ -28,7 +28,7 @@ export function useEcharts(initOptions?: EChartsOption) {
   })
 
   // 坐标轴线样式
-  const getAxisLineStyle = (show: boolean = true) => ({
+  const getAxisLineStyle = (show = true) => ({
     show,
     lineStyle: {
       color: isDark.value ? '#444' : '#e8e8e8',
@@ -37,7 +37,7 @@ export function useEcharts(initOptions?: EChartsOption) {
   })
 
   // 分割线样式
-  const getSplitLineStyle = (show: boolean = true) => ({
+  const getSplitLineStyle = (show = true) => ({
     show,
     lineStyle: {
       color: isDark.value ? '#444' : '#e8e8e8',
