@@ -7,15 +7,15 @@ import { Icon } from '@/components/icon'
 
 export interface ButtonProps extends AntdButtonProps {
   icon?: string
-  iconPosition?: 'left' | 'right'
+  iconPosition?: 'start' | 'end'
   loading?: boolean
 }
 
-const { icon, iconPosition = 'left', size = 'middle', loading = false, ...props } = defineProps<ButtonProps>()
+const { icon, iconPosition = 'start', size = 'middle', loading = false, ...props } = defineProps<ButtonProps>()
 
 const iconClass = computed(() => {
   return {
-    'order-last': iconPosition === 'right',
+    'order-last': iconPosition === 'end',
   }
 })
 

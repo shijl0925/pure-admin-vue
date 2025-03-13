@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { BaseContainer } from '@/components/container'
 import { Button } from '@/components/button'
+import { BaseContainer } from '@/components/container'
 import { useAnimateTheme } from '@/hooks/useAnimateTheme'
 
 const { t } = useI18n()
