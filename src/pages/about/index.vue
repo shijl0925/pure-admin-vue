@@ -37,10 +37,10 @@ function transformVersionData(tuple: [string, string]): PkgVersionInfo {
 
 <template>
   <div class="m-2 flex flex-col gap-2">
-    <a-card :title="t('page.about.title')">
+    <a-card :title="t('page.about.title')" :bordered="false">
       {{ t('page.about.content') }}
     </a-card>
-    <a-card :title="t('page.about.projectInfo')">
+    <a-card :title="t('page.about.projectInfo')" :bordered="false">
       <a-descriptions size="small" bordered>
         <a-descriptions-item :label="t('page.about.version')">
           {{ version }}
@@ -52,14 +52,14 @@ function transformVersionData(tuple: [string, string]): PkgVersionInfo {
         </a-descriptions-item>
       </a-descriptions>
     </a-card>
-    <a-card :title="t('page.about.dependencies')">
+    <a-card :title="t('page.about.dependencies')" :bordered="false">
       <a-descriptions size="small" bordered>
         <a-descriptions-item v-for="item in pkgJson.dependencies" :key="item.name" :label="item.name">
           {{ item.version }}
         </a-descriptions-item>
       </a-descriptions>
     </a-card>
-    <a-card :title="t('page.about.devDependencies')">
+    <a-card :title="t('page.about.devDependencies')" :bordered="false">
       <a-descriptions size="small" bordered>
         <a-descriptions-item v-for="item in pkgJson.devDependencies" :key="item.name" :label="item.name">
           {{ item.version }}
