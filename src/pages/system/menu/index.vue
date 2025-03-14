@@ -89,7 +89,7 @@ const {
         </template>
         <template v-if="column.key === 'actions'">
           <Permission :permission="MENU.CREATE">
-            <Button v-if="record.type !== MENU_TYPE.FEATURE" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
+            <Button v-if="record.type !== MENU_TYPE.FEATURE" icon="icon-park-outline:tree-diagram" type="text" size="small" @click="handleCreate(record)" />
           </Permission>
           <Permission :permission="MENU.UPDATE">
             <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />

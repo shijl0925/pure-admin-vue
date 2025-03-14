@@ -41,7 +41,7 @@ const {
 <template>
   <FormContainer :title="title">
     <a-form v-bind="formProps">
-      <a-form-item :label="t('page.systemRole.name')" name="name" autocomplete="off">
+      <a-form-item :label="t('page.systemRole.name')" name="name">
         <a-input v-model:value="formState.name" />
       </a-form-item>
       <a-form-item :label="t('page.systemRole.code')" name="code">

@@ -119,7 +119,6 @@ export function useForm<
     mutationFn: (id: number) => updateApiFn(id, formState.value as Partial<TModel>),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [listQueryKey] })
-      queryClient.invalidateQueries({ queryKey: [detailQueryKey, id] })
       if (backAfterSuccess)
         handleBack()
     },

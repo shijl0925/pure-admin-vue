@@ -78,7 +78,7 @@ const {
         </template>
         <template v-if="column.key === 'actions'">
           <Permission :permission="API.CREATE">
-            <Button v-if="record.type === API_TYPE.DIRECTORY" icon="icon-park-outline:tree-diagram" type="text" size="small" no-text @click="handleCreate(record)" />
+            <Button v-if="record.type === API_TYPE.DIRECTORY" icon="icon-park-outline:tree-diagram" type="text" size="small" @click="handleCreate(record)" />
           </Permission>
           <Permission :permission="API.UPDATE">
             <EditButton type="text" size="small" no-text @click="handleEdit(record, record)" />

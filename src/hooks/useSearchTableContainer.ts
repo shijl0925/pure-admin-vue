@@ -68,7 +68,6 @@ export function useSearchTableContainer() {
 
   const listContainerProps = computed(() => ({
     searchCardRef,
-    searchCardHeight,
     tableCardHeight,
   }))
 

@@ -303,7 +303,7 @@ export function useTable<
             resetSelectedState()
           },
         }
-      : false,
+      : undefined,
   }))
 
   return {

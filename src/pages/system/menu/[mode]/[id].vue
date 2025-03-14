@@ -17,7 +17,6 @@ import ParentName from '../components/ParentName.vue'
 const { t } = useI18n()
 
 const { getTransferredData } = usePageTransfer()
-
 const data = getTransferredData()
 
 const {

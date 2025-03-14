@@ -3,6 +3,7 @@ import type { Rule } from 'ant-design-vue/es/form'
 
 import { message } from 'ant-design-vue'
 import { reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { updateUserPasswordApi } from '@/apis/user'
 import { SaveButton } from '@/components/button'
@@ -17,10 +18,12 @@ interface Model {
 
 async function validateConfirmPassword(_rule: Rule, value: string) {
   if (value !== model.newPassword) {
-    return Promise.reject(new Error('两次密码不一致'))
+    return Promise.reject(new Error(t('page.userCenter.rules.passwordNotMatch')))
   }
   return Promise.resolve()
 }
+
+const { t } = useI18n()
 
 const model = reactive<Model>({
   oldPassword: '',
@@ -30,23 +33,22 @@ const model = reactive<Model>({
 
 const rules = {
   oldPassword: [
-    { required: true, message: '请输入旧密码' },
+    { required: true, message: t('page.userCenter.rules.oldPassword') },
   ],
   newPassword: [
-    { required: true, message: '请输入新密码' },
-    { min: 6, max: 16, message: '密码长度在6-16位之间' },
+    { required: true, message: t('page.userCenter.rules.newPassword') },
+    { min: 6, max: 16, message: t('page.userCenter.rules.passwordLength') },
   ],
   confirmPassword: [
-    { required: true, message: '请输入确认密码' },
+    { required: true, message: t('page.userCenter.rules.confirmPassword') },
     { validator: validateConfirmPassword, trigger: 'blur' },
-    { min: 6, max: 16, message: '密码长度在6-16位之间' },
   ],
 }
 
 async function handleSubmit(model: Model) {
   try {
     await updateUserPasswordApi(model)
-    message.success('密码修改成功')
+    message.success(t('page.userCenter.success'))
   }
   catch (error) {
     console.error(error)
@@ -64,13 +66,13 @@ async function handleSubmit(model: Model) {
       autocomplete="off"
       @finish="handleSubmit"
     >
-      <a-form-item label="旧密码" name="oldPassword">
+      <a-form-item :label="t('page.userCenter.oldPassword')" name="oldPassword">
         <a-input-password v-model:value="model.oldPassword" />
       </a-form-item>
-      <a-form-item label="新密码" name="newPassword">
+      <a-form-item :label="t('page.userCenter.newPassword')" name="newPassword">
         <a-input-password v-model:value="model.newPassword" />
       </a-form-item>
-      <a-form-item label="确认密码" name="confirmPassword">
+      <a-form-item :label="t('page.userCenter.confirmPassword')" name="confirmPassword">
         <a-input-password v-model:value="model.confirmPassword" />
       </a-form-item>
       <a-form-item :wrapper-col="{ offset: 12, span: 8 }">
