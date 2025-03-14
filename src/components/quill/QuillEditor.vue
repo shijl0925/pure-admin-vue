@@ -4,6 +4,18 @@ import { nextTick, onMounted, ref, watch } from 'vue'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 
+export interface ChangeEvent {
+  html: string
+  text: string
+  quill: Quill
+}
+
+interface QuillEditorProps {
+  options?: Record<string, any>
+  placeholder?: string
+  readOnly?: boolean
+}
+
 const {
   options = {},
   placeholder = '',
@@ -16,18 +28,6 @@ const emit = defineEmits<{
   (e: 'focus', value: Quill): void
   (e: 'ready', value: Quill): void
 }>()
-
-interface QuillEditorProps {
-  options?: Record<string, any>
-  placeholder?: string
-  readOnly?: boolean
-}
-
-export interface ChangeEvent {
-  html: string
-  text: string
-  quill: Quill
-}
 
 const value = defineModel<string | null>('value')
 

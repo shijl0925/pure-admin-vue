@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { ResultProps } from 'ant-design-vue'
+
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 const { status, title, subTitle } = defineProps<{
-  status: string
+  status: ResultProps['status']
   title: string
   subTitle: string
 }>()
