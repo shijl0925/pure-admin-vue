@@ -1,5 +1,51 @@
-# Vue 3 + TypeScript + Vite
+<div align="center">
+  <h1>Pure Admin Vue</h1>
+  <span>中文 | <a href="./README.en_US.md">English</a></span>
+</div>
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+---
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+[![license](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+
+## 简介
+
+`Pure Admin` 是一款简洁优雅、功能强大且专注于用户体验的后台管理系统。 前端同时支持 `React 19` / `Vue 3` 双版本，让您可灵活选择开发技术栈，后端使用 `NestJS 11` 开发。点击 [文档]() 了解更多相关内容。
+
+**本项目为前端 `Vue 3` 版本实现。**
+
+## 特点
+
+- 使用最新技术栈（React 19、Vue 3、NestJS 11、Prisma 6 等）。
+- 使用 TypeScript 进行开发，支持严格的类型检查，提高代码的可维护性。
+- 内置丰富业务组件，包括布局、图表、列表增删改查等，提高开发效率。
+- 漂亮的 UI 设计、极致的用户体验和细节处理。
+- 前端基于文件的路由系统。
+- 基于装饰器的后端缓存系统，简单好用的。
+- 前后端均内置国际化方案，实现多语言支持。
+- 前后端打通的权限系统。
+
+## 版本
+
+- **前端 `Vue` 版本:**
+
+  - [文档地址](/pure-admin-vue/quick-start)
+  - [预览地址](https://github.com/sunhaoxiang)
+  - [Github 仓库](https://github.com/sunhaoxiang/pure-admin-vue)
+
+- **前端 `React` 版本:**
+
+  - [文档地址](/pure-admin-react/quick-start)
+  - [预览地址](https://github.com/sunhaoxiang)
+  - [Github 仓库](https://github.com/sunhaoxiang/pure-admin-react)
+
+- **后端 `NestJS` 版本:**
+
+  - [文档地址](/pure-admin-nestjs/quick-start)
+  - [Github 仓库](https://github.com/sunhaoxiang/pure-admin-nestjs)
+
+## 技术栈
+- **Pure Admin React**：React 19、Vite、Ant Design、@tanstack/react-query、Unocss 等。
+- **Pure Admin Vue**：Vue 3、Vite、Ant Design Vue、@tanstack/vue-query、Unocss 等。
+- **Pure Admin NestJS**：NestJS 11、Prisma 6、PostgreSQL、Redis 等。
+
+## 示例图片
