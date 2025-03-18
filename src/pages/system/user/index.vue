@@ -105,6 +105,14 @@ const {
     </template>
     <a-table v-bind="tableProps">
       <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'isFrozen'">
+          <a-tag v-if="record.isFrozen" color="red">
+            {{ t('page.systemUser.frozen') }}
+          </a-tag>
+          <a-tag v-else color="green">
+            {{ t('page.systemUser.unfrozen') }}
+          </a-tag>
+        </template>
         <template v-if="column.key === 'actions'">
           <Permission :permission="USER.UPDATE">
             <EditButton type="text" size="small" no-text @click="handleEdit(record)" />
