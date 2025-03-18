@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 
 import { Icon } from '@/components/icon'
-import { useAppStore } from '@/stores'
+import { useAppStore } from '@/stores/appStore'
 
 const appStore = useAppStore()
 const { sidebarCollapsed } = storeToRefs(appStore)

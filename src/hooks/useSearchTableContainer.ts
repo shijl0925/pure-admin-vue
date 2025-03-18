@@ -3,7 +3,7 @@ import { theme } from 'ant-design-vue'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 
-import { useAppStore } from '@/stores'
+import { useAppStore } from '@/stores/appStore'
 
 export function useSearchTableContainer() {
   const { token } = theme.useToken()

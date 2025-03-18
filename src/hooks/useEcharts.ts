@@ -5,7 +5,7 @@ import * as echarts from 'echarts/core'
 import { storeToRefs } from 'pinia'
 import { onUnmounted, ref, watch } from 'vue'
 
-import { useAppStore } from '@/stores'
+import { useAppStore } from '@/stores/appStore'
 
 export function useEcharts(initOptions?: EChartsOption) {
   const appStore = useAppStore()

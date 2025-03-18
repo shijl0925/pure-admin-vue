@@ -7,7 +7,7 @@ import { usePermission } from '@/hooks/usePermission'
 import { Layout } from '@/layouts'
 import { hideLoading } from '@/plugins'
 // import type { RouteRecordInfo, ParamValue } from 'vue-router'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/stores/userStore'
 
 const rootRoutes = [
   {

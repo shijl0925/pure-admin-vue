@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
 import { LangSelect, ThemeToggle } from '@/components/common'
-import { useAppStore } from '@/stores'
+import { useAppStore } from '@/stores/appStore'
 
 import Breadcrumb from './Breadcrumb.vue'
 import SiderToggle from './SiderToggle.vue'

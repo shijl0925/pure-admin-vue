@@ -4,7 +4,7 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { Icon } from '@/components/icon'
-import { useAppStore } from '@/stores'
+import { useAppStore } from '@/stores/appStore'
 
 const router = useRouter()
 

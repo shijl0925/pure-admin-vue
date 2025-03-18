@@ -6,7 +6,7 @@ import { computed, ref, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { BackButton } from '@/components/button'
-import { useAppStore } from '@/stores'
+import { useAppStore } from '@/stores/appStore'
 import { scrollbarOptions } from '@/utils/overlayscrollbars'
 
 const {

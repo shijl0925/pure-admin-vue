@@ -1,7 +1,7 @@
 import type { RouteLocationRaw } from 'vue-router'
 
 import { router } from '@/router'
-import { usePageDataStore } from '@/stores'
+import { usePageDataStore } from '@/stores/pageDataStore'
 
 export function usePageTransfer() {
   const pageDataStore = usePageDataStore()

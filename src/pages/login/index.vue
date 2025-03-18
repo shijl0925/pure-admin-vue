@@ -11,7 +11,7 @@ import { LangSelect, ThemeToggle } from '@/components/common'
 import { Icon } from '@/components/icon'
 import { Wave } from '@/components/login'
 import { useLoading } from '@/hooks/useLoading'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/stores/userStore'
 import { deCode, enCode } from '@/utils/string'
 
 const { t } = useI18n()

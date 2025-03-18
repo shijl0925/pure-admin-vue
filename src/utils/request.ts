@@ -6,7 +6,8 @@ import { storeToRefs } from 'pinia'
 
 import { refreshTokenApi } from '@/apis/user'
 import { i18n } from '@/locales'
-import { useAppStore, useUserStore } from '@/stores'
+import { useAppStore } from '@/stores/appStore'
+import { useUserStore } from '@/stores/userStore'
 
 export const request = Axios.create({
   baseURL: import.meta.env.VITE_API_BASEURL,

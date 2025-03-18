@@ -1,7 +1,7 @@
 import { storeToRefs } from 'pinia'
 
 import { MENU_TYPE } from '@/constants/menu'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/stores/userStore'
 
 // 权限类型：菜单权限、功能权限
 export type PermissionType = MENU_TYPE.MENU | MENU_TYPE.FEATURE

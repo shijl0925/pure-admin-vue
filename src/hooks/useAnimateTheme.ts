@@ -3,7 +3,7 @@ import type { ComponentPublicInstance } from 'vue'
 import { storeToRefs } from 'pinia'
 import { nextTick, onMounted, ref } from 'vue'
 
-import { useAppStore } from '@/stores'
+import { useAppStore } from '@/stores/appStore'
 
 const isBrowser = typeof window !== 'undefined'
 
