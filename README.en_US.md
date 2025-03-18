@@ -1,9 +1,6 @@
 <div align="center">
-
- <h1>Pure Admin React</h1>
-
- <span>English | <a href="./README.md">中文</a></span>
-
+  <h1>Pure Admin Vue</h1>
+  <span>English | <a href="./README.md">中文</a></span>
 </div>
 
 ---
