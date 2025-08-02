@@ -73,7 +73,7 @@ request.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
   config.headers['x-lang'] = currentLocale.value
 
-  if (config.url !== '/user/login') {
+  if (config.url !== '/api/v1/auth/login') {
     config.headers.authorization = `Bearer ${accessToken.value}`
   }
 

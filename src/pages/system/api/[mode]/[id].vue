@@ -12,6 +12,7 @@ import { useForm } from '@/hooks/useForm'
 import { usePageTransfer } from '@/hooks/usePageTransfer'
 
 import ParentName from '../components/ParentName.vue'
+import RouterSelect from '../components/RouterSelect.vue'
 
 const { t } = useI18n()
 
@@ -122,7 +123,7 @@ const handleChangeType: RadioGroupProps['onChange'] = async () => {
         />
       </a-form-item>
       <a-form-item v-if="formState.type && formState.type === API_TYPE.API" :label="t('page.systemApi.path')" name="path">
-        <a-input v-model:value="formState.path" />
+        <RouterSelect v-model:value="formState.path" />
       </a-form-item>
       <a-form-item v-if="formState.type && formState.type === API_TYPE.API" :label="t('page.systemApi.method')" name="method">
         <a-select v-model:value="formState.method" :options="methodOptions" allow-clear />

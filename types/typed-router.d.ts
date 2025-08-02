@@ -34,6 +34,8 @@ declare module 'vue-router/auto-routes' {
     '/exception/404/': RouteRecordInfo<'/exception/404/', '/exception/404', Record<never, never>, Record<never, never>>,
     '/exception/500/': RouteRecordInfo<'/exception/500/', '/exception/500', Record<never, never>, Record<never, never>>,
     '/login/': RouteRecordInfo<'/login/', '/login', Record<never, never>, Record<never, never>>,
+    '/monitor/log/': RouteRecordInfo<'/monitor/log/', '/monitor/log', Record<never, never>, Record<never, never>>,
+    '/monitor/log/[mode]/[id]': RouteRecordInfo<'/monitor/log/[mode]/[id]', '/monitor/log/:mode/:id', { mode: ParamValue<true>, id: ParamValue<true> }, { mode: ParamValue<false>, id: ParamValue<false> }>,
     '/multi-menu/first-child/': RouteRecordInfo<'/multi-menu/first-child/', '/multi-menu/first-child', Record<never, never>, Record<never, never>>,
     '/multi-menu/second-child/': RouteRecordInfo<'/multi-menu/second-child/', '/multi-menu/second-child', Record<never, never>, Record<never, never>>,
     '/multi-menu/third-child/': RouteRecordInfo<'/multi-menu/third-child/', '/multi-menu/third-child', Record<never, never>, Record<never, never>>,

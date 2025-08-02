@@ -74,7 +74,9 @@
     "multiMenu2_1": "多级菜单2-1",
     "multiMenu2_2": "多级菜单2-2",
     "multiMenu2_2_1": "多级菜单2-2-1",
-    "about": "关于"
+    "about": "关于",
+    "systemMonitor": "监控管理",
+    "OperationLog": "操作日志"
   },
   "page": {
     "login": {
@@ -280,6 +282,25 @@
         "type": "请选择类型",
         "path": "请输入路径",
         "method": "请选择请求方法"
+      }
+    },
+    "operationLog": {
+      "id": "ID",
+      "status_code": "状态码",
+      "method": "请求方法",
+      "path": "请求路径",
+      "ip": "IP",
+      "user_agent": "User Agent",
+      "latency": "耗时",
+      "user_name": "用户名",
+      "user_id": "用户ID",
+      "createTime": "创建实践",
+      "updateTime": "更新实践",
+      "message": "详情",
+      "rules": {
+        "status_code": "请输入状态码",
+        "method": "请输入请求方法",
+        "path": "请输入请求路径"
       }
     },
     "about": {

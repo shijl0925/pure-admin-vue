@@ -74,7 +74,9 @@
     "multiMenu2_1": "Multi-level Menu 2-1",
     "multiMenu2_2": "Multi-level Menu 2-2",
     "multiMenu2_2_1": "Multi-level Menu 2-2-1",
-    "about": "About"
+    "about": "About",
+    "systemMonitor": "Monitor",
+    "OperationLog": "Operation Log"
   },
   "page": {
     "login": {
@@ -281,6 +283,25 @@
         "type": "Please select type",
         "path": "Please enter path",
         "method": "Please select method"
+      }
+    },
+    "operationLog": {
+      "id": "ID",
+      "status_code": "Status Code",
+      "method": "Method",
+      "path": "Path",
+      "ip": "IP",
+      "user_agent": "User Agent",
+      "latency": "Latency",
+      "user_name": "User Name",
+      "user_id": "User ID",
+      "createTime": "Created Time",
+      "updateTime": "Updated Time",
+      "message": "Message",
+      "rules": {
+        "status_code": "Please enter status code",
+        "method": "Please enter method",
+        "path": "Please enter path"
       }
     },
     "about": {

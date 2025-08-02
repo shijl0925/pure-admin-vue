@@ -19,6 +19,13 @@ export default defineConfig(({ mode }) => {
     base: VITE_BASE_URL,
     server: {
       port: Number.parseInt(VITE_PORT),
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:8888',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, ''),
+        },
+      },
     },
     build: {
       chunkSizeWarningLimit: 1000,

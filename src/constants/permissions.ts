@@ -41,3 +41,10 @@ export enum API {
   UPDATE = 'system:api:update',
   DELETE = 'system:api:delete',
 }
+
+/**
+ * 日志管理
+ */
+export enum LOG {
+  READ = 'monitor:operationlogs:view',
+}
